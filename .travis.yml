@@ -1,0 +1,8 @@
+dist: trusty
+sudo: false
+language: ruby
+rvm: 2.3.6
+cache: bundler
+branches:
+  only:
+    - master
