@@ -1,4 +1,7 @@
 # Assessment Network Metadata Repository
+
+[![Build Status](https://travis-ci.org/a15k/metadata-repository.svg?branch=master)](https://travis-ci.org/a15k/metadata-repository)
+
 Repository for assessment network metadata
 
 ## Dev Database Setup
