@@ -3,6 +3,12 @@ sudo: false
 language: ruby
 rvm: 2.3.6
 cache: bundler
+addons:
+  postgresql: 9.6
 branches:
   only:
     - master
+before_script:
+  - export A15K_META_DB_USERNAME=postgres
+  - export A15K_META_DB_PASSWORD=
+  - export A15K_META_TEST_DB=travis_ci_test
