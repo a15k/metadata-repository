@@ -18,3 +18,7 @@
 !/tmp/.keep
 
 .byebug_history
+
+spec/examples.txt
+
+.DS_Store
