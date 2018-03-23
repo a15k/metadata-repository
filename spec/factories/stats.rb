@@ -1,10 +1,10 @@
 FactoryBot.define do
   factory :stats do
     application
-    user
+    application_user
     resource
     format
     uuid  { SecureRandom.uuid }
-    value { {} }
+    value { { 'test': true } }
   end
 end

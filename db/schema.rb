@@ -104,17 +104,17 @@ ActiveRecord::Schema.define(version: 20180322165555) do
     t.index ["value"], name: "index_stats_on_value", using: :gin
   end
 
-  add_foreign_key "application_users", "applications"
-  add_foreign_key "metadata", "application_users"
-  add_foreign_key "metadata", "applications"
-  add_foreign_key "metadata", "formats"
-  add_foreign_key "metadata", "resources"
-  add_foreign_key "resources", "application_users"
-  add_foreign_key "resources", "applications"
-  add_foreign_key "resources", "formats"
-  add_foreign_key "resources", "languages"
-  add_foreign_key "stats", "application_users"
-  add_foreign_key "stats", "applications"
-  add_foreign_key "stats", "formats"
-  add_foreign_key "stats", "resources"
+  add_foreign_key "application_users", "applications", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "metadata", "application_users", on_update: :cascade, on_delete: :nullify
+  add_foreign_key "metadata", "applications", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "metadata", "formats", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "metadata", "resources", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "resources", "application_users", on_update: :cascade, on_delete: :nullify
+  add_foreign_key "resources", "applications", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "resources", "formats", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "resources", "languages", on_update: :cascade, on_delete: :nullify
+  add_foreign_key "stats", "application_users", on_update: :cascade, on_delete: :nullify
+  add_foreign_key "stats", "applications", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "stats", "formats", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "stats", "resources", on_update: :cascade, on_delete: :cascade
 end

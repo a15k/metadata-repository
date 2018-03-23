@@ -1,10 +1,10 @@
 FactoryBot.define do
   factory :metadata do
     application
-    user
+    application_user
     resource
     format
     uuid  { SecureRandom.uuid }
-    value { {} }
+    value { { 'test': true } }
   end
 end

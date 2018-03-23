@@ -2,7 +2,8 @@ class CreateApplicationUsers < ActiveRecord::Migration[5.1]
   def change
     create_table :application_users do |t|
       t.uuid       :uuid,        null: false
-      t.references :application, null: false, foreign_key: true
+      t.references :application, null: false,
+                                 foreign_key: { on_update: :cascade, on_delete: :cascade }
 
       t.timestamps
     end

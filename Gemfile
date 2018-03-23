@@ -45,3 +45,14 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
 end
+
+group :test do
+  # Test helpers
+  gem 'shoulda-matchers'
+
+  # Mock HTTP requests
+  gem 'webmock'
+
+  # Record and replay HTTP requests
+  gem 'vcr'
+end

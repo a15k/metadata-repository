@@ -1,0 +1,130 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://exercises.openstax.org/api/exercises/1000
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.14.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 301
+      message: Moved Permanently
+    headers:
+      Content-Type:
+      - text/html
+      Date:
+      - Fri, 23 Mar 2018 15:58:44 GMT
+      Location:
+      - https://exercises.openstax.org/api/exercises/1000
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubdomains
+      Content-Length:
+      - '178'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: "<html>\r\n<head><title>301 Moved Permanently</title></head>\r\n<body
+        bgcolor=\"white\">\r\n<center><h1>301 Moved Permanently</h1></center>\r\n<hr><center>nginx</center>\r\n</body>\r\n</html>\r\n"
+    http_version: 
+  recorded_at: Fri, 23 Mar 2018 15:58:44 GMT
+- request:
+    method: get
+    uri: https://exercises.openstax.org/api/exercises/1000
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.14.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Fri, 23 Mar 2018 15:58:44 GMT
+      Etag:
+      - W/"cd89a02f12f217291212a704353e08a2"
+      Server:
+      - nginx
+      Set-Cookie:
+      - _exercises_session=Z1ZVYmZFUUhFdHRJMDBlU1dwSDIvK3o2dUpiOG8wbXlBMVJhQVNpNFdoWFNuR0RmY1hIRXQydmFaNUhaWlZEMzlBNTV6Sk1oMmlJRXpnUmQrTmRUZUE9PS0tYmplNjRkUkgvQ0RyVlZHdWhScUsrQT09--72da4f937e0e35a439e91ab069c1ede29a7ce33b;
+        path=/; HttpOnly
+      Status:
+      - 200 OK
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubdomains
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Request-Id:
+      - 8097fa70-3038-4942-8a5e-7e31ad0a3261
+      X-Runtime:
+      - '0.034216'
+      X-Xss-Protection:
+      - 1; mode=block
+      Content-Length:
+      - '3984'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"tags":["apbio","inbook-yes","ost-chapter-review","critical-thinking","apbio-ch14","apbio-ch14-s03","apbio-ch14-s03-lo02","apbio-ch14-ex041","blooms:2","time:medium","dok:3","book:stax-bio","context-cnxmod:1723d815-cea1-4f32-891f-0373d7ef1137","exid:apbio-ch14-ex041","context-cnxmod:83d81284-3099-4bb3-896a-98628f61d58a","book:stax-apbio","filter-type:import:hs","type:practice"],"uuid":"48051ebb-f590-4033-8683-12f5f86b03b3","group_uuid":"df97aaae-b8e0-4c81-98f8-721685081f7c","number":1000,"version":3,"uid":"1000@3","published_at":"2018-02-16T16:59:51.791Z","authors":[{"user_id":1,"name":"openstax"}],"copyright_holders":[{"user_id":2,"name":"Rice
+        University"}],"derived_from":[],"is_vocab":false,"stimulus_html":"","questions":[{"id":76413,"is_answer_order_important":true,"stimulus_html":"","stem_html":"Discuss
+        how the scientific community learned that DNA replication takes place in a
+        semiconservative fashion.","answers":[{"id":313000,"content_html":"Meselson
+        and Stahl experimented with <em>E. coli</em>. DNA grown in <span data-math=\"^{15}\\text{N}\">^{15}\\text{N}</span>
+        was heavier than DNA grown in <span data-math=\"^{14}\\text{N}\">^{14}\\text{N}</span>.
+        When DNA in <span data-math=\"^{15}\\text{N}\">^{15}\\text{N}</span> was switched
+        to <span data-math=\"^{14}\\text{N}\">^{14}\\text{N}</span> media, DNA sedimented
+        halfway between the <span data-math=\"^{15}\\text{N}\">^{15}\\text{N}</span>
+        and <span data-math=\"^{14}\\text{N}\">^{14}\\text{N}</span> levels after
+        one round of cell division, indicating fifty percent presence of <span data-math=\"^{14}\\text{N}\">^{14}\\text{N}</span>.
+        This supports the semi-conservative replication model."},{"id":313001,"content_html":"Meselson
+        and Stahl experimented with <em>S. pneumonia</em>. DNA grown in <span data-math=\"^{15}\\text{N}\">^{15}\\text{N}</span>
+        was heavier than DNA grown in <span data-math=\"^{14}\\text{N}\">^{14}\\text{N}</span>.
+        When DNA in <span data-math=\"^{15}\\text{N}\">^{15}\\text{N}</span> was switched
+        to <span data-math=\"^{14}\\text{N}\">^{14}\\text{N}</span> media, DNA sedimented
+        halfway between the <span data-math=\"^{15}\\text{N}\">^{15}\\text{N}</span>
+        and <span data-math=\"^{14}\\text{N}\">^{14}\\text{N}</span> levels after
+        one round of cell division, indicating fifty percent presence of <span data-math=\"^{14}\\text{N}\">^{14}\\text{N}</span>.
+        This supports the semi-conservative replication model."},{"id":313002,"content_html":"Meselson
+        and Stahl experimented with <em>E. coli</em>. DNA grown in <span data-math=\"^{14}\\text{N}\">^{14}\\text{N}</span>
+        was heavier than DNA grown in <span data-math=\"^{15}\\text{N}\">^{15}\\text{N}</span>.
+        When DNA in <span data-math=\"^{15}\\text{N}\">^{15}\\text{N}</span> was switched
+        to <span data-math=\"^{14}\\text{N}\">^{14}\\text{N}</span> media, DNA sedimented
+        halfway between the <span data-math=\"^{15}\\text{N}\">^{15}\\text{N}</span>
+        and <span data-math=\"^{14}\\text{N}\">^{14}\\text{N}</span> levels after
+        one round of cell division, indicating fifty percent presence of <span data-math=\"^{14}\\text{N}\">^{14}\\text{N}</span>.
+        This supports the semi-conservative replication model."},{"id":313003,"content_html":"Meselson
+        and Stahl experimented with <em>S. pneumonia</em>. DNA grown in <span data-math=\"^{15}\\text{N}\">^{15}\\text{N}</span>
+        was heavier than DNA grown in <span data-math=\"^{14}\\text{N}\">^{14}\\text{N}</span>.
+        When DNA in <span data-math=\"^{15}\\text{N}\">^{15}\\text{N}</span> was switched
+        to <span data-math=\"^{14}\\text{N}\">^{14}\\text{N}</span> media, DNA sedimented
+        halfway between the <span data-math=\"^{15}\\text{N}\">^{15}\\text{N}</span>
+        and <span data-math=\"^{14}\\text{N}\">^{14}\\text{N}</span> levels after
+        one round of cell division, indicating complete presence of <span data-math=\"^{14}\\text{N}\">^{14}\\text{N}</span>.
+        This supports the semi-conservative replication model."}],"hints":[],"formats":["free-response","multiple-choice"],"combo_choices":[]}],"versions":[3,2,1]}'
+    http_version: 
+  recorded_at: Fri, 23 Mar 2018 15:58:44 GMT
+recorded_with: VCR 4.0.0

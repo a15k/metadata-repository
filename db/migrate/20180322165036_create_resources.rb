@@ -1,10 +1,12 @@
 class CreateResources < ActiveRecord::Migration[5.1]
   def change
     create_table :resources do |t|
-      t.references :application,      null: false, foreign_key: true
-      t.references :application_user, foreign_key: true
-      t.references :format,           null: false, foreign_key: true
-      t.references :language,         foreign_key: true
+      t.references :application,      null: false,
+                                      foreign_key: { on_update: :cascade, on_delete: :cascade }
+      t.references :application_user, foreign_key: { on_update: :cascade, on_delete: :nullify }
+      t.references :format,           null: false,
+                                      foreign_key: { on_update: :cascade, on_delete: :cascade }
+      t.references :language,         foreign_key: { on_update: :cascade, on_delete: :nullify }
       t.uuid       :uuid,             null: false
       t.string     :uri,              null: false
       t.citext     :type,             null: false
