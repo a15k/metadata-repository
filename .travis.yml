@@ -9,6 +9,7 @@ branches:
   only:
     - master
 before_script:
+  - psql -c 'create database travis_ci_test;' -U postgres
   - export A15K_META_DB_USERNAME=postgres
   - export A15K_META_DB_PASSWORD=
   - export A15K_META_TEST_DB=travis_ci_test
