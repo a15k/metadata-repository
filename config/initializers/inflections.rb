@@ -12,4 +12,5 @@
 
 ActiveSupport::Inflector.inflections(:en) do |inflect|
   inflect.acronym 'OpenStax'
+  inflect.uncountable %w( metadata stats )
 end

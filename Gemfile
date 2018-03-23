@@ -20,12 +20,22 @@ gem 'puma', '~> 3.7'
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 gem 'rack-cors'
 
+# HTTP Requests
+gem 'faraday'
+gem 'faraday_middleware'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 
   # Use RSpec for tests
   gem 'rspec-rails'
+
+  # Model factories for tests
+  gem 'factory_bot_rails'
+
+  # Fake data for tests
+  gem 'faker'
 end
 
 group :development do
