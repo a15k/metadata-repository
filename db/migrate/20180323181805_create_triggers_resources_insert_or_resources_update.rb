@@ -21,7 +21,7 @@ NEW."tsvector" = (
     ) AS "regconfig"
   )
   SELECT SETWEIGHT(TO_TSVECTOR("ts_config"."regconfig", COALESCE(NEW."title", '')), 'A') ||
-         SETWEIGHT(TO_TSVECTOR("ts_config"."regconfig", NEW."content"), 'B')
+         SETWEIGHT(TO_TSVECTOR("ts_config"."regconfig", NEW."content"), 'D')
   FROM "ts_config"
 );
       SQL_ACTIONS
@@ -45,7 +45,7 @@ NEW."tsvector" = (
     ) AS "regconfig"
   )
   SELECT SETWEIGHT(TO_TSVECTOR("ts_config"."regconfig", COALESCE(NEW."title", '')), 'A') ||
-         SETWEIGHT(TO_TSVECTOR("ts_config"."regconfig", NEW."content"), 'B')
+         SETWEIGHT(TO_TSVECTOR("ts_config"."regconfig", NEW."content"), 'D')
   FROM "ts_config"
 );
       SQL_ACTIONS

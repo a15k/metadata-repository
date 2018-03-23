@@ -15,7 +15,7 @@ class Resource < ApplicationRecord
         ) AS "regconfig"
       )
       SELECT SETWEIGHT(TO_TSVECTOR("ts_config"."regconfig", COALESCE(NEW."title", '')), 'A') ||
-             SETWEIGHT(TO_TSVECTOR("ts_config"."regconfig", NEW."content"), 'B')
+             SETWEIGHT(TO_TSVECTOR("ts_config"."regconfig", NEW."content"), 'D')
       FROM "ts_config"
     )
   TSVECTOR_UPDATE_SQL
