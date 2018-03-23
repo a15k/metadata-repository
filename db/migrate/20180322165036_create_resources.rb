@@ -10,6 +10,7 @@ class CreateResources < ActiveRecord::Migration[5.1]
       t.uuid       :uuid,             null: false
       t.string     :uri,              null: false
       t.citext     :type,             null: false
+      t.text       :title
       t.text       :content,          null: false
       t.tsvector   :tsvector,         null: false, index: { using: :gin }
 

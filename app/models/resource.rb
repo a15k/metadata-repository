@@ -1,6 +1,28 @@
 class Resource < ApplicationRecord
   self.inheritance_column = nil
 
+  TSVECTOR_UPDATE_SQL = <<-TSVECTOR_UPDATE_SQL.strip_heredoc
+    NEW."tsvector" = (
+      WITH "ts_config" AS (
+        SELECT COALESCE(
+          (
+            SELECT "pg_ts_config"."cfgname"
+            FROM "pg_ts_config"
+              INNER JOIN "languages"
+                ON "pg_ts_config"."cfgname" = "languages"."name"
+            WHERE "languages"."id" = NEW."language_id"
+          )::regconfig, 'simple'
+        ) AS "regconfig"
+      )
+      SELECT SETWEIGHT(TO_TSVECTOR("ts_config"."regconfig", COALESCE(NEW."title", '')), 'A') ||
+             SETWEIGHT(TO_TSVECTOR("ts_config"."regconfig", NEW."content"), 'B')
+      FROM "ts_config"
+    )
+  TSVECTOR_UPDATE_SQL
+
+  trigger.before(:insert)                      { TSVECTOR_UPDATE_SQL }
+  trigger.before(:update).of(:title, :content) { TSVECTOR_UPDATE_SQL }
+
   has_many :metadatas,          dependent: :destroy, inverse_of: :resource
   has_many :stats,              dependent: :destroy, inverse_of: :resource
 

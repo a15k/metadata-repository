@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180322165555) do
+ActiveRecord::Schema.define(version: 20180323181805) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -73,6 +73,7 @@ ActiveRecord::Schema.define(version: 20180322165555) do
     t.uuid "uuid", null: false
     t.string "uri", null: false
     t.citext "type", null: false
+    t.text "title"
     t.text "content", null: false
     t.tsvector "tsvector", null: false
     t.datetime "created_at", null: false
@@ -117,4 +118,51 @@ ActiveRecord::Schema.define(version: 20180322165555) do
   add_foreign_key "stats", "applications", on_update: :cascade, on_delete: :cascade
   add_foreign_key "stats", "formats", on_update: :cascade, on_delete: :cascade
   add_foreign_key "stats", "resources", on_update: :cascade, on_delete: :cascade
+  create_trigger("resources_before_insert_row_tr", :generated => true, :compatibility => 1).
+      on("resources").
+      before(:insert) do
+    <<-SQL_ACTIONS
+NEW."tsvector" = (
+  WITH "ts_config" AS (
+    SELECT COALESCE(
+      (
+        SELECT "pg_ts_config"."cfgname"
+        FROM "pg_ts_config"
+          INNER JOIN "languages"
+            ON "pg_ts_config"."cfgname" = "languages"."name"
+        WHERE "languages"."id" = NEW."language_id"
+      )::regconfig, 'simple'
+    ) AS "regconfig"
+  )
+  SELECT SETWEIGHT(TO_TSVECTOR("ts_config"."regconfig", COALESCE(NEW."title", '')), 'A') ||
+         SETWEIGHT(TO_TSVECTOR("ts_config"."regconfig", NEW."content"), 'B')
+  FROM "ts_config"
+);
+    SQL_ACTIONS
+  end
+
+  create_trigger("resources_before_update_of_title_content_row_tr", :generated => true, :compatibility => 1).
+      on("resources").
+      before(:update).
+      of(:title, :content) do
+    <<-SQL_ACTIONS
+NEW."tsvector" = (
+  WITH "ts_config" AS (
+    SELECT COALESCE(
+      (
+        SELECT "pg_ts_config"."cfgname"
+        FROM "pg_ts_config"
+          INNER JOIN "languages"
+            ON "pg_ts_config"."cfgname" = "languages"."name"
+        WHERE "languages"."id" = NEW."language_id"
+      )::regconfig, 'simple'
+    ) AS "regconfig"
+  )
+  SELECT SETWEIGHT(TO_TSVECTOR("ts_config"."regconfig", COALESCE(NEW."title", '')), 'A') ||
+         SETWEIGHT(TO_TSVECTOR("ts_config"."regconfig", NEW."content"), 'B')
+  FROM "ts_config"
+);
+    SQL_ACTIONS
+  end
+
 end

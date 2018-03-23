@@ -8,6 +8,5 @@ FactoryBot.define do
     uri     { Faker::Internet.url }
     type    'assessment'
     content { Faker::Lorem.words }
-    tsvector ''
   end
 end
