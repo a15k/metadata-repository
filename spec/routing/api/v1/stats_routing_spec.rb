@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'stats API routes', type: :routing do
+RSpec.describe 'stats API V1 routes', type: :routing do
   let(:resource_uuid) { SecureRandom.uuid }
   let(:metadata_uuid) { SecureRandom.uuid }
 

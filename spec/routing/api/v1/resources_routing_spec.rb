@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'resources API routes', type: :routing do
+RSpec.describe 'resources API V1 routes', type: :routing do
   let(:resource_uuid) { SecureRandom.uuid }
 
   context 'GET /api/resources/:uuid' do
