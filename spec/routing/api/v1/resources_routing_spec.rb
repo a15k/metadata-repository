@@ -6,7 +6,7 @@ RSpec.describe 'resources API V1 routes', type: :routing do
   context 'GET /api/resources/:uuid' do
     it 'routes to api/v1/resources#show.json with the given uuid' do
       expect(get: "/api/resources/#{resource_uuid}").to(
-        route_to(controller: 'api/v1/resources', action: 'show', format: :json, id: resource_uuid)
+        route_to(controller: 'api/v1/resources', action: 'show', format: :json, uuid: resource_uuid)
       )
     end
   end
@@ -22,7 +22,12 @@ RSpec.describe 'resources API V1 routes', type: :routing do
   context 'POST /api/resources/:uuid' do
     it 'routes to api/v1/resources#create.json' do
       expect(post: "/api/resources/#{resource_uuid}").to(
-        route_to(controller: 'api/v1/resources', action: 'create', format: :json, id: resource_uuid)
+        route_to(
+          controller: 'api/v1/resources',
+          action: 'create',
+          format: :json,
+          uuid: resource_uuid
+        )
       )
     end
   end
@@ -30,7 +35,12 @@ RSpec.describe 'resources API V1 routes', type: :routing do
   context 'PUT /api/resources/:uuid' do
     it 'routes to api/v1/resources#update.json' do
       expect(put: "/api/resources/#{resource_uuid}").to(
-        route_to(controller: 'api/v1/resources', action: 'update', format: :json, id: resource_uuid)
+        route_to(
+          controller: 'api/v1/resources',
+          action: 'update',
+          format: :json,
+          uuid: resource_uuid
+        )
       )
     end
   end
@@ -38,7 +48,12 @@ RSpec.describe 'resources API V1 routes', type: :routing do
   context 'PATCH /api/resources/:uuid' do
     it 'routes to api/v1/resources#update.json' do
       expect(patch: "/api/resources/#{resource_uuid}").to(
-        route_to(controller: 'api/v1/resources', action: 'update', format: :json, id: resource_uuid)
+        route_to(
+          controller: 'api/v1/resources',
+          action: 'update',
+          format: :json,
+          uuid: resource_uuid
+        )
       )
     end
   end

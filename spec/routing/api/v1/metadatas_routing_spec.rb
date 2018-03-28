@@ -11,7 +11,7 @@ RSpec.describe 'metadatas API V1 routes', type: :routing do
           controller: 'api/v1/metadatas',
           action: 'create',
           format: :json,
-          resource_id: resource_uuid
+          resource_uuid: resource_uuid
         )
       )
     end
@@ -24,8 +24,8 @@ RSpec.describe 'metadatas API V1 routes', type: :routing do
           controller: 'api/v1/metadatas',
           action: 'create',
           format: :json,
-          resource_id: resource_uuid,
-          id: metadata_uuid
+          resource_uuid: resource_uuid,
+          uuid: metadata_uuid
         )
       )
     end
@@ -38,8 +38,8 @@ RSpec.describe 'metadatas API V1 routes', type: :routing do
           controller: 'api/v1/metadatas',
           action: 'update',
           format: :json,
-          resource_id: resource_uuid,
-          id: metadata_uuid
+          resource_uuid: resource_uuid,
+          uuid: metadata_uuid
         )
       )
     end
@@ -52,8 +52,8 @@ RSpec.describe 'metadatas API V1 routes', type: :routing do
           controller: 'api/v1/metadatas',
           action: 'update',
           format: :json,
-          resource_id: resource_uuid,
-          id: metadata_uuid
+          resource_uuid: resource_uuid,
+          uuid: metadata_uuid
         )
       )
     end
@@ -66,8 +66,8 @@ RSpec.describe 'metadatas API V1 routes', type: :routing do
           controller: 'api/v1/metadatas',
           action: 'destroy',
           format: :json,
-          resource_id: resource_uuid,
-          id: metadata_uuid
+          resource_uuid: resource_uuid,
+          uuid: metadata_uuid
         )
       )
     end
