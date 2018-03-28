@@ -6,12 +6,12 @@ Rails.application.routes.draw do
       defaults: { format: :json },
       default: true
     ) do
-      resources :resources, only: [ :show, :create, :update ] do
-        resources :metadatas, only: [ :show, :create, :update ] do
+      resources :resources, except: [ :index ] do
+        resources :metadatas, except: [ :index ] do
           post :/, action: :create, on: :member
         end
 
-        resources :stats, only: [ :show, :create, :update ] do
+        resources :stats, except: [ :index ] do
           post :/, action: :create, on: :member
         end
 

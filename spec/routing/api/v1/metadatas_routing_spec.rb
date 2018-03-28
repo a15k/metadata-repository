@@ -58,4 +58,18 @@ RSpec.describe 'metadatas API V1 routes', type: :routing do
       )
     end
   end
+
+  context 'DELETE /api/resources/:resource_uuid/metadatas/:metadata_uuid' do
+    it 'routes to api/v1/metadatas#destroy.json' do
+      expect(delete: "/api/resources/#{resource_uuid}/metadatas/#{metadata_uuid}").to(
+        route_to(
+          controller: 'api/v1/metadatas',
+          action: 'destroy',
+          format: :json,
+          resource_id: resource_uuid,
+          id: metadata_uuid
+        )
+      )
+    end
+  end
 end
