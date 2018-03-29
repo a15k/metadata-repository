@@ -1,7 +1,10 @@
 module Api
   module V1
-    class ResourcesController < V1Controller
+    class ResourcesController < ApiController
       before_action :get_resource, except: :create
+
+      def index
+      end
 
       def show
       end

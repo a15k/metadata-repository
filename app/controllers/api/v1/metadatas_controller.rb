@@ -1,7 +1,10 @@
 module Api
   module V1
-    class MetadatasController < V1Controller
+    class MetadatasController < ApiController
       before_action :get_metadata, except: :create
+
+      def index
+      end
 
       def show
       end

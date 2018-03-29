@@ -3,6 +3,14 @@ require 'rails_helper'
 RSpec.describe 'resources API V1 routes', type: :routing do
   let(:resource_uuid) { SecureRandom.uuid }
 
+  context 'GET /api/resources' do
+    it 'routes to api/v1/resources#index.json' do
+      expect(get: "/api/resources").to(
+        route_to(controller: 'api/v1/resources', action: 'index', format: :json)
+      )
+    end
+  end
+
   context 'GET /api/resources/:uuid' do
     it 'routes to api/v1/resources#show.json with the given uuid' do
       expect(get: "/api/resources/#{resource_uuid}").to(
