@@ -1,7 +1,7 @@
 module Api
   module V1
     class MetadatasController < ApiController
-      before_action :get_metadata, except: :create
+      before_action :get_metadata, except: [ :index, :create ]
 
       def index
       end
@@ -21,7 +21,7 @@ module Api
       protected
 
       def get_metadata
-        @metadata = Metadata.find_by!(uuid: params[:uuid])
+        @metadata = Metadata.find_by!(application: current_application, uuid: uuid_param)
       end
     end
   end

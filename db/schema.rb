@@ -28,8 +28,10 @@ ActiveRecord::Schema.define(version: 20180323181805) do
   create_table "applications", force: :cascade do |t|
     t.uuid "uuid", null: false
     t.citext "name", null: false
+    t.string "token", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["token"], name: "index_applications_on_token", unique: true
     t.index ["uuid"], name: "index_applications_on_uuid", unique: true
   end
 

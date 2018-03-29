@@ -1,7 +1,7 @@
 module Api
   module V1
     class StatsController < ApiController
-      before_action :get_stats, except: :create
+      before_action :get_stats, except: [ :index, :create ]
 
       def index
       end
@@ -21,7 +21,7 @@ module Api
       protected
 
       def get_stats
-        @stats = Stats.find_by!(uuid: params[:uuid])
+        @stats = Stats.find_by!(application: current_application, uuid: uuid_param)
       end
     end
   end

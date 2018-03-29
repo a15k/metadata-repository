@@ -20,6 +20,9 @@ gem 'puma', '~> 3.7'
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 gem 'rack-cors'
 
+# respond_to controller class method
+gem 'responders'
+
 # HTTP Requests
 gem 'faraday'
 gem 'faraday_middleware'

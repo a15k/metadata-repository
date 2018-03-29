@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   namespace :api do
     api_version(
       module: 'V1',
-      header: { name: 'Accept', value: 'application/vnd.metadata.a15k.org; version=1' },
+      header: { name: 'Accept', value: "#{CONTENT_TYPE}; version=1" },
       defaults: { format: :json },
       default: true
     ) do
