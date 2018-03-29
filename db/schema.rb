@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(version: 20180323181805) do
 
   create_table "applications", force: :cascade do |t|
     t.uuid "uuid", null: false
+    t.citext "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["uuid"], name: "index_applications_on_uuid", unique: true
@@ -72,7 +73,7 @@ ActiveRecord::Schema.define(version: 20180323181805) do
     t.bigint "language_id"
     t.uuid "uuid", null: false
     t.string "uri", null: false
-    t.citext "type", null: false
+    t.citext "resource_type", null: false
     t.text "title"
     t.text "content", null: false
     t.tsvector "tsvector", null: false

@@ -4,9 +4,9 @@ FactoryBot.define do
     application_user
     format
     language
-    uuid    { SecureRandom.uuid }
-    uri     { Faker::Internet.url }
-    type    'assessment'
-    content { Faker::Lorem.words }
+    uuid          { SecureRandom.uuid }
+    uri           { Faker::Internet.url }
+    resource_type 'assessment'
+    content       { Faker::Lorem.words }
   end
 end

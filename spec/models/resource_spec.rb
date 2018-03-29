@@ -14,7 +14,7 @@ RSpec.describe Resource, type: :model, vcr: VCR_OPTS do
 
   it { is_expected.to validate_presence_of(:uuid) }
   it { is_expected.to validate_presence_of(:uri) }
-  it { is_expected.to validate_presence_of(:type) }
+  it { is_expected.to validate_presence_of(:resource_type) }
 
   it { is_expected.to validate_uniqueness_of(:uuid).scoped_to(:application_id).case_insensitive }
   it { is_expected.to validate_uniqueness_of(:uri).scoped_to(:application_id) }

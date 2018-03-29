@@ -6,4 +6,20 @@ class Stats < ApplicationRecord
 
   validates :uuid,  presence: true, uniqueness: { scope: :application_id }
   validates :value, presence: true
+
+  def application_uuid
+    application.uuid
+  end
+
+  def application_user_uuid
+    application_user.uuid
+  end
+
+  def resource_uuid
+    resource.uuid
+  end
+
+  def format_name
+    format.name
+  end
 end

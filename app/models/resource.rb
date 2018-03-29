@@ -1,6 +1,4 @@
 class Resource < ApplicationRecord
-  self.inheritance_column = nil
-
   TSVECTOR_UPDATE_SQL = <<-TSVECTOR_UPDATE_SQL.strip_heredoc
     NEW."tsvector" = (
       WITH "ts_config" AS (
@@ -33,10 +31,26 @@ class Resource < ApplicationRecord
 
   before_validation :set_content
 
-  validates :uuid, :uri,     presence: true, uniqueness: { scope: :application_id }
-  validates :type, :content, presence: true
+  validates :uuid, :uri,              presence: true, uniqueness: { scope: :application_id }
+  validates :resource_type, :content, presence: true
 
   def set_content
     self.content ||= FaradayWithRedirects.get uri
+  end
+
+  def application_uuid
+    application.uuid
+  end
+
+  def application_user_uuid
+    application_user.uuid
+  end
+
+  def format_name
+    format.name
+  end
+
+  def language_name
+    language.name
   end
 end
