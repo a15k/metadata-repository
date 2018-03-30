@@ -10,7 +10,7 @@ RSpec.describe Api::V1::MetadataSerializer, type: :serializer do
   it 'can serialize metadata attributes' do
     expect(data_hash[:id]).to eq metadata.uuid
     expect(data_hash[:type]).to eq :metadata
-    expect(data_hash[:attributes]).to eq metadata.attributes.symbolize_keys.slice(:uuid, :value)
+    expect(data_hash[:attributes]).to eq value: metadata.value
   end
 
   it 'can serialize metadata relationships' do

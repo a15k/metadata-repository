@@ -10,6 +10,6 @@ RSpec.describe Api::V1::ApplicationSerializer, type: :serializer do
   it 'can serialize application attributes' do
     expect(data_hash[:id]).to eq application.uuid
     expect(data_hash[:type]).to eq :application
-    expect(data_hash[:attributes]).to eq application.attributes.symbolize_keys.slice(:uuid, :name)
+    expect(data_hash[:attributes]).to eq name: application.name
   end
 end

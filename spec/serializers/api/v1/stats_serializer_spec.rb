@@ -10,7 +10,7 @@ RSpec.describe Api::V1::StatsSerializer, type: :serializer do
   it 'can serialize stats attributes' do
     expect(data_hash[:id]).to eq stats.uuid
     expect(data_hash[:type]).to eq :stats
-    expect(data_hash[:attributes]).to eq stats.attributes.symbolize_keys.slice(:uuid, :value)
+    expect(data_hash[:attributes]).to eq value: stats.value
   end
 
   it 'can serialize stats relationships' do

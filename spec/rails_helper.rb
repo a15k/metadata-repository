@@ -36,13 +36,40 @@ RSpec.configure do |config|
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
   # instead of true.
-  config.use_transactional_fixtures = true
+  config.use_transactional_fixtures = false
 
   # Filter lines from Rails gems in backtraces.
   config.filter_rails_from_backtrace!
 
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
+
+  # Use DatabaseCleaner instead of rspec transaction rollbacks
+  # http://tomdallimore.com/blog/taking-the-test-trash-out-with-databasecleaner-and-rspec/
+  config.prepend_before(:suite) do
+    DatabaseCleaner.clean_with(:truncation)
+  end
+
+  config.prepend_before(:all) do
+    metadata = self.class.metadata
+    DatabaseCleaner.strategy = metadata[:js] || metadata[:truncation] ? :truncation : :transaction
+    DatabaseCleaner.start
+  end
+
+  config.prepend_before(:each) do
+    DatabaseCleaner.start
+  end
+
+  # https://github.com/DatabaseCleaner/database_cleaner#rspec-with-capybara-example says:
+  #   "It's also recommended to use append_after to ensure DatabaseCleaner.clean
+  #    runs after the after-test cleanup capybara/rspec installs."
+  config.append_after(:each) do
+    DatabaseCleaner.clean
+  end
+
+  config.append_after(:all) do
+    DatabaseCleaner.clean
+  end
 end
 
 Shoulda::Matchers.configure do |config|

@@ -10,6 +10,6 @@ RSpec.describe Api::V1::LanguageSerializer, type: :serializer do
   it 'can serialize language attributes' do
     expect(data_hash[:id]).to eq language.name
     expect(data_hash[:type]).to eq :language
-    expect(data_hash[:attributes]).to eq name: language.name
+    expect(data_hash[:attributes]).to be_nil
   end
 end

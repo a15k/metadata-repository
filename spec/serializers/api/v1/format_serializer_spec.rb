@@ -10,6 +10,6 @@ RSpec.describe Api::V1::FormatSerializer, type: :serializer do
   it 'can serialize format attributes' do
     expect(data_hash[:id]).to eq format.name
     expect(data_hash[:type]).to eq :format
-    expect(data_hash[:attributes]).to eq name: format.name
+    expect(data_hash[:attributes]).to be_nil
   end
 end

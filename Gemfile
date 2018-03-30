@@ -64,6 +64,9 @@ group :development do
 end
 
 group :test do
+  # Test database cleanup
+  gem 'database_cleaner'
+
   # Test helpers
   gem 'shoulda-matchers'
 

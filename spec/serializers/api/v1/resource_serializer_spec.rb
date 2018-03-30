@@ -11,7 +11,7 @@ RSpec.describe Api::V1::ResourceSerializer, type: :serializer do
     expect(data_hash[:id]).to eq resource.uuid
     expect(data_hash[:type]).to eq :resource
     expect(data_hash[:attributes]).to eq(
-      resource.attributes.symbolize_keys.slice(:uuid, :uri, :resource_type, :title, :content)
+      resource.attributes.symbolize_keys.slice(:uri, :resource_type, :title, :content)
     )
   end
 

@@ -4,8 +4,6 @@ module Api
       include FastJsonapi::ObjectSerializer
 
       set_id :uuid
-
-      attributes :uuid
     end
   end
 end

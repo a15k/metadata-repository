@@ -10,6 +10,6 @@ RSpec.describe Api::V1::ApplicationUserSerializer, type: :serializer do
   it 'can serialize application_user attributes' do
     expect(data_hash[:id]).to eq application_user.uuid
     expect(data_hash[:type]).to eq :application_user
-    expect(data_hash[:attributes]).to eq uuid: application_user.uuid
+    expect(data_hash[:attributes]).to be_nil
   end
 end
