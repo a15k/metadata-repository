@@ -8,7 +8,7 @@ RSpec.describe Api::V1::MetadatasController, type: :controller do
   end
 
   include_examples 'json api controller errors',
-                   params_proc: -> { { resource_uuid: @resource.uuid } },
-                   api_token_proc: -> { @application.token }
+                   extra_params_proc: -> { { resource_uuid: @resource.uuid } },
+                   application_proc: -> { @application }
 
 end

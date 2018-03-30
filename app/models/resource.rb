@@ -43,7 +43,7 @@ class Resource < ApplicationRecord
   end
 
   def application_user_uuid
-    application_user.uuid
+    application_user&.uuid
   end
 
   def format_name
@@ -51,6 +51,6 @@ class Resource < ApplicationRecord
   end
 
   def language_name
-    language.name
+    language&.name
   end
 end

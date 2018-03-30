@@ -1,38 +1,41 @@
 require 'rails_helper'
 
-RSpec.shared_examples 'json api controller errors' do |collection_actions: nil,
-                                                       member_actions: nil,
-                                                       params_proc: nil,
-                                                       api_token_proc: nil|
-  collection_actions ||= [
-    [ :get , :index  ],
-    [ :post, :create ]
-  ]
-  member_actions ||= [
+RSpec.shared_examples 'json api controller errors' do |
+    extra_no_data_requests: [],
+    extra_data_requests: [],
+    extra_collection_actions: [],
+    extra_params_proc: -> { {} },
+    application_proc: -> { FactoryBot.create(:application) }
+  |
+  no_data_requests = [
+    [ :get   , :index   ],
     [ :get   , :show    ],
+    [ :delete, :destroy ]
+  ] + extra_no_data_requests
+  data_requests = [
     [ :post  , :create  ],
     [ :put   , :update  ],
-    [ :patch , :update  ],
-    [ :delete, :destroy ]
-  ]
-  actions = collection_actions + member_actions
-  params_proc ||= -> { {} }
-  api_token_proc ||= -> { FactoryBot.create(:application).token }
+    [ :patch , :update  ]
+  ] + extra_data_requests
+  collection_actions = [ :index ] + extra_collection_actions
+  requests = no_data_requests + data_requests
 
-  let(:uuid)      { SecureRandom.uuid }
-  let(:params)    { instance_exec &params_proc }
-  let(:api_token) { instance_exec &api_token_proc }
+  let(:uuid)         { SecureRandom.uuid }
+  let(:extra_params) { instance_exec &extra_params_proc }
+  let(:application)  { instance_exec &application_proc }
+  let(:api_token)    { application.token }
+  let(:error)        { response.errors.first }
 
   context 'without an API token' do
-    actions.each do |method, action|
+    requests.each do |method, action|
       context "#{method.upcase} ##{action}" do
-        let(:action_params) do
-          [ :index, :search ].include?(action) ? params : params.merge(uuid: uuid)
+        let(:params) do
+          collection_actions.include?(action) ? extra_params : extra_params.merge(uuid: uuid)
         end
-        before       { public_send method, action, params: action_params, format: :json }
-        let(:error)  { response.body_hash[:errors].first }
+        before       { public_send method, action, params: params, format: :json }
 
         it 'renders a JSON API 400 error' do
+          expect(response).to be_bad_request
           expect(error[:status]).to eq '400'
           expect(error[:code]).to eq 'missing_api_token'
           expect(error[:title]).to eq 'Missing API Token'
@@ -45,22 +48,25 @@ RSpec.shared_examples 'json api controller errors' do |collection_actions: nil,
   end
 
   context 'with an invalid API token' do
-    before { request.headers[described_class::API_TOKEN_HEADER] = SecureRandom.hex(32) }
+    let(:api_token) { SecureRandom.hex(32) }
+    before { request.headers[described_class::API_TOKEN_HEADER] = api_token }
 
-    actions.each do |method, action|
+    requests.each do |method, action|
       context "#{method.upcase} ##{action}" do
-        let(:action_params) do
-          [ :index, :search ].include?(action) ? params : params.merge(uuid: uuid)
+        let(:params) do
+          collection_actions.include?(action) ? extra_params : extra_params.merge(uuid: uuid)
         end
-        before       { public_send method, action, params: action_params, format: :json }
+        before       { public_send method, action, params: params, format: :json }
         let(:error)  { response.body_hash[:errors].first }
 
         it 'returns a JSON API 403 error' do
+          expect(response).to be_forbidden
           expect(error[:status]).to eq '403'
           expect(error[:code]).to eq 'invalid_api_token'
           expect(error[:title]).to eq 'Invalid API Token'
           expect(error[:detail]).to eq(
-            "The API token provided in the #{described_class::API_TOKEN_HEADER} header is invalid."
+            "The API token provided in the #{described_class::API_TOKEN_HEADER
+            } header (#{api_token}) is invalid."
           )
         end
       end
@@ -71,15 +77,13 @@ RSpec.shared_examples 'json api controller errors' do |collection_actions: nil,
     before { request.headers[described_class::API_TOKEN_HEADER] = api_token }
 
     context 'with no data member' do
-      member_actions.each do |method, action|
+      data_requests.each do |method, action|
         context "#{method.upcase} ##{action}" do
-          let(:action_params) do
-            [ :index, :search ].include?(action) ? params : params.merge(uuid: uuid)
-          end
-          before       { public_send method, action, params: action_params, format: :json }
-          let(:error)  { response.body_hash[:errors].first }
+          let(:params) { extra_params.merge(uuid: uuid) }
+          before       { public_send method, action, params: params, format: :json }
 
           it 'returns a JSON API 400 error' do
+            expect(response).to be_bad_request
             expect(error[:status]).to eq '400'
             expect(error[:code]).to eq 'missing_data'
             expect(error[:title]).to eq 'Missing Data'
@@ -91,14 +95,14 @@ RSpec.shared_examples 'json api controller errors' do |collection_actions: nil,
 
     context 'with a data member' do
       context 'with no type member' do
-        let(:action_params) { params.merge(uuid: uuid, data: { attributes: { test: true } }) }
+        let(:params) { extra_params.merge(uuid: uuid, data: { attributes: { test: true } }) }
 
-        member_actions.each do |method, action|
+        data_requests.each do |method, action|
           context "#{method.upcase} ##{action}" do
-            before      { public_send method, action, params: action_params, format: :json }
-            let(:error) { response.body_hash[:errors].first }
+            before      { public_send method, action, params: params, format: :json }
 
             it 'returns a JSON API 400 error' do
+              expect(response).to be_bad_request
               expect(error[:status]).to eq '400'
               expect(error[:code]).to eq 'missing_type'
               expect(error[:title]).to eq 'Missing Type'
@@ -108,38 +112,41 @@ RSpec.shared_examples 'json api controller errors' do |collection_actions: nil,
         end
       end
 
-      context 'with an invalid type member' do
-        let(:action_params) { params.merge(uuid: uuid, data: { type: 'object' }) }
+      context 'with an invalid type' do
+        let(:type)   { 'object' }
+        let(:params) { extra_params.merge(uuid: uuid, data: { type: type }) }
 
-        member_actions.each do |method, action|
+        data_requests.each do |method, action|
           context "#{method.upcase} ##{action}" do
-            before      { public_send method, action, params: action_params, format: :json }
+            before      { public_send method, action, params: params, format: :json }
             let(:error) { response.body_hash[:errors].first }
 
             it 'returns a JSON API 409 error' do
+              expect(response.status).to eq 409
               expect(error[:status]).to eq '409'
               expect(error[:code]).to eq 'invalid_type'
               expect(error[:title]).to eq 'Invalid Type'
               expect(error[:detail]).to eq(
-                'The type provided is not supported by this API endpoint.'
+                "The type provided (#{type}) is not the one supported by this API endpoint (#{
+                controller.class.valid_type})."
               )
             end
           end
         end
       end
 
-      context 'with a valid type member' do
-        context 'with no id member' do
-          let(:action_params) do
-            params.merge(uuid: uuid, data: { type: described_class.valid_type })
-          end
+      context 'with a valid type' do
+        let(:type)   { described_class.valid_type }
 
-          member_actions.each do |method, action|
+        context 'with no id member' do
+          let(:params) { extra_params.merge(uuid: uuid, data: { type: type }) }
+
+          data_requests.reject { |method, action| action == :create }.each do |method, action|
             context "#{method.upcase} ##{action}" do
-              before      { public_send method, action, params: action_params, format: :json }
-              let(:error) { response.body_hash[:errors].first }
+              before      { public_send method, action, params: params, format: :json }
 
               it 'returns a JSON API 400 error' do
+                expect(response).to be_bad_request
                 expect(error[:status]).to eq '400'
                 expect(error[:code]).to eq 'missing_id'
                 expect(error[:title]).to eq 'Missing Id'
@@ -150,44 +157,182 @@ RSpec.shared_examples 'json api controller errors' do |collection_actions: nil,
         end
 
         context 'with an id that does not match the url uuid' do
-          let(:action_params) do
-            params.merge(
-              uuid: uuid, data: { type: described_class.valid_type, id: SecureRandom.uuid }
-            )
+          let(:id)     { SecureRandom.uuid }
+          let(:params) do
+            extra_params.merge uuid: uuid, data: { type: type, id: id }
           end
 
-          member_actions.each do |method, action|
+          data_requests.each do |method, action|
             context "#{method.upcase} ##{action}" do
-              before      { public_send method, action, params: action_params, format: :json }
-              let(:error) { response.body_hash[:errors].first }
+              before      { public_send method, action, params: params, format: :json }
 
               it 'returns a JSON API 409 error' do
+                expect(response.status).to eq 409
                 expect(error[:status]).to eq '409'
                 expect(error[:code]).to eq 'invalid_id'
                 expect(error[:title]).to eq 'Invalid Id'
-                expect(error[:detail]).to eq 'The id provided did not match the API endpoint URL.'
+                expect(error[:detail]).to eq(
+                  "The id provided (#{id}) did not match the id in the API endpoint URL (#{uuid})."
+                )
               end
             end
           end
         end
 
         context 'with an id that does not exist' do
-          let(:action_params) do
-            params.merge uuid: uuid, data: { type: described_class.valid_type, id: uuid }
-          end
+          let(:params) { extra_params.merge uuid: uuid, data: { type: type, id: uuid } }
 
-          member_actions.reject { |method, action| action == :create }.each do |method, action|
+          data_requests.reject { |method, action| action == :create }.each do |method, action|
             context "#{method.upcase} ##{action}" do
-              before      { public_send method, action, params: action_params, format: :json }
-              let(:error) { response.body_hash[:errors].first }
+              before      { public_send method, action, params: params, format: :json }
 
               it 'returns a JSON API 404 error' do
+                expect(response).to be_not_found
                 expect(error[:status]).to eq '404'
                 expect(error[:code]).to eq 'not_found'
                 expect(error[:title]).to eq 'Not Found'
-                expect(error[:detail]).to eq(
-                  'An object matching the type and id provided could not be found.'
-                )
+                expect(error[:detail]).to eq "Couldn't find #{type.humanize}"
+              end
+            end
+          end
+        end
+
+        context 'with a valid id' do
+          let(:id)     { FactoryBot.create(type).uuid }
+
+          context 'with a relationship' do
+            context 'with no data member' do
+              let(:params) do
+                extra_params.merge uuid: id, data: {
+                  type: type,
+                  id: id,
+                  relationships: { application: { test: true } }
+                }
+              end
+
+              data_requests.each do |method, action|
+                context "#{method.upcase} ##{action}" do
+                  before { public_send method, action, params: params, format: :json }
+
+                  it 'returns a JSON API 400 error' do
+                    expect(response).to be_bad_request
+                    expect(error[:status]).to eq '400'
+                    expect(error[:code]).to eq 'missing_data'
+                    expect(error[:title]).to eq 'Missing Data'
+                    expect(error[:detail]).to eq 'The data member is required by this API endpoint.'
+                  end
+                end
+              end
+            end
+
+            context 'with a data member' do
+              context 'with no type member' do
+                let(:params) do
+                  extra_params.merge uuid: id, data: {
+                    type: type,
+                    id: id,
+                    relationships: { application: { data: { test: true } } }
+                  }
+                end
+
+                data_requests.each do |method, action|
+                  context "#{method.upcase} ##{action}" do
+                    before { public_send method, action, params: params, format: :json }
+
+                    it 'returns a JSON API 400 error' do
+                      expect(response).to be_bad_request
+                      expect(error[:status]).to eq '400'
+                      expect(error[:code]).to eq 'missing_type'
+                      expect(error[:title]).to eq 'Missing Type'
+                      expect(error[:detail]).to eq(
+                        'The type member is required by this API endpoint.'
+                      )
+                    end
+                  end
+                end
+              end
+
+              context 'with an invalid type' do
+                let(:params) do
+                  extra_params.merge uuid: id, data: {
+                    type: type,
+                    id: id,
+                    relationships: { application: { data: { type: 'resource' } } }
+                  }
+                end
+
+                data_requests.each do |method, action|
+                  context "#{method.upcase} ##{action}" do
+                    before { public_send method, action, params: params, format: :json }
+
+                    it 'returns a JSON API 409 error' do
+                      expect(response.status).to eq 409
+                      expect(error[:status]).to eq '409'
+                      expect(error[:code]).to eq 'invalid_application_type'
+                      expect(error[:title]).to eq 'Invalid Application Type'
+                      expect(error[:detail]).to eq(
+                        'The type provided for the application object (resource) is invalid.'
+                      )
+                    end
+                  end
+                end
+              end
+
+              context 'with a valid type' do
+                context 'with no id member' do
+                  let(:params) do
+                    extra_params.merge uuid: id, data: {
+                      type: type,
+                      id: id,
+                      relationships: { application: { data: { type: 'application' } } }
+                    }
+                  end
+
+                  data_requests.each do |method, action|
+                    context "#{method.upcase} ##{action}" do
+                      before { public_send method, action, params: params, format: :json }
+
+                      it 'returns a JSON API 400 error' do
+                        expect(response).to be_bad_request
+                        expect(error[:status]).to eq '400'
+                        expect(error[:code]).to eq 'missing_id'
+                        expect(error[:title]).to eq 'Missing Id'
+                        expect(error[:detail]).to eq(
+                          'The id member is required by this API endpoint.'
+                        )
+                      end
+                    end
+                  end
+                end
+              end
+            end
+          end
+
+          context 'with an application relationship with a data member' +
+                  ' with a valid type with a forbidden id' do
+            let(:params) do
+              extra_params.merge uuid: id, data: {
+                type: type,
+                id: id,
+                relationships: {
+                  application: { data: { type: 'application', id: SecureRandom.uuid } }
+                }
+              }
+            end
+
+            data_requests.each do |method, action|
+              context "#{method.upcase} ##{action}" do
+                before { public_send method, action, params: params, format: :json }
+
+                it 'returns a JSON API 403 error' do
+                  expect(response).to be_forbidden
+                  expect(error[:status]).to eq '403'
+                  expect(error[:code]).to eq 'forbidden_application_id'
+                  expect(error[:title]).to eq 'Forbidden Application Id'
+                  expect(error[:detail]).to eq(
+                    "You are only allowed to provide your own application id (#{application.uuid})."
+                  )
+                end
               end
             end
           end

@@ -5,29 +5,18 @@ module Api
     API_TOKEN_HEADER = 'Metadata-Api-Token'
 
     before_action :require_api_token!, :validate_api_token!
-    before_action :validate_type!, :validate_id!, only: [ :show, :create, :update, :destroy ]
+    before_action :validate_type!, :validate_id!, :validate_relationships!,
+                  only: [ :create, :update, :destroy ]
 
     rescue_from ActionController::ParameterMissing, with: :render_parameter_missing_error
-    rescue_from ActiveRecord::RecordNotFound, with: :render_not_found_error
+    rescue_from ActiveRecord::RecordNotFound,       with: :render_not_found_error
+    rescue_from ActiveRecord::RecordInvalid,        with: :render_validation_errors
 
     def self.valid_type
       name.split('::').last.chomp('Controller').underscore.singularize
     end
 
     protected
-
-    def render_not_found_error
-      render status: :not_found, content_type: CONTENT_TYPE, json: {
-        errors: [
-          {
-            status: '404',
-            code: 'not_found',
-            title: 'Not Found',
-            detail: 'An object matching the type and id provided could not be found.'
-          }
-        ]
-      }
-    end
 
     def render_parameter_missing_error(exception)
       param = exception.param
@@ -44,6 +33,30 @@ module Api
       }
     end
 
+    def render_not_found_error(exception)
+      render status: :not_found, content_type: CONTENT_TYPE, json: {
+        errors: [
+          {
+            status: '404',
+            code: 'not_found',
+            title: 'Not Found',
+            detail: exception.message
+          }
+        ]
+      }
+    end
+
+    def render_validation_errors(exception)
+      code = exception.class.name.demodulize.underscore
+      title = "#{exception.record.class.name.humanize} Invalid"
+
+      render status: :unprocessable_entity, content_type: CONTENT_TYPE, json: {
+        errors: exception.record.errors.full_messages.map do |message|
+          { status: '422', code: code, title: title, detail: message }
+        end
+      }
+    end
+
     def api_token
       request.headers[API_TOKEN_HEADER]
     end
@@ -57,7 +70,8 @@ module Api
     end
 
     def id_param
-      params.require(:data).require(:id)
+      data = params.require(:data)
+      action_name == 'create' ? data.permit(:id)[:id] : data.require(:id)
     end
 
     def type_param
@@ -66,14 +80,6 @@ module Api
 
     def attributes
       params.require(:attributes)
-    end
-
-    def valid_id?
-      id_param == uuid_param
-    end
-
-    def valid_type?
-      type_param == self.class.valid_type
     end
 
     def require_api_token!
@@ -96,23 +102,11 @@ module Api
             status: '403',
             code: 'invalid_api_token',
             title: 'Invalid API Token',
-            detail: "The API token provided in the #{API_TOKEN_HEADER} header is invalid."
+            detail: "The API token provided in the #{API_TOKEN_HEADER
+                    } header (#{api_token}) is invalid."
           }
         ]
       } if current_application.nil?
-    end
-
-    def validate_id!
-      render status: :conflict, content_type: CONTENT_TYPE, json: {
-        errors: [
-          {
-            status: '409',
-            code: 'invalid_id',
-            title: 'Invalid Id',
-            detail: 'The id provided did not match the API endpoint URL.'
-          }
-        ]
-      } unless valid_id?
     end
 
     def validate_type!
@@ -122,18 +116,85 @@ module Api
             status: '409',
             code: 'invalid_type',
             title: 'Invalid Type',
-            detail: 'The type provided is not supported by this API endpoint.'
+            detail: "The type provided (#{type_param
+                    }) is not the one supported by this API endpoint (#{self.class.valid_type})."
           }
         ]
-      } unless valid_type?
+      } unless type_param == self.class.valid_type
+    end
+
+    def validate_id!
+      render status: :conflict, content_type: CONTENT_TYPE, json: {
+        errors: [
+          {
+            status: '409',
+            code: 'invalid_id',
+            title: 'Invalid Id',
+            detail: "The id provided (#{id_param
+                    }) did not match the id in the API endpoint URL (#{uuid_param})."
+          }
+        ]
+      } unless id_param == uuid_param
+    end
+
+    def validate_relationships!
+      return if json_api_data[:relationships].nil?
+
+      json_api_data[:relationships].each do |rel, val|
+        data = val.require(:data)
+
+        type = data.require(:type)
+        render(status: :conflict, content_type: CONTENT_TYPE, json: {
+          errors: [
+            {
+              status: '409',
+              code: "invalid_#{rel}_type",
+              title: "Invalid #{rel.humanize} Type",
+              detail: "The type provided for the #{rel} object (#{type}) is invalid."
+            }
+          ]
+        }) && return unless type == rel
+
+        id = data.require :id
+        render(status: :forbidden, content_type: CONTENT_TYPE, json: {
+          errors: [
+            {
+              status: '403',
+              code: 'forbidden_application_id',
+              title: "Forbidden Application Id",
+              detail: "You are only allowed to provide your own application id (#{
+                      current_application.uuid})."
+            }
+          ]
+        }) && return if rel == 'application' && id != current_application.uuid
+      end
+    end
+
+    def json_api_data
+      params.require(:data).tap do |data|
+        data.require :type
+        data.require(:id) unless action_name == 'create'
+      end
     end
 
     def json_api_attributes
-      data = params.require :data
-      data.require :type
-      data.require :id
+      json_api_data.require(:attributes).tap do |attributes|
+        attributes[:uuid] = attributes.delete(:id) { SecureRandom.uuid }
+      end
+    end
 
-      data.require :attributes
+    def json_api_relationships
+      ActionController::Parameters.new(
+        {}.tap do |relationships|
+          json_api_data.require(:relationships).each do |rel, val|
+            relationships["#{rel}_id".to_sym] = val.require(:data).require(:id)
+          end
+        end
+      )
+    end
+
+    def json_api_params
+      json_api_attributes.merge json_api_relationships.to_unsafe_hash
     end
   end
 end

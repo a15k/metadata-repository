@@ -12,7 +12,7 @@ class Metadata < ApplicationRecord
   end
 
   def application_user_uuid
-    application_user.uuid
+    application_user&.uuid
   end
 
   def resource_uuid
