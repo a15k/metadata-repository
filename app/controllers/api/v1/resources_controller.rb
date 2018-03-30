@@ -1,30 +1,30 @@
 module Api
   module V1
     class ResourcesController < JsonApiController
-      before_action :get_resource, except: [ :index, :create, :search ]
-
       def index
         render_resource resources: current_application.resources
       end
 
       def show
+        get_resource
+
         render_resource
       end
 
       def create
-        @resource = Resource.create! create_or_update_params.merge(application: current_application)
+        @resource = Resource.create! resource_create_params
 
         render_resource
       end
 
       def update
-        @resource.update_attributes! create_or_update_params
+        get_resource.update_attributes! resource_update_params
 
         render_resource
       end
 
       def destroy
-        @resource.destroy!
+        get_resource.destroy!
 
         render_resource
       end
@@ -35,11 +35,11 @@ module Api
       protected
 
       def get_resource
-        @resource = Resource.find_by!(application: current_application, uuid: uuid_param)
+        @resource ||= Resource.find_by!(application: current_application, uuid: uuid_param)
       end
 
-      def resource_params
-        @resource_params ||= json_api_attributes.permit(
+      def resource_attribute_params
+        @resource_attribute_params ||= json_api_attributes.permit(
           :uuid,
           :uri,
           :resource_type,
@@ -49,15 +49,15 @@ module Api
       end
 
       def resource_relationship_params
-        @relationship_params ||= json_api_relationships.permit(
+        @resource_relationship_params ||= json_api_relationships.permit(
           :application_user_id,
           :format_id,
           :language_id
         )
       end
 
-      def create_or_update_params
-        @create_or_update_params ||= resource_params.dup.tap do |hash|
+      def resource_update_params
+        @resource_update_params ||= resource_attribute_params.except(:uuid).tap do |hash|
           hash[:application_user] = current_application.application_users.find_by(
             uuid: resource_relationship_params[:application_user_id]
           ) if resource_relationship_params.has_key? :application_user_id
@@ -70,7 +70,14 @@ module Api
         end
       end
 
-      def render_resource(resources: @resource)
+      def resource_create_params
+        @resource_create_params ||= resource_update_params.merge(
+          application: current_application,
+          uuid: resource_attribute_params[:uuid]
+        )
+      end
+
+      def render_resource(resources: get_resource)
         render json: ResourceSerializer.new(resources).serializable_hash
       end
     end
