@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :resource do
-    application
     application_user
+    application   { application_user.application }
     format
     language
     uuid          { SecureRandom.uuid }

@@ -47,12 +47,20 @@ module Api
     end
 
     def render_validation_errors(exception)
-      code = exception.class.name.demodulize.underscore
       title = "#{exception.record.class.name.humanize} Invalid"
+      statuses = exception.record.errors.details.map do |attribute, errors|
+        errors.any? { |error| error[:error] == :taken } ? '409' : '422'
+      end
+      status = statuses.any? { |status| status == '409' } ? :conflict : :unprocessable_entity
 
-      render status: :unprocessable_entity, content_type: CONTENT_TYPE, json: {
-        errors: exception.record.errors.full_messages.map do |message|
-          { status: '422', code: code, title: title, detail: message }
+      render status: status, content_type: CONTENT_TYPE, json: {
+        errors: exception.record.errors.full_messages.each_with_index.map do |message, index|
+          {
+            status: statuses[index],
+            code: message.downcase.gsub(/[^a-z0-9-]+/, '_'),
+            title: title,
+            detail: "#{message}."
+          }
         end
       }
     end
@@ -178,8 +186,10 @@ module Api
     end
 
     def json_api_attributes
-      json_api_data.require(:attributes).tap do |attributes|
-        attributes[:uuid] = attributes.delete(:id) { SecureRandom.uuid }
+      data = json_api_data
+
+      data.require(:attributes).tap do |attributes|
+        attributes[:uuid] = data.fetch(:id) { SecureRandom.uuid }
       end
     end
 

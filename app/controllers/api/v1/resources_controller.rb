@@ -12,7 +12,6 @@ module Api
       end
 
       def create
-        uuid = resource_params.fetch(:id) { SecureRandom.uuid }
         application_user = current_application.application_users.find_by(
           uuid: resource_relationship_params[:application_user_id]
         )
