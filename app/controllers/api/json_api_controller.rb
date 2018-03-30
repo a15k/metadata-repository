@@ -6,7 +6,7 @@ module Api
 
     before_action :require_api_token!, :validate_api_token!
     before_action :validate_type!, :validate_id!, :validate_relationships!,
-                  only: [ :create, :update, :destroy ]
+                  only: [ :create, :update ]
 
     rescue_from ActionController::ParameterMissing, with: :render_parameter_missing_error
     rescue_from ActiveRecord::RecordNotFound,       with: :render_not_found_error
@@ -149,6 +149,8 @@ module Api
       return if json_api_data[:relationships].nil?
 
       json_api_data[:relationships].each do |rel, val|
+        next if val.nil? || val.has_key?(:data) && val[:data].nil?
+
         data = val.require(:data)
 
         type = data.require(:type)
@@ -158,7 +160,7 @@ module Api
               status: '409',
               code: "invalid_#{rel}_type",
               title: "Invalid #{rel.humanize} Type",
-              detail: "The type provided for the #{rel} object (#{type}) is invalid."
+              detail: "The type provided for the #{rel} relationship (#{type}) is invalid."
             }
           ]
         }) && return unless type == rel
@@ -197,7 +199,7 @@ module Api
       ActionController::Parameters.new(
         {}.tap do |relationships|
           json_api_data.require(:relationships).each do |rel, val|
-            relationships["#{rel}_id".to_sym] = val.require(:data).require(:id)
+            relationships["#{rel}_id".to_sym] = val.nil? ? nil : val.dig(:data, :id)
           end
         end
       )

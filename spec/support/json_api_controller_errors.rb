@@ -28,12 +28,12 @@ RSpec.shared_examples 'json api controller errors' do |
   let(:error)         { response.errors.first }
 
   context 'without an API token' do
-    requests.each do |method, action|
-      context "#{method.upcase} ##{action}" do
+    requests.each do |verb, action|
+      context "#{verb.upcase} ##{action}" do
         let(:params)          do
           collection_actions.include?(action) ? extra_params : extra_params.merge(uuid: uuid)
         end
-        let(:perform_request) { public_send method, action, params: params, as: :json }
+        let(:perform_request) { public_send verb, action, params: params, as: :json }
 
         it 'renders a JSON API 400 error' do
           expect { perform_request }.not_to change { klass.count }
@@ -54,12 +54,12 @@ RSpec.shared_examples 'json api controller errors' do |
     let(:api_token) { SecureRandom.hex(32) }
     before { request.headers[described_class::API_TOKEN_HEADER] = api_token }
 
-    requests.each do |method, action|
-      context "#{method.upcase} ##{action}" do
+    requests.each do |verb, action|
+      context "#{verb.upcase} ##{action}" do
         let(:params) do
           collection_actions.include?(action) ? extra_params : extra_params.merge(uuid: uuid)
         end
-        let(:perform_request) { public_send method, action, params: params, as: :json }
+        let(:perform_request) { public_send verb, action, params: params, as: :json }
         let(:error)  { response.body_hash[:errors].first }
 
         it 'returns a JSON API 403 error' do
@@ -82,10 +82,10 @@ RSpec.shared_examples 'json api controller errors' do |
     before { request.headers[described_class::API_TOKEN_HEADER] = api_token }
 
     context 'with no data member' do
-      data_requests.each do |method, action|
-        context "#{method.upcase} ##{action}" do
+      data_requests.each do |verb, action|
+        context "#{verb.upcase} ##{action}" do
           let(:params) { extra_params.merge(uuid: uuid) }
-          let(:perform_request) { public_send method, action, params: params, as: :json }
+          let(:perform_request) { public_send verb, action, params: params, as: :json }
 
           it 'returns a JSON API 400 error' do
             expect { perform_request }.not_to change { klass.count }
@@ -104,9 +104,9 @@ RSpec.shared_examples 'json api controller errors' do |
       context 'with no type member' do
         let(:params) { extra_params.merge(uuid: uuid, data: { attributes: { test: true } }) }
 
-        data_requests.each do |method, action|
-          context "#{method.upcase} ##{action}" do
-            let(:perform_request) { public_send method, action, params: params, as: :json }
+        data_requests.each do |verb, action|
+          context "#{verb.upcase} ##{action}" do
+            let(:perform_request) { public_send verb, action, params: params, as: :json }
 
             it 'returns a JSON API 400 error' do
               expect { perform_request }.not_to change { klass.count }
@@ -125,9 +125,9 @@ RSpec.shared_examples 'json api controller errors' do |
         let(:type)   { 'object' }
         let(:params) { extra_params.merge(uuid: uuid, data: { type: type }) }
 
-        data_requests.each do |method, action|
-          context "#{method.upcase} ##{action}" do
-            let(:perform_request) { public_send method, action, params: params, as: :json }
+        data_requests.each do |verb, action|
+          context "#{verb.upcase} ##{action}" do
+            let(:perform_request) { public_send verb, action, params: params, as: :json }
             let(:error) { response.body_hash[:errors].first }
 
             it 'returns a JSON API 409 error' do
@@ -152,9 +152,9 @@ RSpec.shared_examples 'json api controller errors' do |
         context 'with no id member' do
           let(:params) { extra_params.merge(uuid: uuid, data: { type: type }) }
 
-          data_requests.reject { |method, action| action == :create }.each do |method, action|
-            context "#{method.upcase} ##{action}" do
-              let(:perform_request) { public_send method, action, params: params, as: :json }
+          data_requests.reject { |_, action| action == :create }.each do |verb, action|
+            context "#{verb.upcase} ##{action}" do
+              let(:perform_request) { public_send verb, action, params: params, as: :json }
 
               it 'returns a JSON API 400 error' do
                 expect { perform_request }.not_to change { klass.count }
@@ -175,9 +175,9 @@ RSpec.shared_examples 'json api controller errors' do |
             extra_params.merge uuid: uuid, data: { type: type, id: id }
           end
 
-          data_requests.each do |method, action|
-            context "#{method.upcase} ##{action}" do
-              let(:perform_request) { public_send method, action, params: params, as: :json }
+          data_requests.each do |verb, action|
+            context "#{verb.upcase} ##{action}" do
+              let(:perform_request) { public_send verb, action, params: params, as: :json }
 
               it 'returns a JSON API 409 error' do
                 expect { perform_request }.not_to change { klass.count }
@@ -197,9 +197,9 @@ RSpec.shared_examples 'json api controller errors' do |
         context 'with an id that does not exist' do
           let(:params) { extra_params.merge uuid: uuid, data: { type: type, id: uuid } }
 
-          data_requests.reject { |method, action| action == :create }.each do |method, action|
-            context "#{method.upcase} ##{action}" do
-              let(:perform_request) { public_send method, action, params: params, as: :json }
+          data_requests.reject { |_, action| action == :create }.each do |verb, action|
+            context "#{verb.upcase} ##{action}" do
+              let(:perform_request) { public_send verb, action, params: params, as: :json }
 
               it 'returns a JSON API 404 error' do
                 expect { perform_request }.not_to change { klass.count }
@@ -214,8 +214,32 @@ RSpec.shared_examples 'json api controller errors' do |
           end
         end
 
+        context 'with an id that was created by a different application' do
+          let(:model)  { FactoryBot.create type }
+          let!(:id)    { model.uuid }
+          let(:params) { extra_params.merge uuid: id, data: { type: type, id: id } }
+
+          data_requests.reject { |_, action| action == :create }.each do |verb, action|
+            context "#{verb.upcase} ##{action}" do
+              let(:perform_request) { public_send verb, action, params: params, as: :json }
+
+              it 'returns a JSON API 404 error' do
+                expect { perform_request }.to  not_change { klass.count }
+                                          .and not_change { model.reload.attributes }
+
+                expect(response).to be_not_found
+                expect(error[:status]).to eq '404'
+                expect(error[:code]).to eq 'not_found'
+                expect(error[:title]).to eq 'Not Found'
+                expect(error[:detail]).to eq "Couldn't find #{type.humanize}"
+              end
+            end
+          end
+        end
+
         context 'with a valid id' do
-          let!(:id)     { FactoryBot.create(type).uuid }
+          let(:model) { FactoryBot.create type, application: application }
+          let!(:id)   { model.uuid }
 
           context 'with a relationship' do
             context 'with no data member' do
@@ -227,12 +251,13 @@ RSpec.shared_examples 'json api controller errors' do |
                 }
               end
 
-              data_requests.each do |method, action|
-                context "#{method.upcase} ##{action}" do
-                  let(:perform_request) { public_send method, action, params: params, as: :json }
+              data_requests.each do |verb, action|
+                context "#{verb.upcase} ##{action}" do
+                  let(:perform_request) { public_send verb, action, params: params, as: :json }
 
                   it 'returns a JSON API 400 error' do
-                    expect { perform_request }.not_to change { klass.count }
+                    expect { perform_request }.to  not_change { klass.count }
+                                              .and not_change { model.reload.attributes }
 
                     expect(response).to be_bad_request
                     expect(error[:status]).to eq '400'
@@ -254,12 +279,13 @@ RSpec.shared_examples 'json api controller errors' do |
                   }
                 end
 
-                data_requests.each do |method, action|
-                  context "#{method.upcase} ##{action}" do
-                    let(:perform_request) { public_send method, action, params: params, as: :json }
+                data_requests.each do |verb, action|
+                  context "#{verb.upcase} ##{action}" do
+                    let(:perform_request) { public_send verb, action, params: params, as: :json }
 
                     it 'returns a JSON API 400 error' do
-                      expect { perform_request }.not_to change { klass.count }
+                      expect { perform_request }.to  not_change { klass.count }
+                                                .and not_change { model.reload.attributes }
 
                       expect(response).to be_bad_request
                       expect(error[:status]).to eq '400'
@@ -282,19 +308,20 @@ RSpec.shared_examples 'json api controller errors' do |
                   }
                 end
 
-                data_requests.each do |method, action|
-                  context "#{method.upcase} ##{action}" do
-                    let(:perform_request) { public_send method, action, params: params, as: :json }
+                data_requests.each do |verb, action|
+                  context "#{verb.upcase} ##{action}" do
+                    let(:perform_request) { public_send verb, action, params: params, as: :json }
 
                     it 'returns a JSON API 409 error' do
-                      expect { perform_request }.not_to change { klass.count }
+                      expect { perform_request }.to  not_change { klass.count }
+                                                .and not_change { model.reload.attributes }
 
                       expect(response.status).to eq 409
                       expect(error[:status]).to eq '409'
                       expect(error[:code]).to eq 'invalid_application_type'
                       expect(error[:title]).to eq 'Invalid Application Type'
                       expect(error[:detail]).to eq(
-                        'The type provided for the application object (resource) is invalid.'
+                        'The type provided for the application relationship (resource) is invalid.'
                       )
                     end
                   end
@@ -311,14 +338,15 @@ RSpec.shared_examples 'json api controller errors' do |
                     }
                   end
 
-                  data_requests.each do |method, action|
-                    context "#{method.upcase} ##{action}" do
+                  data_requests.each do |verb, action|
+                    context "#{verb.upcase} ##{action}" do
                       let(:perform_request) do
-                        public_send method, action, params: params, as: :json
+                        public_send verb, action, params: params, as: :json
                       end
 
                       it 'returns a JSON API 400 error' do
-                        expect { perform_request }.not_to change { klass.count }
+                        expect { perform_request }.to  not_change { klass.count }
+                                                  .and not_change { model.reload.attributes }
 
                         expect(response).to be_bad_request
                         expect(error[:status]).to eq '400'
@@ -347,12 +375,13 @@ RSpec.shared_examples 'json api controller errors' do |
               }
             end
 
-            data_requests.each do |method, action|
-              context "#{method.upcase} ##{action}" do
-                let(:perform_request) { public_send method, action, params: params, as: :json }
+            data_requests.each do |verb, action|
+              context "#{verb.upcase} ##{action}" do
+                let(:perform_request) { public_send verb, action, params: params, as: :json }
 
                 it 'returns a JSON API 403 error' do
-                  expect { perform_request }.not_to change { klass.count }
+                  expect { perform_request }.to  not_change { klass.count }
+                                            .and not_change { model.reload.attributes }
 
                   expect(response).to be_forbidden
                   expect(error[:status]).to eq '403'
