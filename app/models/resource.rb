@@ -21,6 +21,32 @@ class Resource < ApplicationRecord
   trigger.before(:insert)                      { TSVECTOR_UPDATE_SQL }
   trigger.before(:update).of(:title, :content) { TSVECTOR_UPDATE_SQL }
 
+  include PgSearch
+
+  pg_search_scope :search, ->(query, language = 'simple') do
+    {
+      query: query,
+      against: { title: 'A', content: 'D' },
+      using: {
+        tsearch: {
+          dictionary: language,
+          tsvector_column: 'tsvector',
+          negation: true,
+          highlight: {
+            #StartSel: '<b>',
+            #StopSel: '</b>',
+            MaxWords: 20,
+            MinWords: 10,
+            #ShortWord: 3,
+            #HighlightAll: false,
+            MaxFragments: 2,
+            FragmentDelimiter: ' &hellip; '
+          }
+        }
+      }
+    }
+  end
+
   has_many :metadatas,          dependent: :destroy, inverse_of: :resource
   has_many :stats,              dependent: :destroy, inverse_of: :resource
 
