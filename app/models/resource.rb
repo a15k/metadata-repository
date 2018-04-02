@@ -23,6 +23,8 @@ class Resource < ApplicationRecord
 
   include PgSearch
 
+  HIGHLIGHT_SEPARATOR = '&hellip;'
+
   pg_search_scope :search, ->(query, language = 'simple') do
     {
       query: query,
@@ -33,14 +35,10 @@ class Resource < ApplicationRecord
           tsvector_column: 'tsvector',
           negation: true,
           highlight: {
-            #StartSel: '<b>',
-            #StopSel: '</b>',
             MaxWords: 20,
             MinWords: 10,
-            #ShortWord: 3,
-            #HighlightAll: false,
             MaxFragments: 2,
-            FragmentDelimiter: ' &hellip; '
+            FragmentDelimiter: " #{HIGHLIGHT_SEPARATOR} "
           }
         }
       }
@@ -78,5 +76,19 @@ class Resource < ApplicationRecord
 
   def language_name
     language&.name
+  end
+
+  # Like pg_search_highlight but also adds ellipses at the beginning and end of the highlight
+  def highlight
+    return unless respond_to?(:pg_search_highlight)
+
+    title_and_content = "#{title} #{content}".strip
+    highlights = pg_search_highlight.split(HIGHLIGHT_SEPARATOR)
+    first_highlight = highlights.first.strip.gsub(/<b>([^<]*)<\/b>/, '\1')
+    last_highlight = highlights.last.strip.gsub(/<b>([^<]*)<\/b>/, '\1')
+    prefix = "#{HIGHLIGHT_SEPARATOR} " unless title_and_content.starts_with?(first_highlight)
+    suffix = " #{HIGHLIGHT_SEPARATOR}" unless title_and_content.ends_with?(last_highlight)
+
+    "#{prefix}#{pg_search_highlight}#{suffix}"
   end
 end
