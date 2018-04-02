@@ -8,8 +8,7 @@ RSpec.describe Api::V1::ResourcesController, type: :controller do
     @other_application_resource = FactoryBot.create :resource
   end
 
-  include_examples 'json api controller errors', extra_no_data_requests: [ [ :get, :search ] ],
-                                                 extra_collection_actions: [ :search ]
+  include_examples 'json api controller errors'
 
   context 'with a valid API token' do
     before { request.headers[described_class::API_TOKEN_HEADER] = @application.token }
@@ -24,6 +23,82 @@ RSpec.describe Api::V1::ResourcesController, type: :controller do
         expect(response.body).to eq(
           Api::V1::ResourceSerializer.new([ @resource ]).serialized_json
         )
+      end
+
+      context 'with the filter param' do
+        before(:all) do
+          DatabaseCleaner.start
+
+          simple  = FactoryBot.create :language, name: 'simple'
+          english = FactoryBot.create :language, name: 'english'
+
+          all_queries = [ 'lorem', 'jumps', 'jump' ]
+          resources = 10.times.map do
+            FactoryBot.create :resource, application: @application, language: simple
+          end.each do |resource|
+            resource.destroy if all_queries.any? do |query|
+              resource.content.downcase.include?(query) || (
+                !resource.title.nil? && resource.title.downcase.include?(query)
+              )
+            end
+          end
+
+          @title_resource = FactoryBot.create(
+            :resource, application: @application,
+                       title: 'Lorem Ipsum',
+                       content: 'None',
+                       language: simple
+          )
+          @content_resource = FactoryBot.create(
+            :resource, application: @application,
+                       title: nil,
+                       content: 'Lorem Ipsum',
+                       language: simple
+          )
+          @both_resource = FactoryBot.create(
+            :resource, application: @application,
+                       title: 'Lorem Ipsum',
+                       content: 'Lorem Ipsum',
+                       language: simple
+          )
+          @fox_and_dog_resource = FactoryBot.create(
+            :resource, application: @application,
+                       title: 'The fox and the dog',
+                       content: 'The quick brown fox jumps over the lazy dog.',
+                       language: english
+          )
+        end
+        after(:all)  { DatabaseCleaner.clean }
+
+        it "passes the :query param to Resource.search, defaulting to the 'simple' configuration" do
+          expected_response = JSON.parse(
+            Api::V1::ResourceSerializer.new(
+              @application.resources.search('lorem', 'simple').with_pg_search_highlight
+            ).serialized_json
+          ).deep_symbolize_keys
+          expect(Resource).to receive(:search).with('lorem', 'simple').and_call_original
+
+          expect { get :index, params: { filter: { query: 'lorem' } }, as: :json }.not_to(
+            change { Resource.count }
+          )
+
+          expect(response.body_hash).to eq expected_response
+        end
+
+        it 'allows the search configuration to be specified using the :language param' do
+          expected_response = JSON.parse(
+            Api::V1::ResourceSerializer.new(
+              @application.resources.search('jumps', 'english').with_pg_search_highlight
+            ).serialized_json
+          ).deep_symbolize_keys
+          expect(Resource).to receive(:search).with('jumps', 'english').and_call_original
+
+          expect do
+            get :index, params: { filter: { query: 'jumps', language: 'english' } }, as: :json
+          end.not_to change { Resource.count }
+
+          expect(response.body_hash).to eq expected_response
+        end
       end
     end
 

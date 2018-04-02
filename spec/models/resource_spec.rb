@@ -65,6 +65,11 @@ RSpec.describe Resource, type: :model, vcr: VCR_OPTS do
       expect(Resource.search('jump', 'english')).to eq [ @fox_and_dog_resource ]
     end
 
+    it "defaults to 'simple' if the given language is invalid" do
+      expect(Resource.search('lorem', 'abc')).to eq Resource.search('lorem')
+      expect(Resource.search('jumps', '123')).to eq Resource.search('jumps')
+    end
+
     it 'can highlight the searched terms within the original text' do
       expect(Resource.search('lorem').with_pg_search_highlight.map(&:highlight)).to eq [
         '<b>Lorem</b> Ipsum <b>Lorem</b> Ipsum', '<b>Lorem</b> Ipsum None', '<b>Lorem</b> Ipsum'

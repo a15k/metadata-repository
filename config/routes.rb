@@ -15,8 +15,6 @@ Rails.application.routes.draw do
           post :/, action: :create, on: :member
         end
 
-        match :search, via: [ :get, :post ], on: :collection
-
         post :/, action: :create, on: :member
       end
     end

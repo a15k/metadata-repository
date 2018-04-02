@@ -2,7 +2,16 @@ module Api
   module V1
     class ResourcesController < JsonApiController
       def index
-        render_resource resources: current_application.resources
+        resources = current_application.resources
+
+        query = resource_filter_params[:query]
+        unless query.nil?
+          language = resource_filter_params.fetch :language, 'simple'
+
+          resources = resources.search(query, language).with_pg_search_highlight
+        end
+
+        render_resource resources: resources
       end
 
       def show
@@ -29,10 +38,11 @@ module Api
         render_resource
       end
 
-      def search
-      end
-
       protected
+
+      def resource_filter_params
+        params.permit(filter: [ :query, :language ]).fetch(:filter, {})
+      end
 
       def get_resource
         @resource ||= Resource.find_by!(application: current_application, uuid: uuid_param)

@@ -23,15 +23,34 @@ class Resource < ApplicationRecord
 
   include PgSearch
 
+  VALID_TS_CONFIGS = %w(
+    simple
+    danish
+    dutch
+    english
+    finnish
+    french
+    german
+    hungarian
+    italian
+    norwegian
+    portuguese
+    romanian
+    russian
+    spanish
+    swedish
+    turkish
+  )
+
   HIGHLIGHT_SEPARATOR = '&hellip;'
 
-  pg_search_scope :search, ->(query, language = 'simple') do
+  pg_search_scope :search, ->(query, language = nil) do
     {
       query: query,
       against: { title: 'A', content: 'D' },
       using: {
         tsearch: {
-          dictionary: language,
+          dictionary: VALID_TS_CONFIGS.include?(language) ? language : 'simple',
           tsvector_column: 'tsvector',
           negation: true,
           highlight: {
