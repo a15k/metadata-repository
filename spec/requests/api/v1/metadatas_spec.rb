@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Api::V1::MetadatasController, type: :controller do
+RSpec.describe Api::V1::MetadatasController, type: :request do
 
   before(:all) do
     @metadata = FactoryBot.create :metadata
@@ -9,17 +9,17 @@ RSpec.describe Api::V1::MetadatasController, type: :controller do
     @other_application_metadata = FactoryBot.create :metadata
   end
 
-  include_examples 'json api controller errors',
-                   extra_params_proc: -> { { resource_uuid: @resource.uuid } },
-                   application_proc: -> { @application }
-
-  context 'with a valid API token' do
-    before { request.headers[described_class::API_TOKEN_HEADER] = @application.token }
+  context 'with valid Accept and API token headers' do
+    let(:headers) do
+      { 'ACCEPT' => CONTENT_TYPE, described_class::API_TOKEN_HEADER => @application.token }
+    end
 
     context 'GET #index' do
-      let(:perform_request) { get :index, params: { resource_uuid: @resource.uuid }, as: :json }
+      let(:perform_request) do
+        get api_resource_metadatas_path(@resource.uuid), headers: headers, as: :json
+      end
 
-      it 'renders all metadatas created by the current application' do
+      it 'renders all metadatas created by the current application for the given resource' do
         expect { perform_request }.not_to change { Metadata.count }
 
         expect(response).to be_ok
@@ -31,7 +31,7 @@ RSpec.describe Api::V1::MetadatasController, type: :controller do
 
     context 'GET #show' do
       let(:perform_request) do
-        get :show, params: { resource_uuid: @resource.uuid, uuid: metadata.uuid }, as: :json
+        get api_resource_metadata_path(@resource.uuid, @metadata.uuid), headers: headers, as: :json
       end
 
       context 'when the metadata was created by the current application' do
@@ -51,7 +51,10 @@ RSpec.describe Api::V1::MetadatasController, type: :controller do
     context 'POST #create' do
       context 'when the id is not provided' do
         let(:perform_request) do
-          post :create, params: params.merge(resource_uuid: @resource.uuid), as: :json
+          post api_resource_metadatas_path(@resource.uuid),
+               params: params,
+               headers: headers,
+               as: :json
         end
 
         let(:params) do
@@ -86,9 +89,12 @@ RSpec.describe Api::V1::MetadatasController, type: :controller do
             end
           end
           let(:perform_request) do
-            post :create, params: params.merge(
-              resource_uuid: @resource.uuid, uuid: @other_application_metadata.uuid
-            ), as: :json
+            post api_resource_metadata_path(@resource.uuid, @other_application_metadata.uuid),
+                 params: params.merge(
+                   resource_uuid: @resource.uuid, uuid: @other_application_metadata.uuid
+                 ),
+                 headers: headers,
+                 as: :json
           end
 
           it 'creates and renders the metadata with the provided id' do
@@ -102,9 +108,10 @@ RSpec.describe Api::V1::MetadatasController, type: :controller do
         context 'when the metadata already exists' do
           let(:params) { Api::V1::MetadataSerializer.new(@metadata).serializable_hash }
           let(:perform_request) do
-            post :create, params: params.merge(
-              resource_uuid: @resource.uuid, uuid: @metadata.uuid
-            ), as: :json
+            post api_resource_metadata_path(@resource.uuid, @metadata.uuid),
+                 params: params.merge(resource_uuid: @resource.uuid, uuid: @metadata.uuid),
+                 headers: headers,
+                 as: :json
           end
           let(:error) { @response.errors.first }
 
@@ -135,9 +142,11 @@ RSpec.describe Api::V1::MetadatasController, type: :controller do
           end
         end
         let(:perform_request) do
-          public_send verb, :update, params: params.merge(
-            resource_uuid: @resource.uuid, uuid: metadata.uuid
-          ), as: :json
+          public_send verb,
+                      api_resource_metadata_path(@resource.uuid, @metadata.uuid),
+                      params: params.merge(uuid: @metadata.uuid),
+                      headers: headers,
+                      as: :json
         end
 
         context 'when the metadata was created by the current application' do
@@ -156,7 +165,9 @@ RSpec.describe Api::V1::MetadatasController, type: :controller do
 
     context 'DELETE #destroy' do
       let(:perform_request) do
-        delete :destroy, params: { resource_uuid: @resource.uuid, uuid: metadata.uuid }, as: :json
+        delete api_resource_metadata_path(@resource.uuid, @metadata.uuid),
+               headers: headers,
+               as: :json
       end
 
       context 'when the metadata was created by the current application' do

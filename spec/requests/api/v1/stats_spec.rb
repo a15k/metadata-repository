@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Api::V1::StatsController, type: :controller do
+RSpec.describe Api::V1::StatsController, type: :request do
 
   before(:all) do
     @stats = FactoryBot.create :stats
@@ -9,17 +9,17 @@ RSpec.describe Api::V1::StatsController, type: :controller do
     @other_application_stats = FactoryBot.create :stats
   end
 
-  include_examples 'json api controller errors',
-                   extra_params_proc: -> { { resource_uuid: @resource.uuid } },
-                   application_proc: -> { @application }
-
-  context 'with a valid API token' do
-    before { request.headers[described_class::API_TOKEN_HEADER] = @application.token }
+  context 'with valid Accept and API token headers' do
+    let(:headers) do
+      { 'ACCEPT' => CONTENT_TYPE, described_class::API_TOKEN_HEADER => @application.token }
+    end
 
     context 'GET #index' do
-      let(:perform_request) { get :index, params: { resource_uuid: @resource.uuid }, as: :json }
+      let(:perform_request) do
+        get api_resource_stats_index_path(@resource.uuid), headers: headers, as: :json
+      end
 
-      it 'renders all stats created by the current application' do
+      it 'renders all stats created by the current application for the given resource' do
         expect { perform_request }.not_to change { Stats.count }
 
         expect(response).to be_ok
@@ -31,7 +31,7 @@ RSpec.describe Api::V1::StatsController, type: :controller do
 
     context 'GET #show' do
       let(:perform_request) do
-        get :show, params: { resource_uuid: @resource.uuid, uuid: stats.uuid }, as: :json
+        get api_resource_stats_path(@resource.uuid, @stats.uuid), headers: headers, as: :json
       end
 
       context 'when the stats was created by the current application' do
@@ -51,7 +51,10 @@ RSpec.describe Api::V1::StatsController, type: :controller do
     context 'POST #create' do
       context 'when the id is not provided' do
         let(:perform_request) do
-          post :create, params: params.merge(resource_uuid: @resource.uuid), as: :json
+          post api_resource_stats_index_path(@resource.uuid),
+               params: params,
+               headers: headers,
+               as: :json
         end
 
         let(:params) do
@@ -76,7 +79,9 @@ RSpec.describe Api::V1::StatsController, type: :controller do
       context 'when the id is provided' do
         context 'when the stats does not exist or was created by a different application' do
           let(:params) do
-            Api::V1::StatsSerializer.new(@other_application_stats).serializable_hash.tap do |hash|
+            Api::V1::StatsSerializer.new(@other_application_stats)
+                                    .serializable_hash
+                                    .tap do |hash|
               hash[:data][:relationships][:application][:data][:id] = @application.uuid
               hash[:data][:relationships][:application_user][:data][:id] =
                 @stats.application_user.uuid
@@ -84,9 +89,12 @@ RSpec.describe Api::V1::StatsController, type: :controller do
             end
           end
           let(:perform_request) do
-            post :create, params: params.merge(
-              resource_uuid: @resource.uuid, uuid: @other_application_stats.uuid
-            ), as: :json
+            post api_resource_stats_path(@resource.uuid, @other_application_stats.uuid),
+                 params: params.merge(
+                   resource_uuid: @resource.uuid, uuid: @other_application_stats.uuid
+                 ),
+                 headers: headers,
+                 as: :json
           end
 
           it 'creates and renders the stats with the provided id' do
@@ -100,9 +108,10 @@ RSpec.describe Api::V1::StatsController, type: :controller do
         context 'when the stats already exists' do
           let(:params) { Api::V1::StatsSerializer.new(@stats).serializable_hash }
           let(:perform_request) do
-            post :create, params: params.merge(
-              resource_uuid: @resource.uuid, uuid: @stats.uuid
-            ), as: :json
+            post api_resource_stats_path(@resource.uuid, @stats.uuid),
+                 params: params.merge(resource_uuid: @resource.uuid, uuid: @stats.uuid),
+                 headers: headers,
+                 as: :json
           end
           let(:error) { @response.errors.first }
 
@@ -123,7 +132,9 @@ RSpec.describe Api::V1::StatsController, type: :controller do
         after(:all)  { @stats.reload }
 
         let(:params) do
-          Api::V1::StatsSerializer.new(@other_application_stats).serializable_hash.tap do |hash|
+          Api::V1::StatsSerializer.new(@other_application_stats)
+                                     .serializable_hash
+                                     .tap do |hash|
             hash[:data][:id] = stats.uuid
             hash[:data][:relationships][:application][:data][:id] = @application.uuid
             hash[:data][:relationships][:application_user][:data] = nil
@@ -131,9 +142,11 @@ RSpec.describe Api::V1::StatsController, type: :controller do
           end
         end
         let(:perform_request) do
-          public_send verb, :update, params: params.merge(
-            resource_uuid: @resource.uuid, uuid: stats.uuid
-          ), as: :json
+          public_send verb,
+                      api_resource_stats_path(@resource.uuid, @stats.uuid),
+                      params: params.merge(uuid: @stats.uuid),
+                      headers: headers,
+                      as: :json
         end
 
         context 'when the stats was created by the current application' do
@@ -152,7 +165,9 @@ RSpec.describe Api::V1::StatsController, type: :controller do
 
     context 'DELETE #destroy' do
       let(:perform_request) do
-        delete :destroy, params: { resource_uuid: @resource.uuid, uuid: stats.uuid }, as: :json
+        delete api_resource_stats_path(@resource.uuid, @stats.uuid),
+               headers: headers,
+               as: :json
       end
 
       context 'when the stats was created by the current application' do

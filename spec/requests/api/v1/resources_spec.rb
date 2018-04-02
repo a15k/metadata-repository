@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Api::V1::ResourcesController, type: :controller do
+RSpec.describe Api::V1::ResourcesController, type: :request do
 
   before(:all) do
     @resource = FactoryBot.create :resource
@@ -8,13 +8,13 @@ RSpec.describe Api::V1::ResourcesController, type: :controller do
     @other_application_resource = FactoryBot.create :resource
   end
 
-  include_examples 'json api controller errors'
-
-  context 'with a valid API token' do
-    before { request.headers[described_class::API_TOKEN_HEADER] = @application.token }
+  context 'with valid Accept and API token headers' do
+    let(:headers) do
+      { 'Accept' => CONTENT_TYPE, described_class::API_TOKEN_HEADER => @application.token }
+    end
 
     context 'GET #index' do
-      let(:perform_request) { get :index, as: :json }
+      let(:perform_request) { get api_resources_path, headers: headers, as: :json }
 
       it 'renders all resources created by the current application' do
         expect { perform_request }.not_to change { Resource.count }
@@ -78,9 +78,9 @@ RSpec.describe Api::V1::ResourcesController, type: :controller do
           ).deep_symbolize_keys
           expect(Resource).to receive(:search).with('lorem', 'simple').and_call_original
 
-          expect { get :index, params: { filter: { query: 'lorem' } }, as: :json }.not_to(
-            change { Resource.count }
-          )
+          expect do
+            get api_resources_path(filter: { query: 'lorem' }), headers: headers, as: :json
+          end.not_to change { Resource.count }
 
           expect(response.body_hash).to eq expected_response
         end
@@ -94,7 +94,9 @@ RSpec.describe Api::V1::ResourcesController, type: :controller do
           expect(Resource).to receive(:search).with('jumps', 'english').and_call_original
 
           expect do
-            get :index, params: { filter: { query: 'jumps', language: 'english' } }, as: :json
+            get api_resources_path(filter: { query: 'jumps', language: 'english' }),
+                headers: headers,
+                as: :json
           end.not_to change { Resource.count }
 
           expect(response.body_hash).to eq expected_response
@@ -103,7 +105,7 @@ RSpec.describe Api::V1::ResourcesController, type: :controller do
     end
 
     context 'GET #show' do
-      let(:perform_request) { get :show, params: { uuid: resource.uuid }, as: :json }
+      let(:perform_request) { get api_resource_path(resource.uuid), headers: headers, as: :json }
 
       context 'when the resource was created by the current application' do
         let(:resource) { @resource }
@@ -121,7 +123,9 @@ RSpec.describe Api::V1::ResourcesController, type: :controller do
 
     context 'POST #create' do
       context 'when the id is not provided' do
-        let(:perform_request) { post :create, params: params, as: :json }
+        let(:perform_request) do
+          post api_resources_path, params: params, headers: headers, as: :json
+        end
 
         context 'when the provided uri does not yet exist' do
           let(:uri)    { Faker::Internet.url }
@@ -176,7 +180,10 @@ RSpec.describe Api::V1::ResourcesController, type: :controller do
             end
           end
           let(:perform_request) do
-            post :create, params: params.merge(uuid: @other_application_resource.uuid), as: :json
+            post api_resource_path(@other_application_resource.uuid),
+                 params: params.merge(uuid: @other_application_resource.uuid),
+                 headers: headers,
+                 as: :json
           end
 
           it 'creates and renders the resource with the provided id' do
@@ -190,7 +197,10 @@ RSpec.describe Api::V1::ResourcesController, type: :controller do
         context 'when the resource already exists' do
           let(:params) { Api::V1::ResourceSerializer.new(@resource).serializable_hash }
           let(:perform_request) do
-            post :create, params: params.merge(uuid: @resource.uuid), as: :json
+            post api_resource_path(@resource.uuid),
+                 params: params.merge(uuid: @resource.uuid),
+                 headers: headers,
+                 as: :json
           end
           let(:error) { @response.errors.first }
 
@@ -220,7 +230,10 @@ RSpec.describe Api::V1::ResourcesController, type: :controller do
           end
         end
         let(:perform_request) do
-          public_send verb, :update, params: params.merge(uuid: resource.uuid), as: :json
+          public_send verb, api_resource_path(@resource.uuid),
+                            params: params.merge(uuid: @resource.uuid),
+                            headers: headers,
+                            as: :json
         end
 
         context 'when the resource was created by the current application' do
@@ -238,7 +251,9 @@ RSpec.describe Api::V1::ResourcesController, type: :controller do
     end
 
     context 'DELETE #destroy' do
-      let(:perform_request) { delete :destroy, params: { uuid: resource.uuid }, as: :json }
+      let(:perform_request) do
+        delete api_resource_path(@resource.uuid), headers: headers, as: :json
+      end
 
       context 'when the resource was created by the current application' do
         let(:resource) { @resource }
