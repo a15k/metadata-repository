@@ -13,7 +13,7 @@ module Api
     rescue_from ActiveRecord::RecordInvalid,        with: :render_validation_errors
 
     def self.valid_type
-      name.split('::').last.chomp('Controller').underscore.singularize
+      name.demodulize.chomp('Controller').underscore.singularize
     end
 
     protected

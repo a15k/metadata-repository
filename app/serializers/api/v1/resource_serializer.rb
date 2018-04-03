@@ -2,6 +2,7 @@ module Api
   module V1
     class ResourceSerializer
       include FastJsonapi::ObjectSerializer
+      include JsonApiSchema
 
       set_id :uuid
 
