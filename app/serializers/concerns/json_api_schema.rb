@@ -16,11 +16,11 @@ module JsonApiSchema
       json_api_schema['$schema'] = 'http://json-schema.org/draft-06/schema#'
       json_api_schema['title'] = "#{humanized_name} JSON API Schema"
       json_api_schema['description'] = "JSON API schema for #{humanized_name} objects."
-      json_api_schema['definitions']['resource']['properties']['id']['format'] = 'uuid'
       json_api_schema['definitions']['resource']['required'] = [ 'type' ] if create
+      json_api_schema['definitions']['attributes'].delete 'patternProperties'
       json_api_schema['definitions']['attributes']['propertyNames'] = { 'enum' => attributes }
+      json_api_schema['definitions']['relationships'].delete 'patternProperties'
       json_api_schema['definitions']['relationships']['propertyNames'] = { 'enum' => relationships }
-      json_api_schema['definitions']['linkage']['properties']['id']['format'] = 'uuid'
 
       json_api_schema.to_json
     end
