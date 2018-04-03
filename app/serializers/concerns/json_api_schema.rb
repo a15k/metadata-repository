@@ -8,7 +8,7 @@ module JsonApiSchema
       relationships = relationships_to_serialize.keys
 
       # Load the generic json-api schema
-      json_api_schema_filepath = File.join Rails.root, 'app', 'schemas', 'json-api.schema.json'
+      json_api_schema_filepath = File.join Rails.root, 'vendor', 'schemas', 'json-api.schema.json'
       json_api_schema_file = File.open json_api_schema_filepath
       json_api_schema = JSON.parse json_api_schema_file
 
