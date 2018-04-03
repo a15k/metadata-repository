@@ -13,6 +13,7 @@ module JsonApiSchema
       json_api_schema = JSON.parse json_api_schema_file
 
       # Customize the schema for the current model
+      # JSON Schema Draft 6 is required for propertyNames
       json_api_schema['$schema'] = 'http://json-schema.org/draft-06/schema#'
       json_api_schema['title'] = "#{humanized_name} JSON API Schema"
       json_api_schema['description'] = "JSON API schema for #{humanized_name} objects."
