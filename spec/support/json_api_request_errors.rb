@@ -14,24 +14,26 @@ RSpec.shared_examples 'json api request errors' do |base_url_proc:, application_
   ]
   requests = no_data_requests + data_requests
 
-  let!(:application)   { instance_exec &application_proc }
-  let!(:base_url)      { instance_exec &base_url_proc }
-  let(:collection_url) { base_url }
-  let(:member_url)     { "#{base_url}/#{uuid}" }
-  let(:api_token)      { application.token }
+  let!(:application)    { instance_exec &application_proc }
+  let!(:base_url)       { instance_exec &base_url_proc }
+  let(:collection_url)  { base_url }
+  let(:member_url)      { "#{base_url}/#{uuid}" }
+  let(:api_token)       { application.token }
+  let(:url)             { on == :collection ? collection_url : member_url }
+  let(:perform_request) { public_send verb, url, params: params, headers: headers, as: :json }
 
-  let(:klass)          { described_class.valid_type.classify.constantize }
-  let(:uuid)           { SecureRandom.uuid }
-  let(:error)          { response.errors.first }
+  let(:klass)           { described_class.valid_type.classify.constantize }
+  let(:uuid)            { SecureRandom.uuid }
+  let(:error)           { response.errors.first }
 
   context 'without an API token' do
     let(:headers) { { 'Accept' => CONTENT_TYPE } }
 
     requests.each do |verb, on|
       context "#{verb.upcase} ##{on}" do
-        let(:url)             { on == :collection ? collection_url : member_url }
-        let(:params)          { on == :collection ? {} : { uuid: uuid } }
-        let(:perform_request) { public_send verb, url, params: params, headers: headers, as: :json }
+        let(:verb)   { verb }
+        let(:on)     { on }
+        let(:params) { on == :collection ? {} : { uuid: uuid } }
 
         it 'renders a JSON API 400 error' do
           expect { perform_request }.not_to change { klass.count }
@@ -56,10 +58,9 @@ RSpec.shared_examples 'json api request errors' do |base_url_proc:, application_
 
     requests.each do |verb, on|
       context "#{verb.upcase} ##{on}" do
-        let(:url)    { on == :collection ? collection_url : member_url }
+        let(:verb)   { verb }
+        let(:on)     { on }
         let(:params) { on == :collection ? {} : { uuid: uuid } }
-        let(:perform_request) { public_send verb, url, params: params, headers: headers, as: :json }
-        let(:error)  { response.body_hash[:errors].first }
 
         it 'returns a JSON API 403 error' do
           expect { perform_request }.not_to change { klass.count }
@@ -85,11 +86,9 @@ RSpec.shared_examples 'json api request errors' do |base_url_proc:, application_
     context 'with no data member' do
       data_requests.each do |verb, on|
         context "#{verb.upcase} ##{on}" do
-          let(:url)    { on == :collection ? collection_url : member_url }
+          let(:verb)   { verb }
+          let(:on)     { on }
           let(:params) { on == :collection ? {} : { uuid: uuid } }
-          let(:perform_request) do
-            public_send verb, url, params: params, headers: headers, as: :json
-          end
 
           it 'returns a JSON API 400 error' do
             expect { perform_request }.not_to change { klass.count }
@@ -110,10 +109,8 @@ RSpec.shared_examples 'json api request errors' do |base_url_proc:, application_
 
         data_requests.each do |verb, on|
           context "#{verb.upcase} ##{on}" do
-            let(:url)             { on == :collection ? collection_url : member_url }
-            let(:perform_request) do
-              public_send verb, url, params: params, headers: headers, as: :json
-            end
+            let(:verb) { verb }
+            let(:on)   { on }
 
             it 'returns a JSON API 400 error' do
               expect { perform_request }.not_to change { klass.count }
@@ -134,11 +131,8 @@ RSpec.shared_examples 'json api request errors' do |base_url_proc:, application_
 
         data_requests.each do |verb, on|
           context "#{verb.upcase} ##{on}" do
-            let(:url)             { on == :collection ? collection_url : member_url }
-            let(:perform_request) do
-              public_send verb, url, params: params, headers: headers, as: :json
-            end
-            let(:error) { response.body_hash[:errors].first }
+            let(:verb) { verb }
+            let(:on)   { on }
 
             it 'returns a JSON API 409 error' do
               expect { perform_request }.not_to change { klass.count }
@@ -164,10 +158,8 @@ RSpec.shared_examples 'json api request errors' do |base_url_proc:, application_
 
           data_requests.reject { |verb, _| verb == :post }.each do |verb, on|
             context "#{verb.upcase} ##{on}" do
-              let(:url)             { on == :collection ? collection_url : member_url }
-              let(:perform_request) do
-                public_send verb, url, params: params, headers: headers, as: :json
-              end
+              let(:verb) { verb }
+              let(:on)   { on }
 
               it 'returns a JSON API 400 error' do
                 expect { perform_request }.not_to change { klass.count }
@@ -188,10 +180,8 @@ RSpec.shared_examples 'json api request errors' do |base_url_proc:, application_
 
           data_requests.select { |_, on| on == :member }.each do |verb, on|
             context "#{verb.upcase} ##{on}" do
-              let(:url)             { on == :collection ? collection_url : member_url }
-              let(:perform_request) do
-                public_send verb, url, params: params, headers: headers, as: :json
-              end
+              let(:verb) { verb }
+              let(:on)   { on }
 
               it 'returns a JSON API 409 error' do
                 expect { perform_request }.not_to change { klass.count }
@@ -214,10 +204,8 @@ RSpec.shared_examples 'json api request errors' do |base_url_proc:, application_
 
           data_requests.reject { |verb, _| verb == :post }.each do |verb, on|
             context "#{verb.upcase} ##{on}" do
-              let(:url)             { on == :collection ? collection_url : member_url }
-              let(:perform_request) do
-                public_send verb, url, params: params, headers: headers, as: :json
-              end
+              let(:verb) { verb }
+              let(:on)   { on }
 
               it 'returns a JSON API 404 error' do
                 expect { perform_request }.not_to change { klass.count }
@@ -238,10 +226,8 @@ RSpec.shared_examples 'json api request errors' do |base_url_proc:, application_
 
           data_requests.reject { |verb, _| verb == :post }.each do |verb, on|
             context "#{verb.upcase} ##{on}" do
-              let(:url)             { on == :collection ? collection_url : member_url }
-              let(:perform_request) do
-                public_send verb, url, params: params, headers: headers, as: :json
-              end
+              let(:verb) { verb }
+              let(:on)   { on }
 
               it 'returns a JSON API 404 error' do
                 expect { perform_request }.to  not_change { klass.count }
@@ -274,10 +260,8 @@ RSpec.shared_examples 'json api request errors' do |base_url_proc:, application_
 
               data_requests.each do |verb, on|
                 context "#{verb.upcase} ##{on}" do
-                  let(:url)             { on == :collection ? collection_url : member_url }
-                  let(:perform_request) do
-                    public_send verb, url, params: params, headers: headers, as: :json
-                  end
+                  let(:verb) { verb }
+                  let(:on)   { on }
 
                   it 'returns a JSON API 400 error' do
                     expect { perform_request }.to  not_change { klass.count }
@@ -307,10 +291,8 @@ RSpec.shared_examples 'json api request errors' do |base_url_proc:, application_
 
                 data_requests.each do |verb, on|
                   context "#{verb.upcase} ##{on}" do
-                    let(:url)             { on == :collection ? collection_url : member_url }
-                    let(:perform_request) do
-                      public_send verb, url, params: params, headers: headers, as: :json
-                    end
+                    let(:verb) { verb }
+                    let(:on)   { on }
 
                     it 'returns a JSON API 400 error' do
                       expect { perform_request }.to  not_change { klass.count }
@@ -341,10 +323,8 @@ RSpec.shared_examples 'json api request errors' do |base_url_proc:, application_
 
                 data_requests.each do |verb, on|
                   context "#{verb.upcase} ##{on}" do
-                    let(:url)             { on == :collection ? collection_url : member_url }
-                    let(:perform_request) do
-                      public_send verb, url, params: params, headers: headers, as: :json
-                    end
+                    let(:verb) { verb }
+                    let(:on)   { on }
 
                     it 'returns a JSON API 409 error' do
                       expect { perform_request }.to  not_change { klass.count }
@@ -376,10 +356,8 @@ RSpec.shared_examples 'json api request errors' do |base_url_proc:, application_
 
                   data_requests.each do |verb, on|
                     context "#{verb.upcase} ##{on}" do
-                      let(:url)             { on == :collection ? collection_url : member_url }
-                      let(:perform_request) do
-                        public_send verb, url, params: params, headers: headers, as: :json
-                      end
+                      let(:verb) { verb }
+                      let(:on)   { on }
 
                       it 'returns a JSON API 400 error' do
                         expect { perform_request }.to  not_change { klass.count }
@@ -416,10 +394,8 @@ RSpec.shared_examples 'json api request errors' do |base_url_proc:, application_
 
             data_requests.each do |verb, on|
               context "#{verb.upcase} ##{on}" do
-                let(:url)             { on == :collection ? collection_url : member_url }
-                let(:perform_request) do
-                  public_send verb, url, params: params, headers: headers, as: :json
-                end
+                let(:verb) { verb }
+                let(:on)   { on }
 
                 it 'returns a JSON API 403 error' do
                   expect { perform_request }.to  not_change { klass.count }
