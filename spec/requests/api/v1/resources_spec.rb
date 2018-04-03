@@ -8,6 +8,10 @@ RSpec.describe Api::V1::ResourcesController, type: :request do
     @other_application_resource = FactoryBot.create :resource
   end
 
+  include_examples 'json api request errors',
+                   application_proc: -> { @application },
+                   base_url_proc: -> { '/api/resources' }
+
   context 'with valid Accept and API token headers' do
     let(:headers) do
       { 'Accept' => CONTENT_TYPE, described_class::API_TOKEN_HEADER => @application.token }

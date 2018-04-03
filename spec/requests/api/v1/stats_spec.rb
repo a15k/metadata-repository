@@ -9,9 +9,13 @@ RSpec.describe Api::V1::StatsController, type: :request do
     @other_application_stats = FactoryBot.create :stats
   end
 
+  include_examples 'json api request errors',
+                   application_proc: -> { @application },
+                   base_url_proc: -> { "/api/resources/#{@resource.uuid}/stats" }
+
   context 'with valid Accept and API token headers' do
     let(:headers) do
-      { 'ACCEPT' => CONTENT_TYPE, described_class::API_TOKEN_HEADER => @application.token }
+      { 'Accept' => CONTENT_TYPE, described_class::API_TOKEN_HEADER => @application.token }
     end
 
     context 'GET #index' do

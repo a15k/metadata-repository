@@ -73,11 +73,11 @@ module Api
       Application.find_by(token: api_token)
     end
 
-    def uuid_param
+    def path_id_param
       params[:uuid]
     end
 
-    def id_param
+    def body_id_param
       data = params.require(:data)
       action_name == 'create' ? data.permit(:id)[:id] : data.require(:id)
     end
@@ -138,11 +138,11 @@ module Api
             status: '409',
             code: 'invalid_id',
             title: 'Invalid Id',
-            detail: "The id provided (#{id_param
-                    }) did not match the id in the API endpoint URL (#{uuid_param})."
+            detail: "The id provided in the request body (#{body_id_param
+                    }) did not match the id provided in the API endpoint URL (#{path_id_param})."
           }
         ]
-      } unless id_param == uuid_param
+      } unless path_id_param.nil? || body_id_param == path_id_param
     end
 
     def validate_relationships!

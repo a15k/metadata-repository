@@ -32,7 +32,7 @@ module Api
       protected
 
       def get_stats
-        @stats ||= Stats.find_by!(application: current_application, uuid: uuid_param)
+        @stats ||= Stats.find_by!(application: current_application, uuid: path_id_param)
       end
 
       def stats_attribute_params

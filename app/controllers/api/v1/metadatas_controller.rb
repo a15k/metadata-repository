@@ -32,7 +32,7 @@ module Api
       protected
 
       def get_metadata
-        @metadata ||= Metadata.find_by!(application: current_application, uuid: uuid_param)
+        @metadata ||= Metadata.find_by!(application: current_application, uuid: path_id_param)
       end
 
       def metadata_attribute_params

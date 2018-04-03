@@ -45,7 +45,7 @@ module Api
       end
 
       def get_resource
-        @resource ||= Resource.find_by!(application: current_application, uuid: uuid_param)
+        @resource ||= Resource.find_by!(application: current_application, uuid: path_id_param)
       end
 
       def resource_attribute_params
