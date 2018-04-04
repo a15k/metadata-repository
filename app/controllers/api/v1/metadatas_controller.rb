@@ -14,7 +14,7 @@ module Api
       def create
         @metadata = Metadata.create! metadata_create_params
 
-        render_metadata
+        render_metadata status: 201
       end
 
       def update
@@ -68,8 +68,8 @@ module Api
         )
       end
 
-      def render_metadata(metadatas: get_metadata)
-        render json: MetadataSerializer.new(metadatas).serializable_hash
+      def render_metadata(metadatas: get_metadata, status: 200)
+        render json: MetadataSerializer.new(metadatas).serializable_hash, status: status
       end
     end
   end

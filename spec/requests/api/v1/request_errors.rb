@@ -16,8 +16,7 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
       :get,
       :collection,
       "get#{id_scope}#{pluralized_class_name}",
-      "List all #{pluralized_class_name
-      } created by the current application #{description_scope}".strip
+      "List #{pluralized_class_name} created by the current application #{description_scope}".strip
     ],
     [
       :get,
@@ -64,7 +63,6 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
   let(:api_token)    { application.token }
 
   let(:id)           { SecureRandom.uuid }
-  let(:error)        { response.errors.first }
 
   let(:Accept)       { CONTENT_TYPE }
 
@@ -99,11 +97,10 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
             schema json_schema_hash
 
             run_test! do |response|
-              expect(response).to be_bad_request
-              expect(error[:status]).to eq '400'
-              expect(error[:code]).to eq 'missing_api_token'
-              expect(error[:title]).to eq 'Missing API Token'
-              expect(error[:detail]).to eq(
+              expect(response.errors.first[:status]).to eq '400'
+              expect(response.errors.first[:code]).to eq 'missing_api_token'
+              expect(response.errors.first[:title]).to eq 'Missing API Token'
+              expect(response.errors.first[:detail]).to eq(
                 "No API token was provided in the #{
                 Api::JsonApiController::API_TOKEN_HEADER} header."
               )
@@ -130,11 +127,10 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
             schema json_schema_hash
 
             run_test! do |response|
-              expect(response).to be_forbidden
-              expect(error[:status]).to eq '403'
-              expect(error[:code]).to eq 'invalid_api_token'
-              expect(error[:title]).to eq 'Invalid API Token'
-              expect(error[:detail]).to eq(
+              expect(response.errors.first[:status]).to eq '403'
+              expect(response.errors.first[:code]).to eq 'invalid_api_token'
+              expect(response.errors.first[:title]).to eq 'Invalid API Token'
+              expect(response.errors.first[:detail]).to eq(
                 "The API token provided in the #{
                 Api::JsonApiController::API_TOKEN_HEADER} header (#{token}) is invalid."
               )
@@ -161,11 +157,12 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
               schema json_schema_hash
 
               run_test! do |response|
-                expect(response).to be_bad_request
-                expect(error[:status]).to eq '400'
-                expect(error[:code]).to eq 'missing_data'
-                expect(error[:title]).to eq 'Missing Data'
-                expect(error[:detail]).to eq 'The data member is required by this API endpoint.'
+                expect(response.errors.first[:status]).to eq '400'
+                expect(response.errors.first[:code]).to eq 'missing_data'
+                expect(response.errors.first[:title]).to eq 'Missing Data'
+                expect(response.errors.first[:detail]).to eq(
+                  'The data member is required by this API endpoint.'
+                )
               end
             end
           end
@@ -189,11 +186,12 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
                 schema json_schema_hash
 
                 run_test! do |response|
-                  expect(response).to be_bad_request
-                  expect(error[:status]).to eq '400'
-                  expect(error[:code]).to eq 'missing_type'
-                  expect(error[:title]).to eq 'Missing Type'
-                  expect(error[:detail]).to eq 'The type member is required by this API endpoint.'
+                  expect(response.errors.first[:status]).to eq '400'
+                  expect(response.errors.first[:code]).to eq 'missing_type'
+                  expect(response.errors.first[:title]).to eq 'Missing Type'
+                  expect(response.errors.first[:detail]).to eq(
+                    'The type member is required by this API endpoint.'
+                  )
                 end
               end
             end
@@ -217,11 +215,10 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
                 schema json_schema_hash
 
                 run_test! do |response|
-                  expect(response.status).to eq 409
-                  expect(error[:status]).to eq '409'
-                  expect(error[:code]).to eq 'invalid_type'
-                  expect(error[:title]).to eq 'Invalid Type'
-                  expect(error[:detail]).to eq(
+                  expect(response.errors.first[:status]).to eq '409'
+                  expect(response.errors.first[:code]).to eq 'invalid_type'
+                  expect(response.errors.first[:title]).to eq 'Invalid Type'
+                  expect(response.errors.first[:detail]).to eq(
                     "The type provided (#{type}) is not the one supported by this API endpoint (#{
                     controller.class.valid_type})."
                   )
@@ -251,11 +248,12 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
                   schema json_schema_hash
 
                   run_test! do |response|
-                    expect(response).to be_bad_request
-                    expect(error[:status]).to eq '400'
-                    expect(error[:code]).to eq 'missing_id'
-                    expect(error[:title]).to eq 'Missing Id'
-                    expect(error[:detail]).to eq 'The id member is required by this API endpoint.'
+                    expect(response.errors.first[:status]).to eq '400'
+                    expect(response.errors.first[:code]).to eq 'missing_id'
+                    expect(response.errors.first[:title]).to eq 'Missing Id'
+                    expect(response.errors.first[:detail]).to eq(
+                      'The id member is required by this API endpoint.'
+                    )
                   end
                 end
               end
@@ -280,11 +278,10 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
                   schema json_schema_hash
 
                   run_test! do |response|
-                    expect(response.status).to eq 409
-                    expect(error[:status]).to eq '409'
-                    expect(error[:code]).to eq 'invalid_id'
-                    expect(error[:title]).to eq 'Invalid Id'
-                    expect(error[:detail]).to eq(
+                    expect(response.errors.first[:status]).to eq '409'
+                    expect(response.errors.first[:code]).to eq 'invalid_id'
+                    expect(response.errors.first[:title]).to eq 'Invalid Id'
+                    expect(response.errors.first[:detail]).to eq(
                       "The id provided in the request body (#{body_id
                       }) did not match the id provided in the API endpoint URL (#{id})."
                     )
@@ -311,11 +308,10 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
                   schema json_schema_hash
 
                   run_test! do |response|
-                    expect(response).to be_not_found
-                    expect(error[:status]).to eq '404'
-                    expect(error[:code]).to eq 'not_found'
-                    expect(error[:title]).to eq 'Not Found'
-                    expect(error[:detail]).to eq "Couldn't find #{type.humanize}"
+                    expect(response.errors.first[:status]).to eq '404'
+                    expect(response.errors.first[:code]).to eq 'not_found'
+                    expect(response.errors.first[:title]).to eq 'Not Found'
+                    expect(response.errors.first[:detail]).to eq "Couldn't find #{type.humanize}"
                   end
                 end
               end
@@ -340,11 +336,10 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
                   schema json_schema_hash
 
                   run_test! do |response|
-                    expect(response).to be_not_found
-                    expect(error[:status]).to eq '404'
-                    expect(error[:code]).to eq 'not_found'
-                    expect(error[:title]).to eq 'Not Found'
-                    expect(error[:detail]).to eq "Couldn't find #{type.humanize}"
+                    expect(response.errors.first[:status]).to eq '404'
+                    expect(response.errors.first[:code]).to eq 'not_found'
+                    expect(response.errors.first[:title]).to eq 'Not Found'
+                    expect(response.errors.first[:detail]).to eq "Couldn't find #{type.humanize}"
                   end
                 end
               end
@@ -379,11 +374,10 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
                       schema json_schema_hash
 
                       run_test! do |response|
-                        expect(response).to be_bad_request
-                        expect(error[:status]).to eq '400'
-                        expect(error[:code]).to eq 'missing_data'
-                        expect(error[:title]).to eq 'Missing Data'
-                        expect(error[:detail]).to eq(
+                        expect(response.errors.first[:status]).to eq '400'
+                        expect(response.errors.first[:code]).to eq 'missing_data'
+                        expect(response.errors.first[:title]).to eq 'Missing Data'
+                        expect(response.errors.first[:detail]).to eq(
                           'The data member is required by this API endpoint.'
                         )
                       end
@@ -417,11 +411,10 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
                         schema json_schema_hash
 
                         run_test! do |response|
-                          expect(response).to be_bad_request
-                          expect(error[:status]).to eq '400'
-                          expect(error[:code]).to eq 'missing_type'
-                          expect(error[:title]).to eq 'Missing Type'
-                          expect(error[:detail]).to eq(
+                          expect(response.errors.first[:status]).to eq '400'
+                          expect(response.errors.first[:code]).to eq 'missing_type'
+                          expect(response.errors.first[:title]).to eq 'Missing Type'
+                          expect(response.errors.first[:detail]).to eq(
                             'The type member is required by this API endpoint.'
                           )
                         end
@@ -454,11 +447,10 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
                         schema json_schema_hash
 
                         run_test! do |response|
-                          expect(response.status).to eq 409
-                          expect(error[:status]).to eq '409'
-                          expect(error[:code]).to eq 'invalid_application_type'
-                          expect(error[:title]).to eq 'Invalid Application Type'
-                          expect(error[:detail]).to eq(
+                          expect(response.errors.first[:status]).to eq '409'
+                          expect(response.errors.first[:code]).to eq 'invalid_application_type'
+                          expect(response.errors.first[:title]).to eq 'Invalid Application Type'
+                          expect(response.errors.first[:detail]).to eq(
                             'The type provided for the application' +
                             ' relationship (resource) is invalid.'
                           )
@@ -493,11 +485,10 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
                           schema json_schema_hash
 
                           run_test! do |response|
-                            expect(response).to be_bad_request
-                            expect(error[:status]).to eq '400'
-                            expect(error[:code]).to eq 'missing_id'
-                            expect(error[:title]).to eq 'Missing Id'
-                            expect(error[:detail]).to eq(
+                            expect(response.errors.first[:status]).to eq '400'
+                            expect(response.errors.first[:code]).to eq 'missing_id'
+                            expect(response.errors.first[:title]).to eq 'Missing Id'
+                            expect(response.errors.first[:detail]).to eq(
                               'The id member is required by this API endpoint.'
                             )
                           end
@@ -536,11 +527,10 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
                     schema json_schema_hash
 
                     run_test! do |response|
-                      expect(response).to be_forbidden
-                      expect(error[:status]).to eq '403'
-                      expect(error[:code]).to eq 'forbidden_application_id'
-                      expect(error[:title]).to eq 'Forbidden Application Id'
-                      expect(error[:detail]).to eq(
+                      expect(response.errors.first[:status]).to eq '403'
+                      expect(response.errors.first[:code]).to eq 'forbidden_application_id'
+                      expect(response.errors.first[:title]).to eq 'Forbidden Application Id'
+                      expect(response.errors.first[:detail]).to eq(
                         "You are only allowed to provide your own application id (#{
                         application.uuid})."
                       )
