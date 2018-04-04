@@ -11,7 +11,16 @@ RSpec.describe Api::V1::StatsController, type: :request do
 
   include_examples 'json api request errors',
                    application_proc: -> { @application },
-                   base_url_proc: -> { "/api/resources/#{@resource.uuid}/stats" }
+                   base_path_template: '/api/resources/{resource_uuid}/stats',
+                   description_scope: 'for the given Resource',
+                   path_params_proc: -> do
+                     parameter name: :resource_uuid, in: :path, type: :string,
+                               description: "The associated Resource's UUID"
+
+                     let(:resource_uuid) { @resource.uuid }
+                   end,
+                   valid_type: described_class.valid_type,
+                   json_schema_hash: Api::V1::StatsSerializer.json_schema_hash
 
   context 'with valid Accept and API token headers' do
     let(:headers) do

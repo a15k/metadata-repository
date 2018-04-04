@@ -1,103 +1,163 @@
 require 'rails_helper'
 
-RSpec.shared_examples 'json api request errors' do |base_url_proc:, application_proc:|
+RSpec.shared_examples 'json api request errors' do |application_proc:,
+                                                    base_path_template:,
+                                                    description_scope: '',
+                                                    json_schema_hash:,
+                                                    valid_type:,
+                                                    path_params_proc: -> {}|
+  class_name = valid_type.classify
+  klass = class_name.constantize
+  pluralized_scoped_class_name = "#{class_name.pluralize} #{description_scope}".strip
+
   no_data_requests = [
-    [ :get,    :collection ],
-    [ :get,    :member     ],
-    [ :delete, :member     ]
+    [
+      :get,
+      :collection,
+      "List all #{pluralized_scoped_class_name} created by the current application"
+    ],
+    [
+      :get,
+      :member,
+      "View the #{class_name} with the given UUID #{description_scope}".strip
+    ],
+    [
+      :delete,
+      :member,
+      "Delete the #{class_name} with the given UUID #{description_scope}".strip
+    ]
   ]
   data_requests = [
-    [ :post,  :collection  ],
-    [ :post,  :member      ],
-    [ :put,   :member      ],
-    [ :patch, :member      ]
+    [
+      :post,
+      :collection,
+      "Create a new #{class_name} with a random UUID #{description_scope}".strip
+    ],
+    [
+      :post,
+      :member,
+      "Create a new #{class_name} with the given UUID #{description_scope}".strip
+    ],
+    [
+      :put,
+      :member,
+      "Update the #{class_name} with the given UUID #{description_scope}".strip
+    ],
+    [
+      :patch,
+      :member,
+      "Update the #{class_name} with the given UUID #{description_scope}".strip
+    ]
   ]
   requests = no_data_requests + data_requests
 
-  let!(:application)    { instance_exec &application_proc }
-  let!(:base_url)       { instance_exec &base_url_proc }
-  let(:collection_url)  { base_url }
-  let(:member_url)      { "#{base_url}/#{uuid}" }
-  let(:api_token)       { application.token }
-  let(:url)             { on == :collection ? collection_url : member_url }
-  let(:perform_request) { public_send verb, url, params: params, headers: headers, as: :json }
+  let!(:application) { instance_exec &application_proc }
+  let(:api_token)    { application.token }
 
-  let(:klass)           { described_class.valid_type.classify.constantize }
-  let(:uuid)            { SecureRandom.uuid }
-  let(:error)           { response.errors.first }
+  let(:uuid)         { SecureRandom.uuid }
+  let(:error)        { response.errors.first }
+
+  let(:Accept)       { CONTENT_TYPE }
+
+  no_api_token_setup = ->(on) do
+    tags class_name
+    produces CONTENT_TYPE
+    parameter name: :uuid, in: :path, type: :string,
+              description: "The #{class_name} object's UUID" if on == :member
+    instance_exec &path_params_proc
+  end
+  no_data_setup = ->(on) do
+    instance_exec on, &no_api_token_setup
+    security [ apiToken: [] ]
+  end
+  data_setup = ->(on) do
+    instance_exec on, &no_data_setup
+    consumes CONTENT_TYPE
+    parameter name: :params, in: :body, schema: json_schema_hash
+  end
 
   context 'without an API token' do
-    let(:headers) { { 'Accept' => CONTENT_TYPE } }
+    requests.each do |verb, on, description|
+      path on == :collection ? base_path_template : "#{base_path_template}/{uuid}" do
+        public_send verb, description do
+          instance_exec on, &no_api_token_setup
 
-    requests.each do |verb, on|
-      context "#{verb.upcase} ##{on}" do
-        let(:verb)   { verb }
-        let(:on)     { on }
-        let(:params) { on == :collection ? {} : { uuid: uuid } }
+          let(:verb)   { verb }
+          let(:on)     { on }
 
-        it 'renders a JSON API 400 error' do
-          expect { perform_request }.not_to change { klass.count }
+          response 400, 'missing api token' do
+            schema json_schema_hash
 
-          expect(response).to be_bad_request
-          expect(error[:status]).to eq '400'
-          expect(error[:code]).to eq 'missing_api_token'
-          expect(error[:title]).to eq 'Missing API Token'
-          expect(error[:detail]).to eq(
-            "No API token was provided in the #{described_class::API_TOKEN_HEADER} header."
-          )
+            run_test! do |response|
+              expect(response).to be_bad_request
+              expect(error[:status]).to eq '400'
+              expect(error[:code]).to eq 'missing_api_token'
+              expect(error[:title]).to eq 'Missing API Token'
+              expect(error[:detail]).to eq(
+                "No API token was provided in the #{
+                Api::JsonApiController::API_TOKEN_HEADER} header."
+              )
+            end
+          end
         end
       end
     end
   end
 
   context 'with an invalid API token' do
-    let(:token)   { SecureRandom.hex(32) }
-    let(:headers) do
-      { 'Accept' => CONTENT_TYPE, described_class::API_TOKEN_HEADER => token }
-    end
+    let(:token)                                          { SecureRandom.hex(32) }
+    let(Api::JsonApiController::API_TOKEN_HEADER.to_sym) { token }
 
-    requests.each do |verb, on|
-      context "#{verb.upcase} ##{on}" do
-        let(:verb)   { verb }
-        let(:on)     { on }
-        let(:params) { on == :collection ? {} : { uuid: uuid } }
+    requests.each do |verb, on, description|
+      path on == :collection ? base_path_template : "#{base_path_template}/{uuid}" do
+        public_send verb, description do
+          instance_exec on, &no_data_setup
 
-        it 'returns a JSON API 403 error' do
-          expect { perform_request }.not_to change { klass.count }
+          let(:verb)   { verb }
+          let(:on)     { on }
 
-          expect(response).to be_forbidden
-          expect(error[:status]).to eq '403'
-          expect(error[:code]).to eq 'invalid_api_token'
-          expect(error[:title]).to eq 'Invalid API Token'
-          expect(error[:detail]).to eq(
-            "The API token provided in the #{
-            described_class::API_TOKEN_HEADER} header (#{token}) is invalid."
-          )
+          response 403, 'invalid api token' do
+            schema json_schema_hash
+
+            run_test! do |response|
+              expect(response).to be_forbidden
+              expect(error[:status]).to eq '403'
+              expect(error[:code]).to eq 'invalid_api_token'
+              expect(error[:title]).to eq 'Invalid API Token'
+              expect(error[:detail]).to eq(
+                "The API token provided in the #{
+                Api::JsonApiController::API_TOKEN_HEADER} header (#{token}) is invalid."
+              )
+            end
+          end
         end
       end
     end
   end
 
   context 'with a valid API token' do
-    let(:headers) do
-      { 'Accept' => CONTENT_TYPE, described_class::API_TOKEN_HEADER => api_token }
-    end
+    let(Api::JsonApiController::API_TOKEN_HEADER.to_sym) { api_token }
 
     context 'with no data member' do
-      data_requests.each do |verb, on|
-        context "#{verb.upcase} ##{on}" do
-          let(:verb)   { verb }
-          let(:on)     { on }
-          let(:params) { on == :collection ? {} : { uuid: uuid } }
+      data_requests.each do |verb, on, description|
+        path on == :collection ? base_path_template : "#{base_path_template}/{uuid}" do
+          public_send verb, description do
+            instance_exec on, &no_data_setup
 
-          it 'returns a JSON API 400 error' do
-            expect { perform_request }.not_to change { klass.count }
+            let(:verb)   { verb }
+            let(:on)     { on }
 
-            expect(response).to be_bad_request
-            expect(error[:status]).to eq '400'
-            expect(error[:code]).to eq 'missing_data'
-            expect(error[:title]).to eq 'Missing Data'
-            expect(error[:detail]).to eq 'The data member is required by this API endpoint.'
+            response 400, 'missing data' do
+              schema json_schema_hash
+
+              run_test! do |response|
+                expect(response).to be_bad_request
+                expect(error[:status]).to eq '400'
+                expect(error[:code]).to eq 'missing_data'
+                expect(error[:title]).to eq 'Missing Data'
+                expect(error[:detail]).to eq 'The data member is required by this API endpoint.'
+              end
+            end
           end
         end
       end
@@ -107,19 +167,25 @@ RSpec.shared_examples 'json api request errors' do |base_url_proc:, application_
       context 'with no type member' do
         let(:params) { { data: { attributes: { test: true } } } }
 
-        data_requests.each do |verb, on|
-          context "#{verb.upcase} ##{on}" do
-            let(:verb) { verb }
-            let(:on)   { on }
+        data_requests.each do |verb, on, description|
+          path on == :collection ? base_path_template : "#{base_path_template}/{uuid}" do
+            public_send verb, description do
+              instance_exec on, &data_setup
 
-            it 'returns a JSON API 400 error' do
-              expect { perform_request }.not_to change { klass.count }
+              let(:verb) { verb }
+              let(:on)   { on }
 
-              expect(response).to be_bad_request
-              expect(error[:status]).to eq '400'
-              expect(error[:code]).to eq 'missing_type'
-              expect(error[:title]).to eq 'Missing Type'
-              expect(error[:detail]).to eq 'The type member is required by this API endpoint.'
+              response 400, 'missing type' do
+                schema json_schema_hash
+
+                run_test! do |response|
+                  expect(response).to be_bad_request
+                  expect(error[:status]).to eq '400'
+                  expect(error[:code]).to eq 'missing_type'
+                  expect(error[:title]).to eq 'Missing Type'
+                  expect(error[:detail]).to eq 'The type member is required by this API endpoint.'
+                end
+              end
             end
           end
         end
@@ -129,46 +195,58 @@ RSpec.shared_examples 'json api request errors' do |base_url_proc:, application_
         let(:type)   { 'object' }
         let(:params) { { data: { type: type } } }
 
-        data_requests.each do |verb, on|
-          context "#{verb.upcase} ##{on}" do
-            let(:verb) { verb }
-            let(:on)   { on }
+        data_requests.each do |verb, on, description|
+          path on == :collection ? base_path_template : "#{base_path_template}/{uuid}" do
+            public_send verb, description do
+              instance_exec on, &data_setup
 
-            it 'returns a JSON API 409 error' do
-              expect { perform_request }.not_to change { klass.count }
+              let(:verb) { verb }
+              let(:on)   { on }
 
-              expect(response.status).to eq 409
-              expect(error[:status]).to eq '409'
-              expect(error[:code]).to eq 'invalid_type'
-              expect(error[:title]).to eq 'Invalid Type'
-              expect(error[:detail]).to eq(
-                "The type provided (#{type}) is not the one supported by this API endpoint (#{
-                controller.class.valid_type})."
-              )
+              response 409, 'invalid type' do
+                schema json_schema_hash
+
+                run_test! do |response|
+                  expect(response.status).to eq 409
+                  expect(error[:status]).to eq '409'
+                  expect(error[:code]).to eq 'invalid_type'
+                  expect(error[:title]).to eq 'Invalid Type'
+                  expect(error[:detail]).to eq(
+                    "The type provided (#{type}) is not the one supported by this API endpoint (#{
+                    controller.class.valid_type})."
+                  )
+                end
+              end
             end
           end
         end
       end
 
       context 'with a valid type' do
-        let(:type)   { described_class.valid_type }
+        let(:type)   { valid_type }
 
         context 'with no id member' do
           let(:params) { { data: { type: type } } }
 
-          data_requests.reject { |verb, _| verb == :post }.each do |verb, on|
-            context "#{verb.upcase} ##{on}" do
-              let(:verb) { verb }
-              let(:on)   { on }
+          data_requests.reject { |verb, _| verb == :post }.each do |verb, on, description|
+            path on == :collection ? base_path_template : "#{base_path_template}/{uuid}" do
+              public_send verb, description do
+                instance_exec on, &data_setup
 
-              it 'returns a JSON API 400 error' do
-                expect { perform_request }.not_to change { klass.count }
+                let(:verb) { verb }
+                let(:on)   { on }
 
-                expect(response).to be_bad_request
-                expect(error[:status]).to eq '400'
-                expect(error[:code]).to eq 'missing_id'
-                expect(error[:title]).to eq 'Missing Id'
-                expect(error[:detail]).to eq 'The id member is required by this API endpoint.'
+                response 400, 'missing id' do
+                  schema json_schema_hash
+
+                  run_test! do |response|
+                    expect(response).to be_bad_request
+                    expect(error[:status]).to eq '400'
+                    expect(error[:code]).to eq 'missing_id'
+                    expect(error[:title]).to eq 'Missing Id'
+                    expect(error[:detail]).to eq 'The id member is required by this API endpoint.'
+                  end
+                end
               end
             end
           end
@@ -178,22 +256,28 @@ RSpec.shared_examples 'json api request errors' do |base_url_proc:, application_
           let(:body_id) { SecureRandom.uuid }
           let(:params)  { { data: { type: type, id: body_id } } }
 
-          data_requests.select { |_, on| on == :member }.each do |verb, on|
-            context "#{verb.upcase} ##{on}" do
-              let(:verb) { verb }
-              let(:on)   { on }
+          data_requests.select { |_, on| on == :member }.each do |verb, on, description|
+            path on == :collection ? base_path_template : "#{base_path_template}/{uuid}" do
+              public_send verb, description do
+                instance_exec on, &data_setup
 
-              it 'returns a JSON API 409 error' do
-                expect { perform_request }.not_to change { klass.count }
+                let(:verb) { verb }
+                let(:on)   { on }
 
-                expect(response.status).to eq 409
-                expect(error[:status]).to eq '409'
-                expect(error[:code]).to eq 'invalid_id'
-                expect(error[:title]).to eq 'Invalid Id'
-                expect(error[:detail]).to eq(
-                  "The id provided in the request body (#{body_id
-                  }) did not match the id provided in the API endpoint URL (#{uuid})."
-                )
+                response 409, 'invalid id' do
+                  schema json_schema_hash
+
+                  run_test! do |response|
+                    expect(response.status).to eq 409
+                    expect(error[:status]).to eq '409'
+                    expect(error[:code]).to eq 'invalid_id'
+                    expect(error[:title]).to eq 'Invalid Id'
+                    expect(error[:detail]).to eq(
+                      "The id provided in the request body (#{body_id
+                      }) did not match the id provided in the API endpoint URL (#{uuid})."
+                    )
+                  end
+                end
               end
             end
           end
@@ -202,19 +286,25 @@ RSpec.shared_examples 'json api request errors' do |base_url_proc:, application_
         context 'with an id that does not exist' do
           let(:params) { { data: { type: type, id: uuid } } }
 
-          data_requests.reject { |verb, _| verb == :post }.each do |verb, on|
-            context "#{verb.upcase} ##{on}" do
-              let(:verb) { verb }
-              let(:on)   { on }
+          data_requests.reject { |verb, _| verb == :post }.each do |verb, on, description|
+            path on == :collection ? base_path_template : "#{base_path_template}/{uuid}" do
+              public_send verb, description do
+                instance_exec on, &data_setup
 
-              it 'returns a JSON API 404 error' do
-                expect { perform_request }.not_to change { klass.count }
+                let(:verb) { verb }
+                let(:on)   { on }
 
-                expect(response).to be_not_found
-                expect(error[:status]).to eq '404'
-                expect(error[:code]).to eq 'not_found'
-                expect(error[:title]).to eq 'Not Found'
-                expect(error[:detail]).to eq "Couldn't find #{type.humanize}"
+                response 404, 'not found' do
+                  schema json_schema_hash
+
+                  run_test! do |response|
+                    expect(response).to be_not_found
+                    expect(error[:status]).to eq '404'
+                    expect(error[:code]).to eq 'not_found'
+                    expect(error[:title]).to eq 'Not Found'
+                    expect(error[:detail]).to eq "Couldn't find #{type.humanize}"
+                  end
+                end
               end
             end
           end
@@ -224,20 +314,25 @@ RSpec.shared_examples 'json api request errors' do |base_url_proc:, application_
           let!(:model) { FactoryBot.create type, uuid: uuid }
           let(:params) { { data: { type: type, id: uuid } } }
 
-          data_requests.reject { |verb, _| verb == :post }.each do |verb, on|
-            context "#{verb.upcase} ##{on}" do
-              let(:verb) { verb }
-              let(:on)   { on }
+          data_requests.reject { |verb, _| verb == :post }.each do |verb, on, description|
+            path on == :collection ? base_path_template : "#{base_path_template}/{uuid}" do
+              public_send verb, description do
+                instance_exec on, &data_setup
 
-              it 'returns a JSON API 404 error' do
-                expect { perform_request }.to  not_change { klass.count }
-                                          .and not_change { model.reload.attributes }
+                let(:verb) { verb }
+                let(:on)   { on }
 
-                expect(response).to be_not_found
-                expect(error[:status]).to eq '404'
-                expect(error[:code]).to eq 'not_found'
-                expect(error[:title]).to eq 'Not Found'
-                expect(error[:detail]).to eq "Couldn't find #{type.humanize}"
+                response 404, 'not visible' do
+                  schema json_schema_hash
+
+                  run_test! do |response|
+                    expect(response).to be_not_found
+                    expect(error[:status]).to eq '404'
+                    expect(error[:code]).to eq 'not_found'
+                    expect(error[:title]).to eq 'Not Found'
+                    expect(error[:detail]).to eq "Couldn't find #{type.humanize}"
+                  end
+                end
               end
             end
           end
@@ -258,20 +353,27 @@ RSpec.shared_examples 'json api request errors' do |base_url_proc:, application_
                 }
               end
 
-              data_requests.each do |verb, on|
-                context "#{verb.upcase} ##{on}" do
-                  let(:verb) { verb }
-                  let(:on)   { on }
+              data_requests.each do |verb, on, description|
+                path on == :collection ? base_path_template : "#{base_path_template}/{uuid}" do
+                  public_send verb, description do
+                    instance_exec on, &data_setup
 
-                  it 'returns a JSON API 400 error' do
-                    expect { perform_request }.to  not_change { klass.count }
-                                              .and not_change { model.reload.attributes }
+                    let(:verb) { verb }
+                    let(:on)   { on }
 
-                    expect(response).to be_bad_request
-                    expect(error[:status]).to eq '400'
-                    expect(error[:code]).to eq 'missing_data'
-                    expect(error[:title]).to eq 'Missing Data'
-                    expect(error[:detail]).to eq 'The data member is required by this API endpoint.'
+                    response 400, 'missing relationship data' do
+                      schema json_schema_hash
+
+                      run_test! do |response|
+                        expect(response).to be_bad_request
+                        expect(error[:status]).to eq '400'
+                        expect(error[:code]).to eq 'missing_data'
+                        expect(error[:title]).to eq 'Missing Data'
+                        expect(error[:detail]).to eq(
+                          'The data member is required by this API endpoint.'
+                        )
+                      end
+                    end
                   end
                 end
               end
@@ -289,22 +391,27 @@ RSpec.shared_examples 'json api request errors' do |base_url_proc:, application_
                   }
                 end
 
-                data_requests.each do |verb, on|
-                  context "#{verb.upcase} ##{on}" do
-                    let(:verb) { verb }
-                    let(:on)   { on }
+                data_requests.each do |verb, on, description|
+                  path on == :collection ? base_path_template : "#{base_path_template}/{uuid}" do
+                    public_send verb, description do
+                      instance_exec on, &data_setup
 
-                    it 'returns a JSON API 400 error' do
-                      expect { perform_request }.to  not_change { klass.count }
-                                                .and not_change { model.reload.attributes }
+                      let(:verb) { verb }
+                      let(:on)   { on }
 
-                      expect(response).to be_bad_request
-                      expect(error[:status]).to eq '400'
-                      expect(error[:code]).to eq 'missing_type'
-                      expect(error[:title]).to eq 'Missing Type'
-                      expect(error[:detail]).to eq(
-                        'The type member is required by this API endpoint.'
-                      )
+                      response 400, 'missing relationship type' do
+                        schema json_schema_hash
+
+                        run_test! do |response|
+                          expect(response).to be_bad_request
+                          expect(error[:status]).to eq '400'
+                          expect(error[:code]).to eq 'missing_type'
+                          expect(error[:title]).to eq 'Missing Type'
+                          expect(error[:detail]).to eq(
+                            'The type member is required by this API endpoint.'
+                          )
+                        end
+                      end
                     end
                   end
                 end
@@ -321,22 +428,28 @@ RSpec.shared_examples 'json api request errors' do |base_url_proc:, application_
                   }
                 end
 
-                data_requests.each do |verb, on|
-                  context "#{verb.upcase} ##{on}" do
-                    let(:verb) { verb }
-                    let(:on)   { on }
+                data_requests.each do |verb, on, description|
+                  path on == :collection ? base_path_template : "#{base_path_template}/{uuid}" do
+                    public_send verb, description do
+                      instance_exec on, &data_setup
 
-                    it 'returns a JSON API 409 error' do
-                      expect { perform_request }.to  not_change { klass.count }
-                                                .and not_change { model.reload.attributes }
+                      let(:verb) { verb }
+                      let(:on)   { on }
 
-                      expect(response.status).to eq 409
-                      expect(error[:status]).to eq '409'
-                      expect(error[:code]).to eq 'invalid_application_type'
-                      expect(error[:title]).to eq 'Invalid Application Type'
-                      expect(error[:detail]).to eq(
-                        'The type provided for the application relationship (resource) is invalid.'
-                      )
+                      response 409, 'invalid relationship type' do
+                        schema json_schema_hash
+
+                        run_test! do |response|
+                          expect(response.status).to eq 409
+                          expect(error[:status]).to eq '409'
+                          expect(error[:code]).to eq 'invalid_application_type'
+                          expect(error[:title]).to eq 'Invalid Application Type'
+                          expect(error[:detail]).to eq(
+                            'The type provided for the application' +
+                            ' relationship (resource) is invalid.'
+                          )
+                        end
+                      end
                     end
                   end
                 end
@@ -354,22 +467,27 @@ RSpec.shared_examples 'json api request errors' do |base_url_proc:, application_
                     }
                   end
 
-                  data_requests.each do |verb, on|
-                    context "#{verb.upcase} ##{on}" do
-                      let(:verb) { verb }
-                      let(:on)   { on }
+                  data_requests.each do |verb, on, description|
+                    path on == :collection ? base_path_template : "#{base_path_template}/{uuid}" do
+                      public_send verb, description do
+                        instance_exec on, &data_setup
 
-                      it 'returns a JSON API 400 error' do
-                        expect { perform_request }.to  not_change { klass.count }
-                                                  .and not_change { model.reload.attributes }
+                        let(:verb) { verb }
+                        let(:on)   { on }
 
-                        expect(response).to be_bad_request
-                        expect(error[:status]).to eq '400'
-                        expect(error[:code]).to eq 'missing_id'
-                        expect(error[:title]).to eq 'Missing Id'
-                        expect(error[:detail]).to eq(
-                          'The id member is required by this API endpoint.'
-                        )
+                        response 400, 'missing relationship id' do
+                          schema json_schema_hash
+
+                          run_test! do |response|
+                            expect(response).to be_bad_request
+                            expect(error[:status]).to eq '400'
+                            expect(error[:code]).to eq 'missing_id'
+                            expect(error[:title]).to eq 'Missing Id'
+                            expect(error[:detail]).to eq(
+                              'The id member is required by this API endpoint.'
+                            )
+                          end
+                        end
                       end
                     end
                   end
@@ -392,22 +510,28 @@ RSpec.shared_examples 'json api request errors' do |base_url_proc:, application_
               }
             end
 
-            data_requests.each do |verb, on|
-              context "#{verb.upcase} ##{on}" do
-                let(:verb) { verb }
-                let(:on)   { on }
+            data_requests.each do |verb, on, description|
+              path on == :collection ? base_path_template : "#{base_path_template}/{uuid}" do
+                public_send verb, description do
+                  instance_exec on, &data_setup
 
-                it 'returns a JSON API 403 error' do
-                  expect { perform_request }.to  not_change { klass.count }
-                                            .and not_change { model.reload.attributes }
+                  let(:verb) { verb }
+                  let(:on)   { on }
 
-                  expect(response).to be_forbidden
-                  expect(error[:status]).to eq '403'
-                  expect(error[:code]).to eq 'forbidden_application_id'
-                  expect(error[:title]).to eq 'Forbidden Application Id'
-                  expect(error[:detail]).to eq(
-                    "You are only allowed to provide your own application id (#{application.uuid})."
-                  )
+                  response 403, 'forbidden application id' do
+                    schema json_schema_hash
+
+                    run_test! do |response|
+                      expect(response).to be_forbidden
+                      expect(error[:status]).to eq '403'
+                      expect(error[:code]).to eq 'forbidden_application_id'
+                      expect(error[:title]).to eq 'Forbidden Application Id'
+                      expect(error[:detail]).to eq(
+                        "You are only allowed to provide your own application id (#{
+                        application.uuid})."
+                      )
+                    end
+                  end
                 end
               end
             end

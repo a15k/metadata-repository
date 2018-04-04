@@ -2,7 +2,7 @@ module JsonApiSchema
   extend ActiveSupport::Concern
 
   class_methods do
-    def json_schema(create: false)
+    def json_schema_hash(create: false)
       humanized_name = name.demodulize.chomp('Serializer').underscore.humanize
       attributes = attributes_to_serialize.keys
       relationships = relationships_to_serialize.keys
@@ -23,7 +23,7 @@ module JsonApiSchema
       json_api_schema['definitions']['relationships'].delete 'patternProperties'
       json_api_schema['definitions']['relationships']['propertyNames'] = { 'enum' => relationships }
 
-      json_api_schema.to_json
+      json_api_schema
     end
   end
 end

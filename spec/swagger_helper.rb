@@ -19,7 +19,14 @@ RSpec.configure do |config|
         title: 'Assessment Network Metadata API V1',
         version: 'v1'
       },
-      paths: {}
+      paths: {},
+      securityDefinitions: {
+        apiToken: {
+          type: :apiKey,
+          in: :header,
+          name: Api::JsonApiController::API_TOKEN_HEADER
+        }
+      }
     }
   }
 end
