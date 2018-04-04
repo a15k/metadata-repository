@@ -11,8 +11,8 @@ RSpec.describe Api::V1::ResourcesController, type: :request do
   include_examples 'json api request errors',
                    application_proc: -> { @application },
                    base_path_template: '/api/resources',
-                   valid_type: described_class.valid_type,
-                   json_schema_hash: Api::V1::ResourceSerializer.json_schema_hash
+                   json_schema_hash: Api::V1::ResourceSerializer.json_schema_hash,
+                   valid_type: described_class.valid_type
 
   context 'with valid Accept and API token headers' do
     let(:headers) do

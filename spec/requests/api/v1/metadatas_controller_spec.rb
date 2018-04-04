@@ -11,16 +11,16 @@ RSpec.describe Api::V1::MetadatasController, type: :request do
 
   include_examples 'json api request errors',
                    application_proc: -> { @application },
-                   base_path_template: '/api/resources/{resource_uuid}/metadatas',
-                   description_scope: 'for the given Resource',
-                   path_params_proc: -> do
-                     parameter name: :resource_uuid, in: :path, type: :string,
-                               description: "The associated Resource's UUID"
-
-                     let(:resource_uuid) { @resource.uuid }
-                   end,
+                   base_path_template: '/api/resources/{resource_id}/metadatas',
+                   json_schema_hash: Api::V1::MetadataSerializer.json_schema_hash,
                    valid_type: described_class.valid_type,
-                   json_schema_hash: Api::V1::MetadataSerializer.json_schema_hash
+                   id_scope: 'Resource',
+                   path_params_proc: -> do
+                     parameter name: :resource_id, in: :path, type: :string,
+                               description: "The associated Resource's Id"
+
+                     let(:resource_id) { @resource.uuid }
+                   end
 
   context 'with valid Accept and API token headers' do
     let(:headers) do

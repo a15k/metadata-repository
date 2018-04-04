@@ -5,21 +5,22 @@
     "version": "v1"
   },
   "paths": {
-    "/api/resources/{resource_uuid}/metadatas": {
+    "/api/resources/{resource_id}/metadatas": {
       "get": {
-        "summary": "List all Metadata for the given Resource created by the current application",
+        "summary": "List all Metadata created by the current application for the given Resource",
         "tags": [
           "Metadata"
         ],
+        "operationId": "getResourceMetadata",
         "produces": [
           "application/vnd.api.metadata.a15k.org+json"
         ],
         "parameters": [
           {
-            "name": "resource_uuid",
+            "name": "resource_id",
             "in": "path",
             "type": "string",
-            "description": "The associated Resource's UUID",
+            "description": "The associated Resource's Id",
             "required": true
           }
         ],
@@ -788,19 +789,20 @@
         ]
       },
       "post": {
-        "summary": "Create a new Metadata with a random UUID for the given Resource",
+        "summary": "Create a new Metadata with a random Id for the given Resource",
         "tags": [
           "Metadata"
         ],
+        "operationId": "createResourceMetadata",
         "produces": [
           "application/vnd.api.metadata.a15k.org+json"
         ],
         "parameters": [
           {
-            "name": "resource_uuid",
+            "name": "resource_id",
             "in": "path",
             "type": "string",
-            "description": "The associated Resource's UUID",
+            "description": "The associated Resource's Id",
             "required": true
           },
           {
@@ -2329,28 +2331,29 @@
         ]
       }
     },
-    "/api/resources/{resource_uuid}/metadatas/{uuid}": {
+    "/api/resources/{resource_id}/metadatas/{id}": {
       "get": {
-        "summary": "View the Metadata with the given UUID for the given Resource",
+        "summary": "View the Metadata with the given Id for the given Resource",
         "tags": [
           "Metadata"
         ],
+        "operationId": "getResourceMetadataWithId",
         "produces": [
           "application/vnd.api.metadata.a15k.org+json"
         ],
         "parameters": [
           {
-            "name": "uuid",
+            "name": "id",
             "in": "path",
             "type": "string",
-            "description": "The Metadata object's UUID",
+            "description": "The Metadata object's Id",
             "required": true
           },
           {
-            "name": "resource_uuid",
+            "name": "resource_id",
             "in": "path",
             "type": "string",
-            "description": "The associated Resource's UUID",
+            "description": "The associated Resource's Id",
             "required": true
           }
         ],
@@ -3119,26 +3122,27 @@
         ]
       },
       "delete": {
-        "summary": "Delete the Metadata with the given UUID for the given Resource",
+        "summary": "Delete the Metadata with the given Id for the given Resource",
         "tags": [
           "Metadata"
         ],
+        "operationId": "deleteResourceMetadataWithId",
         "produces": [
           "application/vnd.api.metadata.a15k.org+json"
         ],
         "parameters": [
           {
-            "name": "uuid",
+            "name": "id",
             "in": "path",
             "type": "string",
-            "description": "The Metadata object's UUID",
+            "description": "The Metadata object's Id",
             "required": true
           },
           {
-            "name": "resource_uuid",
+            "name": "resource_id",
             "in": "path",
             "type": "string",
-            "description": "The associated Resource's UUID",
+            "description": "The associated Resource's Id",
             "required": true
           }
         ],
@@ -3907,26 +3911,27 @@
         ]
       },
       "post": {
-        "summary": "Create a new Metadata with the given UUID for the given Resource",
+        "summary": "Create a new Metadata with the given Id for the given Resource",
         "tags": [
           "Metadata"
         ],
+        "operationId": "createResourceMetadataWithId",
         "produces": [
           "application/vnd.api.metadata.a15k.org+json"
         ],
         "parameters": [
           {
-            "name": "uuid",
+            "name": "id",
             "in": "path",
             "type": "string",
-            "description": "The Metadata object's UUID",
+            "description": "The Metadata object's Id",
             "required": true
           },
           {
-            "name": "resource_uuid",
+            "name": "resource_id",
             "in": "path",
             "type": "string",
-            "description": "The associated Resource's UUID",
+            "description": "The associated Resource's Id",
             "required": true
           },
           {
@@ -5455,26 +5460,27 @@
         ]
       },
       "put": {
-        "summary": "Update the Metadata with the given UUID for the given Resource",
+        "summary": "Update the Metadata with the given Id for the given Resource",
         "tags": [
           "Metadata"
         ],
+        "operationId": "updateResourceMetadataWithId",
         "produces": [
           "application/vnd.api.metadata.a15k.org+json"
         ],
         "parameters": [
           {
-            "name": "uuid",
+            "name": "id",
             "in": "path",
             "type": "string",
-            "description": "The Metadata object's UUID",
+            "description": "The Metadata object's Id",
             "required": true
           },
           {
-            "name": "resource_uuid",
+            "name": "resource_id",
             "in": "path",
             "type": "string",
-            "description": "The associated Resource's UUID",
+            "description": "The associated Resource's Id",
             "required": true
           },
           {
@@ -7381,26 +7387,27 @@
         ]
       },
       "patch": {
-        "summary": "Update the Metadata with the given UUID for the given Resource",
+        "summary": "Update the Metadata with the given Id for the given Resource",
         "tags": [
           "Metadata"
         ],
+        "operationId": "updateMetadataWithId",
         "produces": [
           "application/vnd.api.metadata.a15k.org+json"
         ],
         "parameters": [
           {
-            "name": "uuid",
+            "name": "id",
             "in": "path",
             "type": "string",
-            "description": "The Metadata object's UUID",
+            "description": "The Metadata object's Id",
             "required": true
           },
           {
-            "name": "resource_uuid",
+            "name": "resource_id",
             "in": "path",
             "type": "string",
-            "description": "The associated Resource's UUID",
+            "description": "The associated Resource's Id",
             "required": true
           },
           {
@@ -9313,6 +9320,7 @@
         "tags": [
           "Resource"
         ],
+        "operationId": "getResources",
         "produces": [
           "application/vnd.api.metadata.a15k.org+json"
         ],
@@ -10089,10 +10097,11 @@
         ]
       },
       "post": {
-        "summary": "Create a new Resource with a random UUID",
+        "summary": "Create a new Resource with a random Id",
         "tags": [
           "Resource"
         ],
+        "operationId": "createResource",
         "produces": [
           "application/vnd.api.metadata.a15k.org+json"
         ],
@@ -11639,21 +11648,22 @@
         ]
       }
     },
-    "/api/resources/{uuid}": {
+    "/api/resources/{id}": {
       "get": {
-        "summary": "View the Resource with the given UUID",
+        "summary": "View the Resource with the given Id",
         "tags": [
           "Resource"
         ],
+        "operationId": "getResourceWithId",
         "produces": [
           "application/vnd.api.metadata.a15k.org+json"
         ],
         "parameters": [
           {
-            "name": "uuid",
+            "name": "id",
             "in": "path",
             "type": "string",
-            "description": "The Resource object's UUID",
+            "description": "The Resource object's Id",
             "required": true
           }
         ],
@@ -12430,19 +12440,20 @@
         ]
       },
       "delete": {
-        "summary": "Delete the Resource with the given UUID",
+        "summary": "Delete the Resource with the given Id",
         "tags": [
           "Resource"
         ],
+        "operationId": "deleteResourceWithId",
         "produces": [
           "application/vnd.api.metadata.a15k.org+json"
         ],
         "parameters": [
           {
-            "name": "uuid",
+            "name": "id",
             "in": "path",
             "type": "string",
-            "description": "The Resource object's UUID",
+            "description": "The Resource object's Id",
             "required": true
           }
         ],
@@ -13219,19 +13230,20 @@
         ]
       },
       "post": {
-        "summary": "Create a new Resource with the given UUID",
+        "summary": "Create a new Resource with the given Id",
         "tags": [
           "Resource"
         ],
+        "operationId": "createResourceWithId",
         "produces": [
           "application/vnd.api.metadata.a15k.org+json"
         ],
         "parameters": [
           {
-            "name": "uuid",
+            "name": "id",
             "in": "path",
             "type": "string",
-            "description": "The Resource object's UUID",
+            "description": "The Resource object's Id",
             "required": true
           },
           {
@@ -14776,19 +14788,20 @@
         ]
       },
       "put": {
-        "summary": "Update the Resource with the given UUID",
+        "summary": "Update the Resource with the given Id",
         "tags": [
           "Resource"
         ],
+        "operationId": "updateResourceWithId",
         "produces": [
           "application/vnd.api.metadata.a15k.org+json"
         ],
         "parameters": [
           {
-            "name": "uuid",
+            "name": "id",
             "in": "path",
             "type": "string",
-            "description": "The Resource object's UUID",
+            "description": "The Resource object's Id",
             "required": true
           },
           {
@@ -16715,19 +16728,20 @@
         ]
       },
       "patch": {
-        "summary": "Update the Resource with the given UUID",
+        "summary": "Update the Resource with the given Id",
         "tags": [
           "Resource"
         ],
+        "operationId": "updateResourceWithId",
         "produces": [
           "application/vnd.api.metadata.a15k.org+json"
         ],
         "parameters": [
           {
-            "name": "uuid",
+            "name": "id",
             "in": "path",
             "type": "string",
-            "description": "The Resource object's UUID",
+            "description": "The Resource object's Id",
             "required": true
           },
           {
@@ -18654,21 +18668,22 @@
         ]
       }
     },
-    "/api/resources/{resource_uuid}/stats": {
+    "/api/resources/{resource_id}/stats": {
       "get": {
-        "summary": "List all Stats for the given Resource created by the current application",
+        "summary": "List all Stats created by the current application for the given Resource",
         "tags": [
           "Stats"
         ],
+        "operationId": "getResourceStats",
         "produces": [
           "application/vnd.api.metadata.a15k.org+json"
         ],
         "parameters": [
           {
-            "name": "resource_uuid",
+            "name": "resource_id",
             "in": "path",
             "type": "string",
-            "description": "The associated Resource's UUID",
+            "description": "The associated Resource's Id",
             "required": true
           }
         ],
@@ -19437,19 +19452,20 @@
         ]
       },
       "post": {
-        "summary": "Create a new Stats with a random UUID for the given Resource",
+        "summary": "Create a new Stats with a random Id for the given Resource",
         "tags": [
           "Stats"
         ],
+        "operationId": "createResourceStats",
         "produces": [
           "application/vnd.api.metadata.a15k.org+json"
         ],
         "parameters": [
           {
-            "name": "resource_uuid",
+            "name": "resource_id",
             "in": "path",
             "type": "string",
-            "description": "The associated Resource's UUID",
+            "description": "The associated Resource's Id",
             "required": true
           },
           {
@@ -20978,28 +20994,29 @@
         ]
       }
     },
-    "/api/resources/{resource_uuid}/stats/{uuid}": {
+    "/api/resources/{resource_id}/stats/{id}": {
       "get": {
-        "summary": "View the Stats with the given UUID for the given Resource",
+        "summary": "View the Stats with the given Id for the given Resource",
         "tags": [
           "Stats"
         ],
+        "operationId": "getResourceStatsWithId",
         "produces": [
           "application/vnd.api.metadata.a15k.org+json"
         ],
         "parameters": [
           {
-            "name": "uuid",
+            "name": "id",
             "in": "path",
             "type": "string",
-            "description": "The Stats object's UUID",
+            "description": "The Stats object's Id",
             "required": true
           },
           {
-            "name": "resource_uuid",
+            "name": "resource_id",
             "in": "path",
             "type": "string",
-            "description": "The associated Resource's UUID",
+            "description": "The associated Resource's Id",
             "required": true
           }
         ],
@@ -21768,26 +21785,27 @@
         ]
       },
       "delete": {
-        "summary": "Delete the Stats with the given UUID for the given Resource",
+        "summary": "Delete the Stats with the given Id for the given Resource",
         "tags": [
           "Stats"
         ],
+        "operationId": "deleteResourceStatsWithId",
         "produces": [
           "application/vnd.api.metadata.a15k.org+json"
         ],
         "parameters": [
           {
-            "name": "uuid",
+            "name": "id",
             "in": "path",
             "type": "string",
-            "description": "The Stats object's UUID",
+            "description": "The Stats object's Id",
             "required": true
           },
           {
-            "name": "resource_uuid",
+            "name": "resource_id",
             "in": "path",
             "type": "string",
-            "description": "The associated Resource's UUID",
+            "description": "The associated Resource's Id",
             "required": true
           }
         ],
@@ -22556,26 +22574,27 @@
         ]
       },
       "post": {
-        "summary": "Create a new Stats with the given UUID for the given Resource",
+        "summary": "Create a new Stats with the given Id for the given Resource",
         "tags": [
           "Stats"
         ],
+        "operationId": "createResourceStatsWithId",
         "produces": [
           "application/vnd.api.metadata.a15k.org+json"
         ],
         "parameters": [
           {
-            "name": "uuid",
+            "name": "id",
             "in": "path",
             "type": "string",
-            "description": "The Stats object's UUID",
+            "description": "The Stats object's Id",
             "required": true
           },
           {
-            "name": "resource_uuid",
+            "name": "resource_id",
             "in": "path",
             "type": "string",
-            "description": "The associated Resource's UUID",
+            "description": "The associated Resource's Id",
             "required": true
           },
           {
@@ -24104,26 +24123,27 @@
         ]
       },
       "put": {
-        "summary": "Update the Stats with the given UUID for the given Resource",
+        "summary": "Update the Stats with the given Id for the given Resource",
         "tags": [
           "Stats"
         ],
+        "operationId": "updateResourceStatsWithId",
         "produces": [
           "application/vnd.api.metadata.a15k.org+json"
         ],
         "parameters": [
           {
-            "name": "uuid",
+            "name": "id",
             "in": "path",
             "type": "string",
-            "description": "The Stats object's UUID",
+            "description": "The Stats object's Id",
             "required": true
           },
           {
-            "name": "resource_uuid",
+            "name": "resource_id",
             "in": "path",
             "type": "string",
-            "description": "The associated Resource's UUID",
+            "description": "The associated Resource's Id",
             "required": true
           },
           {
@@ -26030,26 +26050,27 @@
         ]
       },
       "patch": {
-        "summary": "Update the Stats with the given UUID for the given Resource",
+        "summary": "Update the Stats with the given Id for the given Resource",
         "tags": [
           "Stats"
         ],
+        "operationId": "updateStatsWithId",
         "produces": [
           "application/vnd.api.metadata.a15k.org+json"
         ],
         "parameters": [
           {
-            "name": "uuid",
+            "name": "id",
             "in": "path",
             "type": "string",
-            "description": "The Stats object's UUID",
+            "description": "The Stats object's Id",
             "required": true
           },
           {
-            "name": "resource_uuid",
+            "name": "resource_id",
             "in": "path",
             "type": "string",
-            "description": "The associated Resource's UUID",
+            "description": "The associated Resource's Id",
             "required": true
           },
           {
