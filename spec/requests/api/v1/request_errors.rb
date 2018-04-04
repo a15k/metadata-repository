@@ -1,12 +1,12 @@
-require 'rails_helper'
+require 'swagger_helper'
 
-RSpec.shared_examples 'json api request errors' do |application_proc:,
-                                                    base_path_template:,
-                                                    json_schema_hash:,
-                                                    valid_type:,
-                                                    id_scope: '',
-                                                    description_scope: nil,
-                                                    path_params_proc: -> {}|
+RSpec.shared_examples 'api v1 request errors' do |application_proc:,
+                                                  base_path_template:,
+                                                  json_schema_hash:,
+                                                  valid_type:,
+                                                  id_scope: '',
+                                                  description_scope: nil,
+                                                  path_params_proc: -> {}|
   class_name = valid_type.classify
   pluralized_class_name = class_name.pluralize
   description_scope ||= id_scope.blank? ? '' : "for the given #{id_scope}"

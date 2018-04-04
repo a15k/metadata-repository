@@ -1,4 +1,5 @@
 require 'swagger_helper'
+require_relative 'request_errors'
 
 RSpec.describe Api::V1::ResourcesController, type: :request do
 
@@ -8,7 +9,7 @@ RSpec.describe Api::V1::ResourcesController, type: :request do
     @other_application_resource = FactoryBot.create :resource
   end
 
-  include_examples 'json api request errors',
+  include_examples 'api v1 request errors',
                    application_proc: -> { @application },
                    base_path_template: '/api/resources',
                    json_schema_hash: Api::V1::ResourceSerializer.json_schema_hash,

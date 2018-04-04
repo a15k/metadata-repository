@@ -4,6 +4,13 @@
     "title": "Assessment Network Metadata API V1",
     "version": "v1"
   },
+  "securityDefinitions": {
+    "apiToken": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "Metadata-Api-Token"
+    }
+  },
   "paths": {
     "/api/resources/{resource_id}/metadatas": {
       "get": {
@@ -27976,13 +27983,6 @@
           "application/vnd.api.metadata.a15k.org+json"
         ]
       }
-    }
-  },
-  "securityDefinitions": {
-    "apiToken": {
-      "type": "apiKey",
-      "in": "header",
-      "name": "Metadata-Api-Token"
     }
   }
 }

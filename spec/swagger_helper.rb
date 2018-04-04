@@ -1,4 +1,5 @@
 require 'rails_helper'
+require 'requests/test_response'
 
 RSpec.configure do |config|
   # Specify a root folder where Swagger JSON files are generated
@@ -19,7 +20,6 @@ RSpec.configure do |config|
         title: 'Assessment Network Metadata API V1',
         version: 'v1'
       },
-      paths: {},
       securityDefinitions: {
         apiToken: {
           type: :apiKey,

@@ -1,4 +1,5 @@
 require 'swagger_helper'
+require_relative 'request_errors'
 
 RSpec.describe Api::V1::MetadatasController, type: :request do
 
@@ -9,7 +10,7 @@ RSpec.describe Api::V1::MetadatasController, type: :request do
     @other_application_metadata = FactoryBot.create :metadata
   end
 
-  include_examples 'json api request errors',
+  include_examples 'api v1 request errors',
                    application_proc: -> { @application },
                    base_path_template: '/api/resources/{resource_id}/metadatas',
                    json_schema_hash: Api::V1::MetadataSerializer.json_schema_hash,
