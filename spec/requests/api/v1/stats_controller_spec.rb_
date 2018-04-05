@@ -12,7 +12,7 @@ RSpec.describe Api::V1::StatsController, type: :request do
 
   include_examples 'api v1 request errors',
                    application_proc: -> { @application },
-                   base_path_template: '/api/resources/{resource_id}/stats',
+                   base_path_template: '/resources/{resource_id}/stats',
                    json_schema_hash: Api::V1::StatsSerializer.json_schema_hash,
                    valid_type: described_class.valid_type,
                    id_scope: 'Resource',

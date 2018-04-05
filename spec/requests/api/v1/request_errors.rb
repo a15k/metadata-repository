@@ -2,7 +2,7 @@ require 'swagger_helper'
 
 RSpec.shared_examples 'api v1 request errors' do |application_proc:,
                                                   base_path_template:,
-                                                  json_schema_hash:,
+                                                  schema_reference:,
                                                   valid_type:,
                                                   id_scope: '',
                                                   description_scope: nil,
@@ -59,6 +59,8 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
   ]
   requests = no_data_requests + data_requests
 
+  param_name = valid_type.to_sym
+
   let!(:application) { instance_exec &application_proc }
   let(:api_token)    { application.token }
 
@@ -66,9 +68,16 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
 
   let(:Accept)       { CONTENT_TYPE }
 
+  after do |example|
+    example.metadata[:response][:examples] = {
+      'application/json' => JSON.parse(response.body, symbolize_names: true)
+    }
+  end
+
   no_api_token_setup = ->(on, operation_id) do
     tags class_name
     operationId operation_id
+    schemes 'https'
     produces CONTENT_TYPE
     parameter name: :id, in: :path, type: :string,
               description: "The #{class_name} object's Id" if on == :member
@@ -81,7 +90,7 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
   data_setup = ->(on, operation_id) do
     instance_exec on, operation_id, &no_data_setup
     consumes CONTENT_TYPE
-    parameter name: :params, in: :body, schema: json_schema_hash
+    parameter name: param_name, in: :body, schema: schema_reference
   end
 
   context 'without an API token' do
@@ -94,7 +103,7 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
           let(:on)   { on }
 
           response 400, 'missing api token' do
-            schema json_schema_hash
+            schema schema_reference
 
             run_test! do |response|
               expect(response.errors.first[:status]).to eq '400'
@@ -124,7 +133,7 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
           let(:on)   { on }
 
           response 403, 'invalid api token' do
-            schema json_schema_hash
+            schema schema_reference
 
             run_test! do |response|
               expect(response.errors.first[:status]).to eq '403'
@@ -154,7 +163,7 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
             let(:on)   { on }
 
             response 400, 'missing data' do
-              schema json_schema_hash
+              schema schema_reference
 
               run_test! do |response|
                 expect(response.errors.first[:status]).to eq '400'
@@ -172,7 +181,7 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
 
     context 'with a data member' do
       context 'with no type member' do
-        let(:params) { { data: { attributes: { test: true } } } }
+        let(param_name) { { data: { attributes: { test: true } } } }
 
         data_requests.each do |verb, on, operation_id, description|
           path on == :collection ? base_path_template : "#{base_path_template}/{id}" do
@@ -183,7 +192,7 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
               let(:on)   { on }
 
               response 400, 'missing type' do
-                schema json_schema_hash
+                schema schema_reference
 
                 run_test! do |response|
                   expect(response.errors.first[:status]).to eq '400'
@@ -200,8 +209,8 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
       end
 
       context 'with an invalid type' do
-        let(:type)   { 'object' }
-        let(:params) { { data: { type: type } } }
+        let(:type)      { 'object' }
+        let(param_name) { { data: { type: type } } }
 
         data_requests.each do |verb, on, operation_id, description|
           path on == :collection ? base_path_template : "#{base_path_template}/{id}" do
@@ -212,7 +221,7 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
               let(:on)   { on }
 
               response 409, 'invalid type' do
-                schema json_schema_hash
+                schema schema_reference
 
                 run_test! do |response|
                   expect(response.errors.first[:status]).to eq '409'
@@ -233,7 +242,7 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
         let(:type)   { valid_type }
 
         context 'with no id member' do
-          let(:params) { { data: { type: type } } }
+          let(param_name) { { data: { type: type } } }
 
           data_requests.reject { |verb, _| verb == :post }
                        .each do |verb, on, operation_id, description|
@@ -245,7 +254,7 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
                 let(:on)   { on }
 
                 response 400, 'missing id' do
-                  schema json_schema_hash
+                  schema schema_reference
 
                   run_test! do |response|
                     expect(response.errors.first[:status]).to eq '400'
@@ -262,8 +271,8 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
         end
 
         context 'with an id that does not match the url id' do
-          let(:body_id) { SecureRandom.uuid }
-          let(:params)  { { data: { type: type, id: body_id } } }
+          let(:body_id)    { SecureRandom.uuid }
+          let(param_name)  { { data: { type: type, id: body_id } } }
 
           data_requests.select { |_, on| on == :member }
                        .each do |verb, on, operation_id, description|
@@ -275,7 +284,7 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
                 let(:on)   { on }
 
                 response 409, 'invalid id' do
-                  schema json_schema_hash
+                  schema schema_reference
 
                   run_test! do |response|
                     expect(response.errors.first[:status]).to eq '409'
@@ -293,7 +302,7 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
         end
 
         context 'with an id that does not exist' do
-          let(:params) { { data: { type: type, id: id } } }
+          let(param_name) { { data: { type: type, id: id } } }
 
           data_requests.reject { |verb, _| verb == :post }
                        .each do |verb, on, operation_id, description|
@@ -305,7 +314,7 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
                 let(:on)   { on }
 
                 response 404, 'not found' do
-                  schema json_schema_hash
+                  schema schema_reference
 
                   run_test! do |response|
                     expect(response.errors.first[:status]).to eq '404'
@@ -320,8 +329,8 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
         end
 
         context 'with an id that was created by a different application' do
-          let!(:model) { FactoryBot.create type, uuid: id }
-          let(:params) { { data: { type: type, id: id } } }
+          let!(:model)    { FactoryBot.create type, uuid: id }
+          let(param_name) { { data: { type: type, id: id } } }
 
           data_requests.reject { |verb, _| verb == :post }
                        .each do |verb, on, operation_id, description|
@@ -333,7 +342,7 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
                 let(:on)   { on }
 
                 response 404, 'not visible' do
-                  schema json_schema_hash
+                  schema schema_reference
 
                   run_test! do |response|
                     expect(response.errors.first[:status]).to eq '404'
@@ -352,7 +361,7 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
 
           context 'with a relationship' do
             context 'with no data member' do
-              let(:params) do
+              let(param_name) do
                 {
                   data: {
                     type: type,
@@ -371,7 +380,7 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
                     let(:on)   { on }
 
                     response 400, 'missing relationship data' do
-                      schema json_schema_hash
+                      schema schema_reference
 
                       run_test! do |response|
                         expect(response.errors.first[:status]).to eq '400'
@@ -389,7 +398,7 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
 
             context 'with a data member' do
               context 'with no type member' do
-                let(:params) do
+                let(param_name) do
                   {
                     data: {
                       type: type,
@@ -408,7 +417,7 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
                       let(:on)   { on }
 
                       response 400, 'missing relationship type' do
-                        schema json_schema_hash
+                        schema schema_reference
 
                         run_test! do |response|
                           expect(response.errors.first[:status]).to eq '400'
@@ -425,7 +434,7 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
               end
 
               context 'with an invalid type' do
-                let(:params) do
+                let(param_name) do
                   {
                     data: {
                       type: type,
@@ -444,7 +453,7 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
                       let(:on)   { on }
 
                       response 409, 'invalid relationship type' do
-                        schema json_schema_hash
+                        schema schema_reference
 
                         run_test! do |response|
                           expect(response.errors.first[:status]).to eq '409'
@@ -463,7 +472,7 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
 
               context 'with a valid type' do
                 context 'with no id member' do
-                  let(:params) do
+                  let(param_name) do
                     {
                       data: {
                         type: type,
@@ -482,7 +491,7 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
                         let(:on)   { on }
 
                         response 400, 'missing relationship id' do
-                          schema json_schema_hash
+                          schema schema_reference
 
                           run_test! do |response|
                             expect(response.errors.first[:status]).to eq '400'
@@ -503,7 +512,7 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
 
           context 'with an application relationship with a data member' +
                   ' with a valid type with a forbidden id' do
-            let(:params) do
+            let(param_name) do
               {
                 data: {
                   type: type,
@@ -524,7 +533,7 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
                   let(:on)   { on }
 
                   response 403, 'forbidden application id' do
-                    schema json_schema_hash
+                    schema schema_reference
 
                     run_test! do |response|
                       expect(response.errors.first[:status]).to eq '403'

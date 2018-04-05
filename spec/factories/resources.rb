@@ -5,7 +5,7 @@ FactoryBot.define do
     format
     language
     uuid          { SecureRandom.uuid }
-    uri           { Faker::Internet.url }
+    uri           { "https://example.com/assessments/#{uuid}" }
     resource_type 'assessment'
     content       { Faker::Lorem.words(10).join(' ') }
   end

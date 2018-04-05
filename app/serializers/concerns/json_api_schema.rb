@@ -4,11 +4,11 @@ module JsonApiSchema
   class_methods do
     def json_schema_hash(create: false)
       humanized_name = name.demodulize.chomp('Serializer').underscore.humanize
-      attributes = attributes_to_serialize.keys
-      relationships = relationships_to_serialize.keys
+      attributes = (attributes_to_serialize || {}).keys
+      relationships = (relationships_to_serialize || {}).keys
 
       # Load the generic json-api schema
-      json_api_schema_filepath = File.join Rails.root, 'vendor', 'schemas', 'json-api.schema.json'
+      json_api_schema_filepath = Rails.root.join 'vendor', 'schemas', 'json-api.schema.json'
       json_api_schema_file = File.open json_api_schema_filepath
       json_api_schema = JSON.parse json_api_schema_file
 
@@ -22,6 +22,10 @@ module JsonApiSchema
       json_api_schema['definitions']['relationships']['propertyNames'] = { 'enum' => relationships }
 
       json_api_schema
+    end
+
+    def json_schema(create: false)
+      json_schema_hash(create: create).to_json
     end
   end
 end

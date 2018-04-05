@@ -12,7 +12,7 @@ RSpec.describe Api::V1::MetadatasController, type: :request do
 
   include_examples 'api v1 request errors',
                    application_proc: -> { @application },
-                   base_path_template: '/api/resources/{resource_id}/metadatas',
+                   base_path_template: '/resources/{resource_id}/metadatas',
                    json_schema_hash: Api::V1::MetadataSerializer.json_schema_hash,
                    valid_type: described_class.valid_type,
                    id_scope: 'Resource',

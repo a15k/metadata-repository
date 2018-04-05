@@ -5,7 +5,7 @@ RSpec.configure do |config|
   # Specify a root folder where Swagger JSON files are generated
   # NOTE: If you're using the rswag-api to serve API descriptions, you'll need
   # to ensure that it's confiugred to server Swagger from the same folder
-  config.swagger_root = File.join Rails.root, 'swagger'
+  config.swagger_root = Rails.root.join 'swagger'
 
   # Define one or more Swagger documents and provide global metadata for each one
   # When you run the 'rswag:specs:to_swagger' rake task, the complete Swagger will
@@ -20,12 +20,16 @@ RSpec.configure do |config|
         title: 'Assessment Network Metadata API V1',
         version: 'v1'
       },
+      basePath: '/api',
       securityDefinitions: {
         apiToken: {
           type: :apiKey,
-          in: :header,
-          name: Api::JsonApiController::API_TOKEN_HEADER
+          name: Api::JsonApiController::API_TOKEN_HEADER,
+          in: :header
         }
+      },
+      definitions: {
+        resource: { '$ref': 'public/schemas/api/v1/resource.schema.json' }
       }
     }
   }
