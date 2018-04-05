@@ -19,6 +19,12 @@
 
 .byebug_history
 
+/public/packs
+/public/packs-test
+/node_modules
+yarn-debug.log*
+.yarn-integrity
+
 spec/examples.txt
 
 .DS_Store

@@ -38,6 +38,9 @@ gem 'fast_jsonapi'
 # API versioning
 gem 'versionist'
 
+# Webpack integration
+gem 'webpacker'
+
 # API docs
 gem 'rswag'
 
