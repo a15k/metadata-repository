@@ -195,7 +195,7 @@ RSpec.describe Api::V1::ResourcesController, type: :request do
         post 'Create a new Resource with a random Id' do
           instance_exec &create_collection_setup
 
-          response 201, 'resource created' do
+          response 201, 'Resource created' do
             schema resource_schema_reference
 
             run_test! { |response| expect(response.body_hash).to match expected_response }
@@ -213,7 +213,7 @@ RSpec.describe Api::V1::ResourcesController, type: :request do
         post 'Create a new Resource with a random Id' do
           instance_exec &create_collection_setup
 
-          response 409, 'resource uri already exists' do
+          response 409, 'Resource uri already exists' do
             schema resource_schema_reference
 
             run_test! do |response|
@@ -232,7 +232,7 @@ RSpec.describe Api::V1::ResourcesController, type: :request do
         instance_exec :member, &no_data_setup
         operationId 'getResourceWithId'
 
-        context 'when the resource was created by the current application' do
+        context 'when the Resource was created by the current application' do
           response 200, 'success' do
             schema resource_schema_reference
 
@@ -245,7 +245,7 @@ RSpec.describe Api::V1::ResourcesController, type: :request do
         end
       end
 
-      context 'when the resource does not exist or was created by a different application' do
+      context 'when the Resource does not exist or was created by a different application' do
         before(:all) do
           DatabaseCleaner.start
 
@@ -290,7 +290,7 @@ RSpec.describe Api::V1::ResourcesController, type: :request do
           post 'Create a new Resource with the given Id' do
             instance_exec &create_member_setup
 
-            response 409, 'resource uri already exists' do
+            response 409, 'Resource uri already exists' do
               schema resource_schema_reference
 
               run_test! do |response|
@@ -304,13 +304,13 @@ RSpec.describe Api::V1::ResourcesController, type: :request do
         end
       end
 
-      context 'when the resource already exists' do
+      context 'when the Resource already exists' do
         let(:resource) { Api::V1::ResourceSerializer.new(@resource).serializable_hash }
 
         post 'Create a new Resource with the given Id' do
           instance_exec &create_member_setup
 
-          response 409, 'resource uuid already exists' do
+          response 409, 'Resource uuid already exists' do
             schema resource_schema_reference
 
             run_test! do |response|
@@ -340,8 +340,8 @@ RSpec.describe Api::V1::ResourcesController, type: :request do
             end
           end
 
-          context 'when the resource was created by the current application' do
-            response 200, 'resource updated' do
+          context 'when the Resource was created by the current application' do
+            response 200, 'Resource updated' do
               schema resource_schema_reference
 
               run_test! do |response|
@@ -358,8 +358,8 @@ RSpec.describe Api::V1::ResourcesController, type: :request do
 
         after(:all) { @resource.reload }
 
-        context 'when the resource was created by the current application' do
-          response 200, 'resource deleted' do
+        context 'when the Resource was created by the current application' do
+          response 200, 'Resource deleted' do
             schema resource_schema_reference
 
             run_test! do |response|

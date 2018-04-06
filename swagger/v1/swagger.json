@@ -15,9 +15,1010 @@
   "definitions": {
     "resource": {
       "$ref": "public/schemas/api/v1/resource.schema.json"
+    },
+    "metadata": {
+      "$ref": "public/schemas/api/v1/metadata.schema.json"
+    },
+    "stats": {
+      "$ref": "public/schemas/api/v1/stats.schema.json"
     }
   },
   "paths": {
+    "/resources/{resource_id}/metadatas": {
+      "get": {
+        "summary": "List Metadatas created by the current application for the given Resource",
+        "tags": [
+          "Metadata"
+        ],
+        "operationId": "getResourceMetadatas",
+        "schemes": [
+          "https"
+        ],
+        "produces": [
+          "application/vnd.api.metadata.a15k.org+json"
+        ],
+        "parameters": [
+          {
+            "name": "resource_id",
+            "in": "path",
+            "type": "string",
+            "description": "The associated Resource's Id",
+            "required": true
+          },
+          {
+            "name": "Metadata-Api-Token",
+            "in": "header",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "missing api token",
+            "schema": {
+              "$ref": "#/definitions/metadata"
+            },
+            "examples": {
+              "application/json": {
+                "errors": [
+                  {
+                    "status": "400",
+                    "code": "missing_api_token",
+                    "title": "Missing API Token",
+                    "detail": "No API token was provided in the Metadata-Api-Token header."
+                  }
+                ]
+              }
+            }
+          },
+          "403": {
+            "description": "invalid api token",
+            "schema": {
+              "$ref": "#/definitions/metadata"
+            },
+            "examples": {
+              "application/json": {
+                "errors": [
+                  {
+                    "status": "403",
+                    "code": "invalid_api_token",
+                    "title": "Invalid API Token",
+                    "detail": "The API token provided in the Metadata-Api-Token header (1f29ff9da18fe85d6bdb8112ea3bdedcdd65cbd53e8f26160c43b3f235c3f1dd) is invalid."
+                  }
+                ]
+              }
+            }
+          },
+          "200": {
+            "description": "success",
+            "schema": {
+              "$ref": "#/definitions/metadata"
+            },
+            "examples": {
+              "application/json": {
+                "data": [
+                  {
+                    "id": "023ffeb7-a1ea-4435-93ab-18adc21d7603",
+                    "type": "metadata",
+                    "attributes": {
+                      "value": {
+                        "test": true
+                      }
+                    },
+                    "relationships": {
+                      "application": {
+                        "data": {
+                          "id": "c2eac97f-d77d-455d-8176-31e20ca37980",
+                          "type": "application"
+                        }
+                      },
+                      "application_user": {
+                        "data": {
+                          "id": "341abe95-116c-4878-bc18-eeed6d2c4c33",
+                          "type": "application_user"
+                        }
+                      },
+                      "resource": {
+                        "data": {
+                          "id": "8481e858-ef6e-4fc3-97cf-b175a6c259d2",
+                          "type": "resource"
+                        }
+                      },
+                      "format": {
+                        "data": {
+                          "id": "repellendus ea natus nihil ut cumque et laudantium dolorem ratione",
+                          "type": "format"
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiToken": []
+          }
+        ]
+      },
+      "post": {
+        "summary": "Create a new Metadata with a random Id for the given Resource",
+        "tags": [
+          "Metadata"
+        ],
+        "operationId": "createResourceMetadata",
+        "schemes": [
+          "https"
+        ],
+        "produces": [
+          "application/vnd.api.metadata.a15k.org+json"
+        ],
+        "parameters": [
+          {
+            "name": "resource_id",
+            "in": "path",
+            "type": "string",
+            "description": "The associated Resource's Id",
+            "required": true
+          },
+          {
+            "name": "metadata",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/metadata"
+            }
+          },
+          {
+            "name": "Metadata-Api-Token",
+            "in": "header",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "missing relationship id",
+            "schema": {
+              "$ref": "#/definitions/metadata"
+            },
+            "examples": {
+              "application/json": {
+                "errors": [
+                  {
+                    "status": "400",
+                    "code": "missing_id",
+                    "title": "Missing Id",
+                    "detail": "The id member is required by this API endpoint."
+                  }
+                ]
+              }
+            }
+          },
+          "403": {
+            "description": "forbidden application id",
+            "schema": {
+              "$ref": "#/definitions/metadata"
+            },
+            "examples": {
+              "application/json": {
+                "errors": [
+                  {
+                    "status": "403",
+                    "code": "forbidden_application_id",
+                    "title": "Forbidden Application Id",
+                    "detail": "You are only allowed to provide your own application id (c2eac97f-d77d-455d-8176-31e20ca37980)."
+                  }
+                ]
+              }
+            }
+          },
+          "409": {
+            "description": "invalid relationship type",
+            "schema": {
+              "$ref": "#/definitions/metadata"
+            },
+            "examples": {
+              "application/json": {
+                "errors": [
+                  {
+                    "status": "409",
+                    "code": "invalid_application_type",
+                    "title": "Invalid Application Type",
+                    "detail": "The type provided for the application relationship (resource) is invalid."
+                  }
+                ]
+              }
+            }
+          },
+          "201": {
+            "description": "Metadata created",
+            "schema": {
+              "$ref": "#/definitions/metadata"
+            },
+            "examples": {
+              "application/json": {
+                "data": {
+                  "id": "b0ab680a-d88e-42dc-b266-b3f947639baa",
+                  "type": "metadata",
+                  "attributes": {
+                    "value": {
+                      "test": true
+                    }
+                  },
+                  "relationships": {
+                    "application": {
+                      "data": {
+                        "id": "c2eac97f-d77d-455d-8176-31e20ca37980",
+                        "type": "application"
+                      }
+                    },
+                    "application_user": {
+                      "data": {
+                        "id": "341abe95-116c-4878-bc18-eeed6d2c4c33",
+                        "type": "application_user"
+                      }
+                    },
+                    "resource": {
+                      "data": {
+                        "id": "8481e858-ef6e-4fc3-97cf-b175a6c259d2",
+                        "type": "resource"
+                      }
+                    },
+                    "format": {
+                      "data": {
+                        "id": "repellendus ea natus nihil ut cumque et laudantium dolorem ratione",
+                        "type": "format"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiToken": []
+          }
+        ],
+        "consumes": [
+          "application/vnd.api.metadata.a15k.org+json"
+        ]
+      }
+    },
+    "/resources/{resource_id}/metadatas/{id}": {
+      "get": {
+        "summary": "View the Metadata with the given Id for the given Resource",
+        "tags": [
+          "Metadata"
+        ],
+        "operationId": "getResourceMetadataWithId",
+        "schemes": [
+          "https"
+        ],
+        "produces": [
+          "application/vnd.api.metadata.a15k.org+json"
+        ],
+        "parameters": [
+          {
+            "name": "resource_id",
+            "in": "path",
+            "type": "string",
+            "description": "The associated Resource's Id",
+            "required": true
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "description": "The Metadata object's Id",
+            "required": true
+          },
+          {
+            "name": "Metadata-Api-Token",
+            "in": "header",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "missing api token",
+            "schema": {
+              "$ref": "#/definitions/metadata"
+            },
+            "examples": {
+              "application/json": {
+                "errors": [
+                  {
+                    "status": "400",
+                    "code": "missing_api_token",
+                    "title": "Missing API Token",
+                    "detail": "No API token was provided in the Metadata-Api-Token header."
+                  }
+                ]
+              }
+            }
+          },
+          "403": {
+            "description": "invalid api token",
+            "schema": {
+              "$ref": "#/definitions/metadata"
+            },
+            "examples": {
+              "application/json": {
+                "errors": [
+                  {
+                    "status": "403",
+                    "code": "invalid_api_token",
+                    "title": "Invalid API Token",
+                    "detail": "The API token provided in the Metadata-Api-Token header (4a26037cee944759e9eb056c88195620ba7a2de9796fd39ecb0faaf284594c9f) is invalid."
+                  }
+                ]
+              }
+            }
+          },
+          "200": {
+            "description": "success",
+            "schema": {
+              "$ref": "#/definitions/metadata"
+            },
+            "examples": {
+              "application/json": {
+                "data": {
+                  "id": "023ffeb7-a1ea-4435-93ab-18adc21d7603",
+                  "type": "metadata",
+                  "attributes": {
+                    "value": {
+                      "test": true
+                    }
+                  },
+                  "relationships": {
+                    "application": {
+                      "data": {
+                        "id": "c2eac97f-d77d-455d-8176-31e20ca37980",
+                        "type": "application"
+                      }
+                    },
+                    "application_user": {
+                      "data": {
+                        "id": "341abe95-116c-4878-bc18-eeed6d2c4c33",
+                        "type": "application_user"
+                      }
+                    },
+                    "resource": {
+                      "data": {
+                        "id": "8481e858-ef6e-4fc3-97cf-b175a6c259d2",
+                        "type": "resource"
+                      }
+                    },
+                    "format": {
+                      "data": {
+                        "id": "repellendus ea natus nihil ut cumque et laudantium dolorem ratione",
+                        "type": "format"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiToken": []
+          }
+        ]
+      },
+      "delete": {
+        "summary": "Delete the Metadata with the given Id for the given Resource",
+        "tags": [
+          "Metadata"
+        ],
+        "operationId": "deleteResourceMetadataWithId",
+        "schemes": [
+          "https"
+        ],
+        "produces": [
+          "application/vnd.api.metadata.a15k.org+json"
+        ],
+        "parameters": [
+          {
+            "name": "resource_id",
+            "in": "path",
+            "type": "string",
+            "description": "The associated Resource's Id",
+            "required": true
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "description": "The Metadata object's Id",
+            "required": true
+          },
+          {
+            "name": "Metadata-Api-Token",
+            "in": "header",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "missing api token",
+            "schema": {
+              "$ref": "#/definitions/metadata"
+            },
+            "examples": {
+              "application/json": {
+                "errors": [
+                  {
+                    "status": "400",
+                    "code": "missing_api_token",
+                    "title": "Missing API Token",
+                    "detail": "No API token was provided in the Metadata-Api-Token header."
+                  }
+                ]
+              }
+            }
+          },
+          "403": {
+            "description": "invalid api token",
+            "schema": {
+              "$ref": "#/definitions/metadata"
+            },
+            "examples": {
+              "application/json": {
+                "errors": [
+                  {
+                    "status": "403",
+                    "code": "invalid_api_token",
+                    "title": "Invalid API Token",
+                    "detail": "The API token provided in the Metadata-Api-Token header (ec55b80b465779991e3122538c5666a7ed4a6697a1b189f7d473176244e0addf) is invalid."
+                  }
+                ]
+              }
+            }
+          },
+          "200": {
+            "description": "Metadata deleted",
+            "schema": {
+              "$ref": "#/definitions/metadata"
+            },
+            "examples": {
+              "application/json": {
+                "data": {
+                  "id": "023ffeb7-a1ea-4435-93ab-18adc21d7603",
+                  "type": "metadata",
+                  "attributes": {
+                    "value": {
+                      "test": true
+                    }
+                  },
+                  "relationships": {
+                    "application": {
+                      "data": {
+                        "id": "c2eac97f-d77d-455d-8176-31e20ca37980",
+                        "type": "application"
+                      }
+                    },
+                    "application_user": {
+                      "data": {
+                        "id": "341abe95-116c-4878-bc18-eeed6d2c4c33",
+                        "type": "application_user"
+                      }
+                    },
+                    "resource": {
+                      "data": {
+                        "id": "8481e858-ef6e-4fc3-97cf-b175a6c259d2",
+                        "type": "resource"
+                      }
+                    },
+                    "format": {
+                      "data": {
+                        "id": "repellendus ea natus nihil ut cumque et laudantium dolorem ratione",
+                        "type": "format"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiToken": []
+          }
+        ]
+      },
+      "post": {
+        "summary": "Create a new Metadata with the given Id for the given Resource",
+        "tags": [
+          "Metadata"
+        ],
+        "operationId": "createResourceMetadataWithId",
+        "schemes": [
+          "https"
+        ],
+        "produces": [
+          "application/vnd.api.metadata.a15k.org+json"
+        ],
+        "parameters": [
+          {
+            "name": "resource_id",
+            "in": "path",
+            "type": "string",
+            "description": "The associated Resource's Id",
+            "required": true
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "description": "The Metadata object's Id",
+            "required": true
+          },
+          {
+            "name": "metadata",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/metadata"
+            }
+          },
+          {
+            "name": "Metadata-Api-Token",
+            "in": "header",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "missing relationship id",
+            "schema": {
+              "$ref": "#/definitions/metadata"
+            },
+            "examples": {
+              "application/json": {
+                "errors": [
+                  {
+                    "status": "400",
+                    "code": "missing_id",
+                    "title": "Missing Id",
+                    "detail": "The id member is required by this API endpoint."
+                  }
+                ]
+              }
+            }
+          },
+          "403": {
+            "description": "forbidden application id",
+            "schema": {
+              "$ref": "#/definitions/metadata"
+            },
+            "examples": {
+              "application/json": {
+                "errors": [
+                  {
+                    "status": "403",
+                    "code": "forbidden_application_id",
+                    "title": "Forbidden Application Id",
+                    "detail": "You are only allowed to provide your own application id (c2eac97f-d77d-455d-8176-31e20ca37980)."
+                  }
+                ]
+              }
+            }
+          },
+          "409": {
+            "description": "Metadata uuid already exists",
+            "schema": {
+              "$ref": "#/definitions/metadata"
+            },
+            "examples": {
+              "application/json": {
+                "errors": [
+                  {
+                    "status": "409",
+                    "code": "uuid_has_already_been_taken",
+                    "title": "Metadata Invalid",
+                    "detail": "Uuid has already been taken."
+                  }
+                ]
+              }
+            }
+          },
+          "201": {
+            "description": "Metadata created",
+            "schema": {
+              "$ref": "#/definitions/metadata"
+            },
+            "examples": {
+              "application/json": {
+                "data": {
+                  "id": "023ffeb7-a1ea-4435-93ab-18adc21d7603",
+                  "type": "metadata",
+                  "attributes": {
+                    "value": {
+                      "test": true
+                    }
+                  },
+                  "relationships": {
+                    "application": {
+                      "data": {
+                        "id": "c2eac97f-d77d-455d-8176-31e20ca37980",
+                        "type": "application"
+                      }
+                    },
+                    "application_user": {
+                      "data": {
+                        "id": "341abe95-116c-4878-bc18-eeed6d2c4c33",
+                        "type": "application_user"
+                      }
+                    },
+                    "resource": {
+                      "data": {
+                        "id": "8481e858-ef6e-4fc3-97cf-b175a6c259d2",
+                        "type": "resource"
+                      }
+                    },
+                    "format": {
+                      "data": {
+                        "id": "repellendus ea natus nihil ut cumque et laudantium dolorem ratione",
+                        "type": "format"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiToken": []
+          }
+        ],
+        "consumes": [
+          "application/vnd.api.metadata.a15k.org+json"
+        ]
+      },
+      "put": {
+        "summary": "Update the Metadata with the given Id for the given Resource",
+        "tags": [
+          "Metadata"
+        ],
+        "operationId": "updateResourceMetadataWithId",
+        "schemes": [
+          "https"
+        ],
+        "produces": [
+          "application/vnd.api.metadata.a15k.org+json"
+        ],
+        "parameters": [
+          {
+            "name": "resource_id",
+            "in": "path",
+            "type": "string",
+            "description": "The associated Resource's Id",
+            "required": true
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "description": "The Metadata object's Id",
+            "required": true
+          },
+          {
+            "name": "metadata",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/metadata"
+            }
+          },
+          {
+            "name": "Metadata-Api-Token",
+            "in": "header",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "missing relationship id",
+            "schema": {
+              "$ref": "#/definitions/metadata"
+            },
+            "examples": {
+              "application/json": {
+                "errors": [
+                  {
+                    "status": "400",
+                    "code": "missing_id",
+                    "title": "Missing Id",
+                    "detail": "The id member is required by this API endpoint."
+                  }
+                ]
+              }
+            }
+          },
+          "403": {
+            "description": "forbidden application id",
+            "schema": {
+              "$ref": "#/definitions/metadata"
+            },
+            "examples": {
+              "application/json": {
+                "errors": [
+                  {
+                    "status": "403",
+                    "code": "forbidden_application_id",
+                    "title": "Forbidden Application Id",
+                    "detail": "You are only allowed to provide your own application id (c2eac97f-d77d-455d-8176-31e20ca37980)."
+                  }
+                ]
+              }
+            }
+          },
+          "409": {
+            "description": "invalid relationship type",
+            "schema": {
+              "$ref": "#/definitions/metadata"
+            },
+            "examples": {
+              "application/json": {
+                "errors": [
+                  {
+                    "status": "409",
+                    "code": "invalid_application_type",
+                    "title": "Invalid Application Type",
+                    "detail": "The type provided for the application relationship (resource) is invalid."
+                  }
+                ]
+              }
+            }
+          },
+          "404": {
+            "description": "not visible",
+            "schema": {
+              "$ref": "#/definitions/metadata"
+            },
+            "examples": {
+              "application/json": {
+                "errors": [
+                  {
+                    "status": "404",
+                    "code": "not_found",
+                    "title": "Not Found",
+                    "detail": "Couldn't find Metadata"
+                  }
+                ]
+              }
+            }
+          },
+          "200": {
+            "description": "Metadata updated",
+            "schema": {
+              "$ref": "#/definitions/metadata"
+            },
+            "examples": {
+              "application/json": {
+                "data": {
+                  "id": "023ffeb7-a1ea-4435-93ab-18adc21d7603",
+                  "type": "metadata",
+                  "attributes": {
+                    "value": {
+                      "test": true
+                    }
+                  },
+                  "relationships": {
+                    "application": {
+                      "data": {
+                        "id": "c2eac97f-d77d-455d-8176-31e20ca37980",
+                        "type": "application"
+                      }
+                    },
+                    "application_user": {
+                      "data": null
+                    },
+                    "resource": {
+                      "data": {
+                        "id": "8481e858-ef6e-4fc3-97cf-b175a6c259d2",
+                        "type": "resource"
+                      }
+                    },
+                    "format": {
+                      "data": {
+                        "id": "aperiam deserunt atque distinctio earum eligendi temporibus eum officia quisquam",
+                        "type": "format"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiToken": []
+          }
+        ],
+        "consumes": [
+          "application/vnd.api.metadata.a15k.org+json"
+        ]
+      },
+      "patch": {
+        "summary": "Update the Metadata with the given Id for the given Resource",
+        "tags": [
+          "Metadata"
+        ],
+        "operationId": "updateResourceMetadataWithId",
+        "schemes": [
+          "https"
+        ],
+        "produces": [
+          "application/vnd.api.metadata.a15k.org+json"
+        ],
+        "parameters": [
+          {
+            "name": "resource_id",
+            "in": "path",
+            "type": "string",
+            "description": "The associated Resource's Id",
+            "required": true
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "description": "The Metadata object's Id",
+            "required": true
+          },
+          {
+            "name": "metadata",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/metadata"
+            }
+          },
+          {
+            "name": "Metadata-Api-Token",
+            "in": "header",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "missing relationship id",
+            "schema": {
+              "$ref": "#/definitions/metadata"
+            },
+            "examples": {
+              "application/json": {
+                "errors": [
+                  {
+                    "status": "400",
+                    "code": "missing_id",
+                    "title": "Missing Id",
+                    "detail": "The id member is required by this API endpoint."
+                  }
+                ]
+              }
+            }
+          },
+          "403": {
+            "description": "forbidden application id",
+            "schema": {
+              "$ref": "#/definitions/metadata"
+            },
+            "examples": {
+              "application/json": {
+                "errors": [
+                  {
+                    "status": "403",
+                    "code": "forbidden_application_id",
+                    "title": "Forbidden Application Id",
+                    "detail": "You are only allowed to provide your own application id (c2eac97f-d77d-455d-8176-31e20ca37980)."
+                  }
+                ]
+              }
+            }
+          },
+          "409": {
+            "description": "invalid relationship type",
+            "schema": {
+              "$ref": "#/definitions/metadata"
+            },
+            "examples": {
+              "application/json": {
+                "errors": [
+                  {
+                    "status": "409",
+                    "code": "invalid_application_type",
+                    "title": "Invalid Application Type",
+                    "detail": "The type provided for the application relationship (resource) is invalid."
+                  }
+                ]
+              }
+            }
+          },
+          "404": {
+            "description": "not visible",
+            "schema": {
+              "$ref": "#/definitions/metadata"
+            },
+            "examples": {
+              "application/json": {
+                "errors": [
+                  {
+                    "status": "404",
+                    "code": "not_found",
+                    "title": "Not Found",
+                    "detail": "Couldn't find Metadata"
+                  }
+                ]
+              }
+            }
+          },
+          "200": {
+            "description": "Metadata updated",
+            "schema": {
+              "$ref": "#/definitions/metadata"
+            },
+            "examples": {
+              "application/json": {
+                "data": {
+                  "id": "023ffeb7-a1ea-4435-93ab-18adc21d7603",
+                  "type": "metadata",
+                  "attributes": {
+                    "value": {
+                      "test": true
+                    }
+                  },
+                  "relationships": {
+                    "application": {
+                      "data": {
+                        "id": "c2eac97f-d77d-455d-8176-31e20ca37980",
+                        "type": "application"
+                      }
+                    },
+                    "application_user": {
+                      "data": null
+                    },
+                    "resource": {
+                      "data": {
+                        "id": "8481e858-ef6e-4fc3-97cf-b175a6c259d2",
+                        "type": "resource"
+                      }
+                    },
+                    "format": {
+                      "data": {
+                        "id": "aperiam deserunt atque distinctio earum eligendi temporibus eum officia quisquam",
+                        "type": "format"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiToken": []
+          }
+        ],
+        "consumes": [
+          "application/vnd.api.metadata.a15k.org+json"
+        ]
+      }
+    },
     "/resources": {
       "get": {
         "summary": "List Resources created by the current application",
@@ -62,7 +1063,7 @@
                     "status": "403",
                     "code": "invalid_api_token",
                     "title": "Invalid API Token",
-                    "detail": "The API token provided in the Metadata-Api-Token header (efe5b709540dcf17cd2d034718da32bcb1ceb338f5d2940487bbc0057a340b4a) is invalid."
+                    "detail": "The API token provided in the Metadata-Api-Token header (9d8b11d0573bf1405bd604297f67eb3d122252d38ed319da7db729ee0b83079a) is invalid."
                   }
                 ]
               }
@@ -77,10 +1078,10 @@
               "application/json": {
                 "data": [
                   {
-                    "id": "7d1ea827-432b-4dd6-bd0f-7dbf19c6d7ac",
+                    "id": "19f53877-8eb2-45ad-9ea5-8d7032ed1c63",
                     "type": "resource",
                     "attributes": {
-                      "uri": "https://example.com/assessments/7d1ea827-432b-4dd6-bd0f-7dbf19c6d7ac",
+                      "uri": "https://example.com/assessments/19f53877-8eb2-45ad-9ea5-8d7032ed1c63",
                       "resource_type": "assessment",
                       "title": "The fox and the dog",
                       "content": "The quick brown fox jumps over the lazy dog.",
@@ -89,19 +1090,19 @@
                     "relationships": {
                       "application": {
                         "data": {
-                          "id": "318224d1-912a-428e-a153-a702f07334b1",
+                          "id": "901375b9-824a-4038-a1b1-d479d3cf7419",
                           "type": "application"
                         }
                       },
                       "application_user": {
                         "data": {
-                          "id": "32407595-5892-43e2-a5c0-ff3cedca0957",
+                          "id": "cdb6e665-52dc-43c7-93e5-421ab82fdb50",
                           "type": "application_user"
                         }
                       },
                       "format": {
                         "data": {
-                          "id": "sunt repellat architecto iure veniam dicta in adipisci cumque perspiciatis",
+                          "id": "vel eius veniam aperiam illum quia et aut et ratione",
                           "type": "format"
                         }
                       },
@@ -189,14 +1190,14 @@
                     "status": "403",
                     "code": "forbidden_application_id",
                     "title": "Forbidden Application Id",
-                    "detail": "You are only allowed to provide your own application id (318224d1-912a-428e-a153-a702f07334b1)."
+                    "detail": "You are only allowed to provide your own application id (901375b9-824a-4038-a1b1-d479d3cf7419)."
                   }
                 ]
               }
             }
           },
           "409": {
-            "description": "resource uri already exists",
+            "description": "Resource uri already exists",
             "schema": {
               "$ref": "#/definitions/resource"
             },
@@ -214,44 +1215,44 @@
             }
           },
           "201": {
-            "description": "resource created",
+            "description": "Resource created",
             "schema": {
               "$ref": "#/definitions/resource"
             },
             "examples": {
               "application/json": {
                 "data": {
-                  "id": "4520bd55-e2f0-46b0-b679-e67943f9658d",
+                  "id": "11beee35-d8ca-45bd-98b1-1a6b5d09d8ff",
                   "type": "resource",
                   "attributes": {
-                    "uri": "https://example.com/assessments/34b351f5-1576-4772-80c7-612d69f7760b",
+                    "uri": "https://example.com/assessments/57e3c370-8421-44a7-9328-a819fee36fe4",
                     "resource_type": "assessment",
                     "title": null,
-                    "content": "iusto consequuntur maiores voluptas doloribus optio non nemo occaecati et",
+                    "content": "harum sint voluptatibus velit assumenda adipisci nisi beatae sed et",
                     "highlight": null
                   },
                   "relationships": {
                     "application": {
                       "data": {
-                        "id": "318224d1-912a-428e-a153-a702f07334b1",
+                        "id": "901375b9-824a-4038-a1b1-d479d3cf7419",
                         "type": "application"
                       }
                     },
                     "application_user": {
                       "data": {
-                        "id": "c6e8a544-1034-4a77-9307-d7617e18891b",
+                        "id": "1425e4b3-c8e4-42a2-ba2c-dcb7f0720550",
                         "type": "application_user"
                       }
                     },
                     "format": {
                       "data": {
-                        "id": "quis ut atque vero sapiente qui pariatur adipisci maiores rerum",
+                        "id": "possimus laborum voluptatibus omnis nihil ea vel beatae hic ut",
                         "type": "format"
                       }
                     },
                     "language": {
                       "data": {
-                        "id": "porro voluptatem ex dolorem tempore eum asperiores debitis pariatur accusantium",
+                        "id": "eveniet adipisci nobis sed sunt soluta est qui aut aspernatur",
                         "type": "language"
                       }
                     }
@@ -345,7 +1346,7 @@
                     "status": "403",
                     "code": "invalid_api_token",
                     "title": "Invalid API Token",
-                    "detail": "The API token provided in the Metadata-Api-Token header (67c8c27f316fcc7aeff9390e5fa304c9791d3404026233979069aa87808e92f4) is invalid."
+                    "detail": "The API token provided in the Metadata-Api-Token header (25c9dc5504a49ab1631157ed7867cf518a447c828de00d53491806a8bd331b8f) is invalid."
                   }
                 ]
               }
@@ -359,37 +1360,37 @@
             "examples": {
               "application/json": {
                 "data": {
-                  "id": "989cde17-d668-4cf8-b138-1af86667fc59",
+                  "id": "0762955c-696c-4fd1-a9b2-c4e66d6552bf",
                   "type": "resource",
                   "attributes": {
-                    "uri": "https://example.com/assessments/989cde17-d668-4cf8-b138-1af86667fc59",
+                    "uri": "https://example.com/assessments/0762955c-696c-4fd1-a9b2-c4e66d6552bf",
                     "resource_type": "assessment",
                     "title": null,
-                    "content": "iusto consequuntur maiores voluptas doloribus optio non nemo occaecati et",
+                    "content": "harum sint voluptatibus velit assumenda adipisci nisi beatae sed et",
                     "highlight": null
                   },
                   "relationships": {
                     "application": {
                       "data": {
-                        "id": "318224d1-912a-428e-a153-a702f07334b1",
+                        "id": "901375b9-824a-4038-a1b1-d479d3cf7419",
                         "type": "application"
                       }
                     },
                     "application_user": {
                       "data": {
-                        "id": "c6e8a544-1034-4a77-9307-d7617e18891b",
+                        "id": "1425e4b3-c8e4-42a2-ba2c-dcb7f0720550",
                         "type": "application_user"
                       }
                     },
                     "format": {
                       "data": {
-                        "id": "quis ut atque vero sapiente qui pariatur adipisci maiores rerum",
+                        "id": "possimus laborum voluptatibus omnis nihil ea vel beatae hic ut",
                         "type": "format"
                       }
                     },
                     "language": {
                       "data": {
-                        "id": "porro voluptatem ex dolorem tempore eum asperiores debitis pariatur accusantium",
+                        "id": "eveniet adipisci nobis sed sunt soluta est qui aut aspernatur",
                         "type": "language"
                       }
                     }
@@ -463,51 +1464,51 @@
                     "status": "403",
                     "code": "invalid_api_token",
                     "title": "Invalid API Token",
-                    "detail": "The API token provided in the Metadata-Api-Token header (7d7bcba9172af5fda232838f2cf0d238bebc14ad7c54c7eca55e433d79811e5b) is invalid."
+                    "detail": "The API token provided in the Metadata-Api-Token header (fce9b40a4b315e8e69a4178513879a2dd33e78b3878943cfdf319c4c737521bd) is invalid."
                   }
                 ]
               }
             }
           },
           "200": {
-            "description": "resource deleted",
+            "description": "Resource deleted",
             "schema": {
               "$ref": "#/definitions/resource"
             },
             "examples": {
               "application/json": {
                 "data": {
-                  "id": "989cde17-d668-4cf8-b138-1af86667fc59",
+                  "id": "0762955c-696c-4fd1-a9b2-c4e66d6552bf",
                   "type": "resource",
                   "attributes": {
-                    "uri": "https://example.com/assessments/989cde17-d668-4cf8-b138-1af86667fc59",
+                    "uri": "https://example.com/assessments/0762955c-696c-4fd1-a9b2-c4e66d6552bf",
                     "resource_type": "assessment",
                     "title": null,
-                    "content": "iusto consequuntur maiores voluptas doloribus optio non nemo occaecati et",
+                    "content": "harum sint voluptatibus velit assumenda adipisci nisi beatae sed et",
                     "highlight": null
                   },
                   "relationships": {
                     "application": {
                       "data": {
-                        "id": "318224d1-912a-428e-a153-a702f07334b1",
+                        "id": "901375b9-824a-4038-a1b1-d479d3cf7419",
                         "type": "application"
                       }
                     },
                     "application_user": {
                       "data": {
-                        "id": "c6e8a544-1034-4a77-9307-d7617e18891b",
+                        "id": "1425e4b3-c8e4-42a2-ba2c-dcb7f0720550",
                         "type": "application_user"
                       }
                     },
                     "format": {
                       "data": {
-                        "id": "quis ut atque vero sapiente qui pariatur adipisci maiores rerum",
+                        "id": "possimus laborum voluptatibus omnis nihil ea vel beatae hic ut",
                         "type": "format"
                       }
                     },
                     "language": {
                       "data": {
-                        "id": "porro voluptatem ex dolorem tempore eum asperiores debitis pariatur accusantium",
+                        "id": "eveniet adipisci nobis sed sunt soluta est qui aut aspernatur",
                         "type": "language"
                       }
                     }
@@ -588,14 +1589,14 @@
                     "status": "403",
                     "code": "forbidden_application_id",
                     "title": "Forbidden Application Id",
-                    "detail": "You are only allowed to provide your own application id (318224d1-912a-428e-a153-a702f07334b1)."
+                    "detail": "You are only allowed to provide your own application id (901375b9-824a-4038-a1b1-d479d3cf7419)."
                   }
                 ]
               }
             }
           },
           "409": {
-            "description": "resource uuid already exists",
+            "description": "Resource uuid already exists",
             "schema": {
               "$ref": "#/definitions/resource"
             },
@@ -626,37 +1627,37 @@
             "examples": {
               "application/json": {
                 "data": {
-                  "id": "989cde17-d668-4cf8-b138-1af86667fc59",
+                  "id": "0762955c-696c-4fd1-a9b2-c4e66d6552bf",
                   "type": "resource",
                   "attributes": {
-                    "uri": "https://example.com/assessments/989cde17-d668-4cf8-b138-1af86667fc59",
+                    "uri": "https://example.com/assessments/0762955c-696c-4fd1-a9b2-c4e66d6552bf",
                     "resource_type": "assessment",
                     "title": null,
-                    "content": "iusto consequuntur maiores voluptas doloribus optio non nemo occaecati et",
+                    "content": "harum sint voluptatibus velit assumenda adipisci nisi beatae sed et",
                     "highlight": null
                   },
                   "relationships": {
                     "application": {
                       "data": {
-                        "id": "318224d1-912a-428e-a153-a702f07334b1",
+                        "id": "901375b9-824a-4038-a1b1-d479d3cf7419",
                         "type": "application"
                       }
                     },
                     "application_user": {
                       "data": {
-                        "id": "c6e8a544-1034-4a77-9307-d7617e18891b",
+                        "id": "1425e4b3-c8e4-42a2-ba2c-dcb7f0720550",
                         "type": "application_user"
                       }
                     },
                     "format": {
                       "data": {
-                        "id": "quis ut atque vero sapiente qui pariatur adipisci maiores rerum",
+                        "id": "possimus laborum voluptatibus omnis nihil ea vel beatae hic ut",
                         "type": "format"
                       }
                     },
                     "language": {
                       "data": {
-                        "id": "porro voluptatem ex dolorem tempore eum asperiores debitis pariatur accusantium",
+                        "id": "eveniet adipisci nobis sed sunt soluta est qui aut aspernatur",
                         "type": "language"
                       }
                     }
@@ -740,7 +1741,7 @@
                     "status": "403",
                     "code": "forbidden_application_id",
                     "title": "Forbidden Application Id",
-                    "detail": "You are only allowed to provide your own application id (318224d1-912a-428e-a153-a702f07334b1)."
+                    "detail": "You are only allowed to provide your own application id (901375b9-824a-4038-a1b1-d479d3cf7419)."
                   }
                 ]
               }
@@ -783,26 +1784,26 @@
             }
           },
           "200": {
-            "description": "resource updated",
+            "description": "Resource updated",
             "schema": {
               "$ref": "#/definitions/resource"
             },
             "examples": {
               "application/json": {
                 "data": {
-                  "id": "989cde17-d668-4cf8-b138-1af86667fc59",
+                  "id": "0762955c-696c-4fd1-a9b2-c4e66d6552bf",
                   "type": "resource",
                   "attributes": {
-                    "uri": "https://example.com/assessments/48fbc732-1af8-47d9-98fb-44f963245c90",
+                    "uri": "https://example.com/assessments/f2103427-af92-4a2f-b871-1f220442d60b",
                     "resource_type": "assessment",
                     "title": null,
-                    "content": "laudantium et non illum repudiandae impedit id accusantium assumenda odit",
+                    "content": "placeat aliquid nisi ea dolores ipsam eius quod doloremque sed",
                     "highlight": null
                   },
                   "relationships": {
                     "application": {
                       "data": {
-                        "id": "318224d1-912a-428e-a153-a702f07334b1",
+                        "id": "901375b9-824a-4038-a1b1-d479d3cf7419",
                         "type": "application"
                       }
                     },
@@ -811,13 +1812,13 @@
                     },
                     "format": {
                       "data": {
-                        "id": "ea maxime doloremque rerum quo reprehenderit dolore ut tenetur sed",
+                        "id": "quia exercitationem sint praesentium aliquam et omnis accusantium quisquam dicta",
                         "type": "format"
                       }
                     },
                     "language": {
                       "data": {
-                        "id": "perspiciatis quisquam eaque quia beatae consequatur maiores sit qui porro",
+                        "id": "aliquam fugit maiores voluptas dicta qui animi est autem reprehenderit",
                         "type": "language"
                       }
                     }
@@ -901,7 +1902,7 @@
                     "status": "403",
                     "code": "forbidden_application_id",
                     "title": "Forbidden Application Id",
-                    "detail": "You are only allowed to provide your own application id (318224d1-912a-428e-a153-a702f07334b1)."
+                    "detail": "You are only allowed to provide your own application id (901375b9-824a-4038-a1b1-d479d3cf7419)."
                   }
                 ]
               }
@@ -944,26 +1945,26 @@
             }
           },
           "200": {
-            "description": "resource updated",
+            "description": "Resource updated",
             "schema": {
               "$ref": "#/definitions/resource"
             },
             "examples": {
               "application/json": {
                 "data": {
-                  "id": "989cde17-d668-4cf8-b138-1af86667fc59",
+                  "id": "0762955c-696c-4fd1-a9b2-c4e66d6552bf",
                   "type": "resource",
                   "attributes": {
-                    "uri": "https://example.com/assessments/48fbc732-1af8-47d9-98fb-44f963245c90",
+                    "uri": "https://example.com/assessments/f2103427-af92-4a2f-b871-1f220442d60b",
                     "resource_type": "assessment",
                     "title": null,
-                    "content": "laudantium et non illum repudiandae impedit id accusantium assumenda odit",
+                    "content": "placeat aliquid nisi ea dolores ipsam eius quod doloremque sed",
                     "highlight": null
                   },
                   "relationships": {
                     "application": {
                       "data": {
-                        "id": "318224d1-912a-428e-a153-a702f07334b1",
+                        "id": "901375b9-824a-4038-a1b1-d479d3cf7419",
                         "type": "application"
                       }
                     },
@@ -972,14 +1973,1009 @@
                     },
                     "format": {
                       "data": {
-                        "id": "ea maxime doloremque rerum quo reprehenderit dolore ut tenetur sed",
+                        "id": "quia exercitationem sint praesentium aliquam et omnis accusantium quisquam dicta",
                         "type": "format"
                       }
                     },
                     "language": {
                       "data": {
-                        "id": "perspiciatis quisquam eaque quia beatae consequatur maiores sit qui porro",
+                        "id": "aliquam fugit maiores voluptas dicta qui animi est autem reprehenderit",
                         "type": "language"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiToken": []
+          }
+        ],
+        "consumes": [
+          "application/vnd.api.metadata.a15k.org+json"
+        ]
+      }
+    },
+    "/resources/{resource_id}/stats": {
+      "get": {
+        "summary": "List Stats created by the current application for the given Resource",
+        "tags": [
+          "Stats"
+        ],
+        "operationId": "getResourceStats",
+        "schemes": [
+          "https"
+        ],
+        "produces": [
+          "application/vnd.api.metadata.a15k.org+json"
+        ],
+        "parameters": [
+          {
+            "name": "resource_id",
+            "in": "path",
+            "type": "string",
+            "description": "The associated Resource's Id",
+            "required": true
+          },
+          {
+            "name": "Metadata-Api-Token",
+            "in": "header",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "missing api token",
+            "schema": {
+              "$ref": "#/definitions/stats"
+            },
+            "examples": {
+              "application/json": {
+                "errors": [
+                  {
+                    "status": "400",
+                    "code": "missing_api_token",
+                    "title": "Missing API Token",
+                    "detail": "No API token was provided in the Metadata-Api-Token header."
+                  }
+                ]
+              }
+            }
+          },
+          "403": {
+            "description": "invalid api token",
+            "schema": {
+              "$ref": "#/definitions/stats"
+            },
+            "examples": {
+              "application/json": {
+                "errors": [
+                  {
+                    "status": "403",
+                    "code": "invalid_api_token",
+                    "title": "Invalid API Token",
+                    "detail": "The API token provided in the Metadata-Api-Token header (a68a6399e450203dffa28a021e2bfc25751d8f4d63c62fc289e5d20a7a981d73) is invalid."
+                  }
+                ]
+              }
+            }
+          },
+          "200": {
+            "description": "success",
+            "schema": {
+              "$ref": "#/definitions/stats"
+            },
+            "examples": {
+              "application/json": {
+                "data": [
+                  {
+                    "id": "809bf1a0-ab27-4a3d-9ec9-24aba83a31fd",
+                    "type": "stats",
+                    "attributes": {
+                      "value": {
+                        "test": true
+                      }
+                    },
+                    "relationships": {
+                      "application": {
+                        "data": {
+                          "id": "96ef58de-d80e-4956-b027-02e8f86959ca",
+                          "type": "application"
+                        }
+                      },
+                      "application_user": {
+                        "data": {
+                          "id": "c4048159-cba0-40b9-b888-84e6ba0c57a9",
+                          "type": "application_user"
+                        }
+                      },
+                      "resource": {
+                        "data": {
+                          "id": "19cf263d-54ba-4723-9460-86c42d744867",
+                          "type": "resource"
+                        }
+                      },
+                      "format": {
+                        "data": {
+                          "id": "mollitia alias qui sapiente id non architecto necessitatibus vel rerum",
+                          "type": "format"
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiToken": []
+          }
+        ]
+      },
+      "post": {
+        "summary": "Create a new Stats with a random Id for the given Resource",
+        "tags": [
+          "Stats"
+        ],
+        "operationId": "createResourceStats",
+        "schemes": [
+          "https"
+        ],
+        "produces": [
+          "application/vnd.api.metadata.a15k.org+json"
+        ],
+        "parameters": [
+          {
+            "name": "resource_id",
+            "in": "path",
+            "type": "string",
+            "description": "The associated Resource's Id",
+            "required": true
+          },
+          {
+            "name": "stats",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/stats"
+            }
+          },
+          {
+            "name": "Metadata-Api-Token",
+            "in": "header",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "missing relationship id",
+            "schema": {
+              "$ref": "#/definitions/stats"
+            },
+            "examples": {
+              "application/json": {
+                "errors": [
+                  {
+                    "status": "400",
+                    "code": "missing_id",
+                    "title": "Missing Id",
+                    "detail": "The id member is required by this API endpoint."
+                  }
+                ]
+              }
+            }
+          },
+          "403": {
+            "description": "forbidden application id",
+            "schema": {
+              "$ref": "#/definitions/stats"
+            },
+            "examples": {
+              "application/json": {
+                "errors": [
+                  {
+                    "status": "403",
+                    "code": "forbidden_application_id",
+                    "title": "Forbidden Application Id",
+                    "detail": "You are only allowed to provide your own application id (96ef58de-d80e-4956-b027-02e8f86959ca)."
+                  }
+                ]
+              }
+            }
+          },
+          "409": {
+            "description": "invalid relationship type",
+            "schema": {
+              "$ref": "#/definitions/stats"
+            },
+            "examples": {
+              "application/json": {
+                "errors": [
+                  {
+                    "status": "409",
+                    "code": "invalid_application_type",
+                    "title": "Invalid Application Type",
+                    "detail": "The type provided for the application relationship (resource) is invalid."
+                  }
+                ]
+              }
+            }
+          },
+          "201": {
+            "description": "Stats created",
+            "schema": {
+              "$ref": "#/definitions/stats"
+            },
+            "examples": {
+              "application/json": {
+                "data": {
+                  "id": "e98edbe7-a794-4886-843c-04d69240cd28",
+                  "type": "stats",
+                  "attributes": {
+                    "value": {
+                      "test": true
+                    }
+                  },
+                  "relationships": {
+                    "application": {
+                      "data": {
+                        "id": "96ef58de-d80e-4956-b027-02e8f86959ca",
+                        "type": "application"
+                      }
+                    },
+                    "application_user": {
+                      "data": {
+                        "id": "c4048159-cba0-40b9-b888-84e6ba0c57a9",
+                        "type": "application_user"
+                      }
+                    },
+                    "resource": {
+                      "data": {
+                        "id": "19cf263d-54ba-4723-9460-86c42d744867",
+                        "type": "resource"
+                      }
+                    },
+                    "format": {
+                      "data": {
+                        "id": "mollitia alias qui sapiente id non architecto necessitatibus vel rerum",
+                        "type": "format"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiToken": []
+          }
+        ],
+        "consumes": [
+          "application/vnd.api.metadata.a15k.org+json"
+        ]
+      }
+    },
+    "/resources/{resource_id}/stats/{id}": {
+      "get": {
+        "summary": "View the Stats with the given Id for the given Resource",
+        "tags": [
+          "Stats"
+        ],
+        "operationId": "getResourceStatsWithId",
+        "schemes": [
+          "https"
+        ],
+        "produces": [
+          "application/vnd.api.metadata.a15k.org+json"
+        ],
+        "parameters": [
+          {
+            "name": "resource_id",
+            "in": "path",
+            "type": "string",
+            "description": "The associated Resource's Id",
+            "required": true
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "description": "The Stats object's Id",
+            "required": true
+          },
+          {
+            "name": "Metadata-Api-Token",
+            "in": "header",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "missing api token",
+            "schema": {
+              "$ref": "#/definitions/stats"
+            },
+            "examples": {
+              "application/json": {
+                "errors": [
+                  {
+                    "status": "400",
+                    "code": "missing_api_token",
+                    "title": "Missing API Token",
+                    "detail": "No API token was provided in the Metadata-Api-Token header."
+                  }
+                ]
+              }
+            }
+          },
+          "403": {
+            "description": "invalid api token",
+            "schema": {
+              "$ref": "#/definitions/stats"
+            },
+            "examples": {
+              "application/json": {
+                "errors": [
+                  {
+                    "status": "403",
+                    "code": "invalid_api_token",
+                    "title": "Invalid API Token",
+                    "detail": "The API token provided in the Metadata-Api-Token header (578a1eae1b6ca8755f93620080e726d18e45535aca74e99c10858e332ab40c61) is invalid."
+                  }
+                ]
+              }
+            }
+          },
+          "200": {
+            "description": "success",
+            "schema": {
+              "$ref": "#/definitions/stats"
+            },
+            "examples": {
+              "application/json": {
+                "data": {
+                  "id": "809bf1a0-ab27-4a3d-9ec9-24aba83a31fd",
+                  "type": "stats",
+                  "attributes": {
+                    "value": {
+                      "test": true
+                    }
+                  },
+                  "relationships": {
+                    "application": {
+                      "data": {
+                        "id": "96ef58de-d80e-4956-b027-02e8f86959ca",
+                        "type": "application"
+                      }
+                    },
+                    "application_user": {
+                      "data": {
+                        "id": "c4048159-cba0-40b9-b888-84e6ba0c57a9",
+                        "type": "application_user"
+                      }
+                    },
+                    "resource": {
+                      "data": {
+                        "id": "19cf263d-54ba-4723-9460-86c42d744867",
+                        "type": "resource"
+                      }
+                    },
+                    "format": {
+                      "data": {
+                        "id": "mollitia alias qui sapiente id non architecto necessitatibus vel rerum",
+                        "type": "format"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiToken": []
+          }
+        ]
+      },
+      "delete": {
+        "summary": "Delete the Stats with the given Id for the given Resource",
+        "tags": [
+          "Stats"
+        ],
+        "operationId": "deleteResourceStatsWithId",
+        "schemes": [
+          "https"
+        ],
+        "produces": [
+          "application/vnd.api.metadata.a15k.org+json"
+        ],
+        "parameters": [
+          {
+            "name": "resource_id",
+            "in": "path",
+            "type": "string",
+            "description": "The associated Resource's Id",
+            "required": true
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "description": "The Stats object's Id",
+            "required": true
+          },
+          {
+            "name": "Metadata-Api-Token",
+            "in": "header",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "missing api token",
+            "schema": {
+              "$ref": "#/definitions/stats"
+            },
+            "examples": {
+              "application/json": {
+                "errors": [
+                  {
+                    "status": "400",
+                    "code": "missing_api_token",
+                    "title": "Missing API Token",
+                    "detail": "No API token was provided in the Metadata-Api-Token header."
+                  }
+                ]
+              }
+            }
+          },
+          "403": {
+            "description": "invalid api token",
+            "schema": {
+              "$ref": "#/definitions/stats"
+            },
+            "examples": {
+              "application/json": {
+                "errors": [
+                  {
+                    "status": "403",
+                    "code": "invalid_api_token",
+                    "title": "Invalid API Token",
+                    "detail": "The API token provided in the Metadata-Api-Token header (92b163fe232da2c341d603558257d01398ff8b6c2d2c7a51c655d5a6a38a5b05) is invalid."
+                  }
+                ]
+              }
+            }
+          },
+          "200": {
+            "description": "Stats deleted",
+            "schema": {
+              "$ref": "#/definitions/stats"
+            },
+            "examples": {
+              "application/json": {
+                "data": {
+                  "id": "809bf1a0-ab27-4a3d-9ec9-24aba83a31fd",
+                  "type": "stats",
+                  "attributes": {
+                    "value": {
+                      "test": true
+                    }
+                  },
+                  "relationships": {
+                    "application": {
+                      "data": {
+                        "id": "96ef58de-d80e-4956-b027-02e8f86959ca",
+                        "type": "application"
+                      }
+                    },
+                    "application_user": {
+                      "data": {
+                        "id": "c4048159-cba0-40b9-b888-84e6ba0c57a9",
+                        "type": "application_user"
+                      }
+                    },
+                    "resource": {
+                      "data": {
+                        "id": "19cf263d-54ba-4723-9460-86c42d744867",
+                        "type": "resource"
+                      }
+                    },
+                    "format": {
+                      "data": {
+                        "id": "mollitia alias qui sapiente id non architecto necessitatibus vel rerum",
+                        "type": "format"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiToken": []
+          }
+        ]
+      },
+      "post": {
+        "summary": "Create a new Stats with the given Id for the given Resource",
+        "tags": [
+          "Stats"
+        ],
+        "operationId": "createResourceStatsWithId",
+        "schemes": [
+          "https"
+        ],
+        "produces": [
+          "application/vnd.api.metadata.a15k.org+json"
+        ],
+        "parameters": [
+          {
+            "name": "resource_id",
+            "in": "path",
+            "type": "string",
+            "description": "The associated Resource's Id",
+            "required": true
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "description": "The Stats object's Id",
+            "required": true
+          },
+          {
+            "name": "stats",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/stats"
+            }
+          },
+          {
+            "name": "Metadata-Api-Token",
+            "in": "header",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "missing relationship id",
+            "schema": {
+              "$ref": "#/definitions/stats"
+            },
+            "examples": {
+              "application/json": {
+                "errors": [
+                  {
+                    "status": "400",
+                    "code": "missing_id",
+                    "title": "Missing Id",
+                    "detail": "The id member is required by this API endpoint."
+                  }
+                ]
+              }
+            }
+          },
+          "403": {
+            "description": "forbidden application id",
+            "schema": {
+              "$ref": "#/definitions/stats"
+            },
+            "examples": {
+              "application/json": {
+                "errors": [
+                  {
+                    "status": "403",
+                    "code": "forbidden_application_id",
+                    "title": "Forbidden Application Id",
+                    "detail": "You are only allowed to provide your own application id (96ef58de-d80e-4956-b027-02e8f86959ca)."
+                  }
+                ]
+              }
+            }
+          },
+          "409": {
+            "description": "Stats uuid already exists",
+            "schema": {
+              "$ref": "#/definitions/stats"
+            },
+            "examples": {
+              "application/json": {
+                "errors": [
+                  {
+                    "status": "409",
+                    "code": "uuid_has_already_been_taken",
+                    "title": "Stats Invalid",
+                    "detail": "Uuid has already been taken."
+                  }
+                ]
+              }
+            }
+          },
+          "201": {
+            "description": "Stats created",
+            "schema": {
+              "$ref": "#/definitions/stats"
+            },
+            "examples": {
+              "application/json": {
+                "data": {
+                  "id": "809bf1a0-ab27-4a3d-9ec9-24aba83a31fd",
+                  "type": "stats",
+                  "attributes": {
+                    "value": {
+                      "test": true
+                    }
+                  },
+                  "relationships": {
+                    "application": {
+                      "data": {
+                        "id": "96ef58de-d80e-4956-b027-02e8f86959ca",
+                        "type": "application"
+                      }
+                    },
+                    "application_user": {
+                      "data": {
+                        "id": "c4048159-cba0-40b9-b888-84e6ba0c57a9",
+                        "type": "application_user"
+                      }
+                    },
+                    "resource": {
+                      "data": {
+                        "id": "19cf263d-54ba-4723-9460-86c42d744867",
+                        "type": "resource"
+                      }
+                    },
+                    "format": {
+                      "data": {
+                        "id": "mollitia alias qui sapiente id non architecto necessitatibus vel rerum",
+                        "type": "format"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiToken": []
+          }
+        ],
+        "consumes": [
+          "application/vnd.api.metadata.a15k.org+json"
+        ]
+      },
+      "put": {
+        "summary": "Update the Stats with the given Id for the given Resource",
+        "tags": [
+          "Stats"
+        ],
+        "operationId": "updateResourceStatsWithId",
+        "schemes": [
+          "https"
+        ],
+        "produces": [
+          "application/vnd.api.metadata.a15k.org+json"
+        ],
+        "parameters": [
+          {
+            "name": "resource_id",
+            "in": "path",
+            "type": "string",
+            "description": "The associated Resource's Id",
+            "required": true
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "description": "The Stats object's Id",
+            "required": true
+          },
+          {
+            "name": "stats",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/stats"
+            }
+          },
+          {
+            "name": "Metadata-Api-Token",
+            "in": "header",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "missing relationship id",
+            "schema": {
+              "$ref": "#/definitions/stats"
+            },
+            "examples": {
+              "application/json": {
+                "errors": [
+                  {
+                    "status": "400",
+                    "code": "missing_id",
+                    "title": "Missing Id",
+                    "detail": "The id member is required by this API endpoint."
+                  }
+                ]
+              }
+            }
+          },
+          "403": {
+            "description": "forbidden application id",
+            "schema": {
+              "$ref": "#/definitions/stats"
+            },
+            "examples": {
+              "application/json": {
+                "errors": [
+                  {
+                    "status": "403",
+                    "code": "forbidden_application_id",
+                    "title": "Forbidden Application Id",
+                    "detail": "You are only allowed to provide your own application id (96ef58de-d80e-4956-b027-02e8f86959ca)."
+                  }
+                ]
+              }
+            }
+          },
+          "409": {
+            "description": "invalid relationship type",
+            "schema": {
+              "$ref": "#/definitions/stats"
+            },
+            "examples": {
+              "application/json": {
+                "errors": [
+                  {
+                    "status": "409",
+                    "code": "invalid_application_type",
+                    "title": "Invalid Application Type",
+                    "detail": "The type provided for the application relationship (resource) is invalid."
+                  }
+                ]
+              }
+            }
+          },
+          "404": {
+            "description": "not visible",
+            "schema": {
+              "$ref": "#/definitions/stats"
+            },
+            "examples": {
+              "application/json": {
+                "errors": [
+                  {
+                    "status": "404",
+                    "code": "not_found",
+                    "title": "Not Found",
+                    "detail": "Couldn't find Stats"
+                  }
+                ]
+              }
+            }
+          },
+          "200": {
+            "description": "Stats updated",
+            "schema": {
+              "$ref": "#/definitions/stats"
+            },
+            "examples": {
+              "application/json": {
+                "data": {
+                  "id": "809bf1a0-ab27-4a3d-9ec9-24aba83a31fd",
+                  "type": "stats",
+                  "attributes": {
+                    "value": {
+                      "test": true
+                    }
+                  },
+                  "relationships": {
+                    "application": {
+                      "data": {
+                        "id": "96ef58de-d80e-4956-b027-02e8f86959ca",
+                        "type": "application"
+                      }
+                    },
+                    "application_user": {
+                      "data": null
+                    },
+                    "resource": {
+                      "data": {
+                        "id": "19cf263d-54ba-4723-9460-86c42d744867",
+                        "type": "resource"
+                      }
+                    },
+                    "format": {
+                      "data": {
+                        "id": "et eum sit et qui quaerat suscipit autem est eius",
+                        "type": "format"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiToken": []
+          }
+        ],
+        "consumes": [
+          "application/vnd.api.metadata.a15k.org+json"
+        ]
+      },
+      "patch": {
+        "summary": "Update the Stats with the given Id for the given Resource",
+        "tags": [
+          "Stats"
+        ],
+        "operationId": "updateResourceStatsWithId",
+        "schemes": [
+          "https"
+        ],
+        "produces": [
+          "application/vnd.api.metadata.a15k.org+json"
+        ],
+        "parameters": [
+          {
+            "name": "resource_id",
+            "in": "path",
+            "type": "string",
+            "description": "The associated Resource's Id",
+            "required": true
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "description": "The Stats object's Id",
+            "required": true
+          },
+          {
+            "name": "stats",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/stats"
+            }
+          },
+          {
+            "name": "Metadata-Api-Token",
+            "in": "header",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "missing relationship id",
+            "schema": {
+              "$ref": "#/definitions/stats"
+            },
+            "examples": {
+              "application/json": {
+                "errors": [
+                  {
+                    "status": "400",
+                    "code": "missing_id",
+                    "title": "Missing Id",
+                    "detail": "The id member is required by this API endpoint."
+                  }
+                ]
+              }
+            }
+          },
+          "403": {
+            "description": "forbidden application id",
+            "schema": {
+              "$ref": "#/definitions/stats"
+            },
+            "examples": {
+              "application/json": {
+                "errors": [
+                  {
+                    "status": "403",
+                    "code": "forbidden_application_id",
+                    "title": "Forbidden Application Id",
+                    "detail": "You are only allowed to provide your own application id (96ef58de-d80e-4956-b027-02e8f86959ca)."
+                  }
+                ]
+              }
+            }
+          },
+          "409": {
+            "description": "invalid relationship type",
+            "schema": {
+              "$ref": "#/definitions/stats"
+            },
+            "examples": {
+              "application/json": {
+                "errors": [
+                  {
+                    "status": "409",
+                    "code": "invalid_application_type",
+                    "title": "Invalid Application Type",
+                    "detail": "The type provided for the application relationship (resource) is invalid."
+                  }
+                ]
+              }
+            }
+          },
+          "404": {
+            "description": "not visible",
+            "schema": {
+              "$ref": "#/definitions/stats"
+            },
+            "examples": {
+              "application/json": {
+                "errors": [
+                  {
+                    "status": "404",
+                    "code": "not_found",
+                    "title": "Not Found",
+                    "detail": "Couldn't find Stats"
+                  }
+                ]
+              }
+            }
+          },
+          "200": {
+            "description": "Stats updated",
+            "schema": {
+              "$ref": "#/definitions/stats"
+            },
+            "examples": {
+              "application/json": {
+                "data": {
+                  "id": "809bf1a0-ab27-4a3d-9ec9-24aba83a31fd",
+                  "type": "stats",
+                  "attributes": {
+                    "value": {
+                      "test": true
+                    }
+                  },
+                  "relationships": {
+                    "application": {
+                      "data": {
+                        "id": "96ef58de-d80e-4956-b027-02e8f86959ca",
+                        "type": "application"
+                      }
+                    },
+                    "application_user": {
+                      "data": null
+                    },
+                    "resource": {
+                      "data": {
+                        "id": "19cf263d-54ba-4723-9460-86c42d744867",
+                        "type": "resource"
+                      }
+                    },
+                    "format": {
+                      "data": {
+                        "id": "et eum sit et qui quaerat suscipit autem est eius",
+                        "type": "format"
                       }
                     }
                   }
