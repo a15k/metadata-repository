@@ -29,9 +29,10 @@ RSpec.configure do |config|
         }
       },
       definitions: {
-        resource: { '$ref': 'public/schemas/api/v1/resource.schema.json' },
-        metadata: { '$ref': 'public/schemas/api/v1/metadata.schema.json' },
-        stats:    { '$ref': 'public/schemas/api/v1/stats.schema.json'    }
+        application_user: { '$ref': 'public/schemas/api/v1/application_user.schema.json' },
+        resource:         { '$ref': 'public/schemas/api/v1/resource.schema.json'         },
+        metadata:         { '$ref': 'public/schemas/api/v1/metadata.schema.json'         },
+        stats:            { '$ref': 'public/schemas/api/v1/stats.schema.json'            }
       }
     }
   }

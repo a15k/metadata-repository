@@ -5,6 +5,8 @@ module Api
       include JsonApiSchema
 
       set_id :uuid
+
+      belongs_to :application, id_method_name: :application_uuid
     end
   end
 end

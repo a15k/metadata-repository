@@ -9,6 +9,10 @@ Rails.application.routes.draw do
       defaults: { format: :json },
       default: true
     ) do
+      resources :application_users, param: :uuid do
+        post :/, action: :create, on: :member
+      end
+
       resources :resources, param: :uuid do
         resources :metadatas, param: :uuid do
           post :/, action: :create, on: :member

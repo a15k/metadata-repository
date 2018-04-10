@@ -65,4 +65,17 @@ RSpec.describe 'resources API V1 routes', type: :routing do
       )
     end
   end
+
+  context 'DELETE /api/resources/:uuid' do
+    it 'routes to api/v1/resources#destroy.json' do
+      expect(delete: "/api/resources/#{resource_uuid}").to(
+        route_to(
+          controller: 'api/v1/resources',
+          action: 'destroy',
+          format: :json,
+          uuid: resource_uuid
+        )
+      )
+    end
+  end
 end

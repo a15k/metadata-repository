@@ -26,8 +26,8 @@ module Api
           {
             status: '400',
             code: "missing_#{param}",
-            title: "Missing #{param.to_s.humanize}",
-            detail: "The #{param} member is required by this API endpoint."
+            title: "Missing #{param}",
+            detail: "The \"#{param}\" member is required by this API endpoint."
           }
         ]
       }
@@ -47,7 +47,7 @@ module Api
     end
 
     def render_validation_errors(exception)
-      title = "#{exception.record.class.name.humanize} Invalid"
+      title = "#{exception.record.class.name.classify} Invalid"
       statuses = exception.record.errors.details.map do |attribute, errors|
         errors.any? { |error| error[:error] == :taken } ? '409' : '422'
       end
@@ -96,7 +96,7 @@ module Api
           {
             status: '400',
             code: 'missing_api_token',
-            title: 'Missing API Token',
+            title: 'Missing api token',
             detail: "No API token was provided in the #{API_TOKEN_HEADER} header."
           }
         ]
@@ -109,7 +109,7 @@ module Api
           {
             status: '403',
             code: 'invalid_api_token',
-            title: 'Invalid API Token',
+            title: 'Invalid api token',
             detail: "The API token provided in the #{API_TOKEN_HEADER
                     } header (#{api_token}) is invalid."
           }
@@ -123,7 +123,7 @@ module Api
           {
             status: '409',
             code: 'invalid_type',
-            title: 'Invalid Type',
+            title: 'Invalid type',
             detail: "The type provided (#{type_param
                     }) is not the one supported by this API endpoint (#{self.class.valid_type})."
           }
@@ -137,7 +137,7 @@ module Api
           {
             status: '409',
             code: 'invalid_id',
-            title: 'Invalid Id',
+            title: 'Invalid id',
             detail: "The id provided in the request body (#{body_id_param
                     }) did not match the id provided in the API endpoint URL (#{path_id_param})."
           }
@@ -159,7 +159,7 @@ module Api
             {
               status: '409',
               code: "invalid_#{rel}_type",
-              title: "Invalid #{rel.humanize} Type",
+              title: "Invalid #{rel} type",
               detail: "The type provided for the #{rel} relationship (#{type}) is invalid."
             }
           ]
@@ -171,7 +171,7 @@ module Api
             {
               status: '403',
               code: 'forbidden_application_id',
-              title: "Forbidden Application Id",
+              title: "Forbidden application id",
               detail: "You are only allowed to provide your own application id (#{
                       current_application.uuid})."
             }
@@ -187,12 +187,13 @@ module Api
       end
     end
 
-    def json_api_attributes
+    def json_api_attributes(required: true)
       data = json_api_data
 
-      data.require(:attributes).tap do |attributes|
-        attributes[:uuid] = data.fetch(:id) { SecureRandom.uuid }
-      end
+      attributes = required ? data.require(:attributes) :
+                              data.permit(:attributes).fetch(:attributes, {})
+      attributes[:uuid] = data.fetch(:id) { SecureRandom.uuid }
+      attributes
     end
 
     def json_api_relationships
@@ -203,10 +204,6 @@ module Api
           end
         end
       )
-    end
-
-    def json_api_params
-      json_api_attributes.merge json_api_relationships.to_unsafe_hash
     end
   end
 end

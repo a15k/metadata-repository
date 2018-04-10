@@ -6,4 +6,8 @@ class ApplicationUser < ApplicationRecord
   belongs_to :application, inverse_of: :application_users
 
   validates :uuid, presence: true, uniqueness: { scope: :application_id }
+
+  def application_uuid
+    application.uuid
+  end
 end

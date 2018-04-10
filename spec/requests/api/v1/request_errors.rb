@@ -108,7 +108,7 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
             run_test! do |response|
               expect(response.errors.first[:status]).to eq '400'
               expect(response.errors.first[:code]).to eq 'missing_api_token'
-              expect(response.errors.first[:title]).to eq 'Missing API Token'
+              expect(response.errors.first[:title]).to eq 'Missing api token'
               expect(response.errors.first[:detail]).to eq(
                 "No API token was provided in the #{
                 Api::JsonApiController::API_TOKEN_HEADER} header."
@@ -138,7 +138,7 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
             run_test! do |response|
               expect(response.errors.first[:status]).to eq '403'
               expect(response.errors.first[:code]).to eq 'invalid_api_token'
-              expect(response.errors.first[:title]).to eq 'Invalid API Token'
+              expect(response.errors.first[:title]).to eq 'Invalid api token'
               expect(response.errors.first[:detail]).to eq(
                 "The API token provided in the #{
                 Api::JsonApiController::API_TOKEN_HEADER} header (#{token}) is invalid."
@@ -168,9 +168,9 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
               run_test! do |response|
                 expect(response.errors.first[:status]).to eq '400'
                 expect(response.errors.first[:code]).to eq 'missing_data'
-                expect(response.errors.first[:title]).to eq 'Missing Data'
+                expect(response.errors.first[:title]).to eq 'Missing data'
                 expect(response.errors.first[:detail]).to eq(
-                  'The data member is required by this API endpoint.'
+                  'The "data" member is required by this API endpoint.'
                 )
               end
             end
@@ -197,9 +197,9 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
                 run_test! do |response|
                   expect(response.errors.first[:status]).to eq '400'
                   expect(response.errors.first[:code]).to eq 'missing_type'
-                  expect(response.errors.first[:title]).to eq 'Missing Type'
+                  expect(response.errors.first[:title]).to eq 'Missing type'
                   expect(response.errors.first[:detail]).to eq(
-                    'The type member is required by this API endpoint.'
+                    'The "type" member is required by this API endpoint.'
                   )
                 end
               end
@@ -226,7 +226,7 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
                 run_test! do |response|
                   expect(response.errors.first[:status]).to eq '409'
                   expect(response.errors.first[:code]).to eq 'invalid_type'
-                  expect(response.errors.first[:title]).to eq 'Invalid Type'
+                  expect(response.errors.first[:title]).to eq 'Invalid type'
                   expect(response.errors.first[:detail]).to eq(
                     "The type provided (#{type}) is not the one supported by this API endpoint (#{
                     controller.class.valid_type})."
@@ -259,9 +259,9 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
                   run_test! do |response|
                     expect(response.errors.first[:status]).to eq '400'
                     expect(response.errors.first[:code]).to eq 'missing_id'
-                    expect(response.errors.first[:title]).to eq 'Missing Id'
+                    expect(response.errors.first[:title]).to eq 'Missing id'
                     expect(response.errors.first[:detail]).to eq(
-                      'The id member is required by this API endpoint.'
+                      'The "id" member is required by this API endpoint.'
                     )
                   end
                 end
@@ -289,7 +289,7 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
                   run_test! do |response|
                     expect(response.errors.first[:status]).to eq '409'
                     expect(response.errors.first[:code]).to eq 'invalid_id'
-                    expect(response.errors.first[:title]).to eq 'Invalid Id'
+                    expect(response.errors.first[:title]).to eq 'Invalid id'
                     expect(response.errors.first[:detail]).to eq(
                       "The id provided in the request body (#{body_id
                       }) did not match the id provided in the API endpoint URL (#{id})."
@@ -320,7 +320,7 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
                     expect(response.errors.first[:status]).to eq '404'
                     expect(response.errors.first[:code]).to eq 'not_found'
                     expect(response.errors.first[:title]).to eq 'Not Found'
-                    expect(response.errors.first[:detail]).to eq "Couldn't find #{type.humanize}"
+                    expect(response.errors.first[:detail]).to eq "Couldn't find #{type.classify}"
                   end
                 end
               end
@@ -348,7 +348,7 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
                     expect(response.errors.first[:status]).to eq '404'
                     expect(response.errors.first[:code]).to eq 'not_found'
                     expect(response.errors.first[:title]).to eq 'Not Found'
-                    expect(response.errors.first[:detail]).to eq "Couldn't find #{type.humanize}"
+                    expect(response.errors.first[:detail]).to eq "Couldn't find #{type.classify}"
                   end
                 end
               end
@@ -385,9 +385,9 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
                       run_test! do |response|
                         expect(response.errors.first[:status]).to eq '400'
                         expect(response.errors.first[:code]).to eq 'missing_data'
-                        expect(response.errors.first[:title]).to eq 'Missing Data'
+                        expect(response.errors.first[:title]).to eq 'Missing data'
                         expect(response.errors.first[:detail]).to eq(
-                          'The data member is required by this API endpoint.'
+                          'The "data" member is required by this API endpoint.'
                         )
                       end
                     end
@@ -422,9 +422,9 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
                         run_test! do |response|
                           expect(response.errors.first[:status]).to eq '400'
                           expect(response.errors.first[:code]).to eq 'missing_type'
-                          expect(response.errors.first[:title]).to eq 'Missing Type'
+                          expect(response.errors.first[:title]).to eq 'Missing type'
                           expect(response.errors.first[:detail]).to eq(
-                            'The type member is required by this API endpoint.'
+                            'The "type" member is required by this API endpoint.'
                           )
                         end
                       end
@@ -458,7 +458,7 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
                         run_test! do |response|
                           expect(response.errors.first[:status]).to eq '409'
                           expect(response.errors.first[:code]).to eq 'invalid_application_type'
-                          expect(response.errors.first[:title]).to eq 'Invalid Application Type'
+                          expect(response.errors.first[:title]).to eq 'Invalid application type'
                           expect(response.errors.first[:detail]).to eq(
                             'The type provided for the application' +
                             ' relationship (resource) is invalid.'
@@ -496,9 +496,9 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
                           run_test! do |response|
                             expect(response.errors.first[:status]).to eq '400'
                             expect(response.errors.first[:code]).to eq 'missing_id'
-                            expect(response.errors.first[:title]).to eq 'Missing Id'
+                            expect(response.errors.first[:title]).to eq 'Missing id'
                             expect(response.errors.first[:detail]).to eq(
-                              'The id member is required by this API endpoint.'
+                              'The "id" member is required by this API endpoint.'
                             )
                           end
                         end
@@ -538,7 +538,7 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
                     run_test! do |response|
                       expect(response.errors.first[:status]).to eq '403'
                       expect(response.errors.first[:code]).to eq 'forbidden_application_id'
-                      expect(response.errors.first[:title]).to eq 'Forbidden Application Id'
+                      expect(response.errors.first[:title]).to eq 'Forbidden application id'
                       expect(response.errors.first[:detail]).to eq(
                         "You are only allowed to provide your own application id (#{
                         application.uuid})."
