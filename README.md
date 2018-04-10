@@ -4,7 +4,17 @@
 
 Repository for assessment network metadata
 
-## Dev Database Setup
+## Setup
+
+### Install Dependencies
+
+In the metadata repository's dir:
+```sh
+bundle install
+yarn install
+```
+
+### Create Dev Database
 
 In psql:
 ```sql
