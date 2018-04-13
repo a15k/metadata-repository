@@ -2,7 +2,7 @@ module Api
   module V1
     class ResourcesController < JsonApiController
       def index
-        resources = current_application.resources
+        resources = Resource.all
 
         query = resource_filter_params[:query]
         unless query.nil?

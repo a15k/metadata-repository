@@ -62,17 +62,21 @@ RSpec.describe Api::V1::ResourcesController, type: :request do
 
     path '/resources' do
       context 'with no filter param' do
-        get 'List Resources created by the current application' do
+        get 'List Resources created by all applications' do
           instance_exec &index_setup
 
           response 200, 'success' do
             schema resource_schema_reference
 
-            run_test! do |response|
-              expect(response.body_hash).to eq JSON.parse(
-                Api::V1::ResourceSerializer.new([ @resource ]).serialized_json
-              ).deep_symbolize_keys
+            let!(:expected_response) do
+              JSON.parse(
+                Api::V1::ResourceSerializer.new(Resource.all).serialized_json
+              ).deep_symbolize_keys.tap do |expected|
+                expected[:data] = a_collection_containing_exactly *expected[:data]
+              end
             end
+
+            run_test! { |response| expect(response.body_hash).to match expected_response }
           end
         end
       end
@@ -85,7 +89,7 @@ RSpec.describe Api::V1::ResourcesController, type: :request do
           english = FactoryBot.create :language, name: 'english'
 
           all_queries = [ 'lorem', 'jumps', 'jump', 'jumping', 'jumped' ]
-          [ @resource ] + 10.times.map do
+          [ @resource, @other_application_resource ] + 10.times.map do
             FactoryBot.create :resource, application: @application, language: simple
           end.each do |resource|
             resource.destroy if all_queries.any? do |query|
@@ -129,7 +133,7 @@ RSpec.describe Api::V1::ResourcesController, type: :request do
         context 'with no language param' do
           let(:'filter[query]') { 'lorem' }
 
-          get 'List Resources created by the current application' do
+          get 'List Resources created by all applications' do
             instance_exec &index_setup
 
             response 200, 'success' do
@@ -138,7 +142,7 @@ RSpec.describe Api::V1::ResourcesController, type: :request do
               let!(:expected_response) do
                 JSON.parse(
                   Api::V1::ResourceSerializer.new(
-                    @application.resources.search('lorem', 'simple').with_pg_search_highlight
+                    Resource.search('lorem', 'simple').with_pg_search_highlight
                   ).serialized_json
                 ).deep_symbolize_keys
               end
@@ -155,7 +159,7 @@ RSpec.describe Api::V1::ResourcesController, type: :request do
           let(:'filter[query]')    { 'jumps' }
           let(:'filter[language]') { 'english' }
 
-          get 'List Resources created by the current application' do
+          get 'List Resources created by all applications' do
             instance_exec &index_setup
 
             response 200, 'success' do
@@ -164,7 +168,7 @@ RSpec.describe Api::V1::ResourcesController, type: :request do
               let!(:expected_response) do
                 JSON.parse(
                   Api::V1::ResourceSerializer.new(
-                    @application.resources.search('jumps', 'english').with_pg_search_highlight
+                    Resource.search('jumps', 'english').with_pg_search_highlight
                   ).serialized_json
                 ).deep_symbolize_keys
               end

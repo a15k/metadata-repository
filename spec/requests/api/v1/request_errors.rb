@@ -16,7 +16,7 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
       :get,
       :collection,
       "get#{id_scope}#{pluralized_class_name}",
-      "List #{pluralized_class_name} created by the current application #{description_scope}".strip
+      "List #{pluralized_class_name} created by all applications #{description_scope}".strip
     ],
     [
       :get,

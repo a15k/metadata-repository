@@ -60,7 +60,7 @@ RSpec.describe Api::V1::StatsController, type: :request do
     let(Api::JsonApiController::API_TOKEN_HEADER.to_sym) { @application.token }
 
     path '/resources/{resource_id}/stats' do
-      get 'List Stats created by the current application for the given Resource' do
+      get 'List Stats created by all applications for the given Resource' do
         instance_exec :collection, &no_data_setup
         operationId 'getResourceStats'
 
