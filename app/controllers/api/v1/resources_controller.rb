@@ -1,6 +1,8 @@
 module Api
   module V1
     class ResourcesController < JsonApiController
+      before_action :can_modify!, only: [ :update, :destroy ]
+
       def index
         resources = Resource.all
 
@@ -15,8 +17,6 @@ module Api
       end
 
       def show
-        get_resource
-
         render_resource
       end
 
@@ -27,13 +27,13 @@ module Api
       end
 
       def update
-        get_resource.update_attributes! resource_update_params
+        resource.update_attributes! resource_update_params
 
         render_resource
       end
 
       def destroy
-        get_resource.destroy!
+        resource.destroy!
 
         render_resource
       end
@@ -44,8 +44,13 @@ module Api
         params.permit(filter: [ :query, :language ]).fetch(:filter, {})
       end
 
-      def get_resource
-        @resource ||= Resource.find_by!(application: current_application, uuid: path_id_param)
+      def resource
+        @resource ||= Resource.find_by(application: current_application, uuid: path_id_param) ||
+                      Resource.order(:id).find_by!(uuid: path_id_param)
+      end
+
+      def can_modify!
+        raise SecurityTransgression, resource unless resource.application == current_application
       end
 
       def resource_attribute_params
@@ -87,7 +92,7 @@ module Api
         )
       end
 
-      def render_resource(resources: get_resource, status: 200)
+      def render_resource(resources: resource, status: 200)
         render json: ResourceSerializer.new(resources).serializable_hash, status: status
       end
     end

@@ -10,6 +10,7 @@ module Api
 
     rescue_from ActionController::ParameterMissing, with: :render_parameter_missing_error
     rescue_from ActiveRecord::RecordNotFound,       with: :render_not_found_error
+    rescue_from SecurityTransgression,              with: :render_forbidden_error
     rescue_from ActiveRecord::RecordInvalid,        with: :render_validation_errors
 
     def self.valid_type
@@ -33,6 +34,19 @@ module Api
       }
     end
 
+    def render_forbidden_error(exception)
+      render status: :forbidden, content_type: CONTENT_TYPE, json: {
+        errors: [
+          {
+            status: '403',
+            code: 'forbidden',
+            title: 'Forbidden',
+            detail: exception.message
+          }
+        ]
+      }
+    end
+
     def render_not_found_error(exception)
       render status: :not_found, content_type: CONTENT_TYPE, json: {
         errors: [
@@ -40,7 +54,7 @@ module Api
             status: '404',
             code: 'not_found',
             title: 'Not Found',
-            detail: exception.message
+            detail: exception.message.split(' with ').first
           }
         ]
       }

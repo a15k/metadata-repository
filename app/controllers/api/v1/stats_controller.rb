@@ -1,13 +1,13 @@
 module Api
   module V1
     class StatsController < JsonApiController
+      before_action :can_modify!, only: [ :update, :destroy ]
+
       def index
         render_stats stats: current_application.stats
       end
 
       def show
-        get_stats
-
         render_stats
       end
 
@@ -18,21 +18,26 @@ module Api
       end
 
       def update
-        get_stats.update_attributes! stats_update_params
+        stats.update_attributes! stats_update_params
 
         render_stats
       end
 
       def destroy
-        get_stats.destroy!
+        stats.destroy!
 
         render_stats
       end
 
       protected
 
-      def get_stats
-        @stats ||= Stats.find_by!(application: current_application, uuid: path_id_param)
+      def stats
+        @stats ||= Stats.find_by(application: current_application, uuid: path_id_param) ||
+                   Stats.order(:id).find_by!(uuid: path_id_param)
+      end
+
+      def can_modify!
+        raise SecurityTransgression, stats unless stats.application == current_application
       end
 
       def stats_attribute_params
@@ -68,7 +73,9 @@ module Api
         )
       end
 
-      def render_stats(stats: get_stats, status: 200)
+      def render_stats(stats: nil, status: 200)
+        stats ||= send :stats
+
         render json: StatsSerializer.new(stats).serializable_hash, status: status
       end
     end

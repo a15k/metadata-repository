@@ -15,7 +15,8 @@ RSpec.describe Api::V1::ApplicationUsersController, type: :request do
                    application_proc: -> { @application },
                    base_path_template: '/application_users',
                    schema_reference: application_user_schema_reference,
-                   valid_type: valid_type
+                   valid_type: valid_type,
+                   fully_scoped: true
 
   no_data_setup = ->(on) do
     tags valid_type.classify

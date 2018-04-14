@@ -6,7 +6,8 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
                                                   valid_type:,
                                                   id_scope: '',
                                                   description_scope: nil,
-                                                  path_params_proc: -> {}|
+                                                  path_params_proc: -> {},
+                                                  fully_scoped: false|
   class_name = valid_type.classify
   pluralized_class_name = class_name.pluralize
   description_scope ||= id_scope.blank? ? '' : "for the given #{id_scope}"
@@ -341,14 +342,29 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
                 let(:verb) { verb }
                 let(:on)   { on }
 
-                response 404, 'not visible' do
-                  schema schema_reference
+                if fully_scoped
+                  response 404, 'not visible' do
+                    schema schema_reference
 
-                  run_test! do |response|
-                    expect(response.errors.first[:status]).to eq '404'
-                    expect(response.errors.first[:code]).to eq 'not_found'
-                    expect(response.errors.first[:title]).to eq 'Not Found'
-                    expect(response.errors.first[:detail]).to eq "Couldn't find #{type.classify}"
+                    run_test! do |response|
+                      expect(response.errors.first[:status]).to eq '404'
+                      expect(response.errors.first[:code]).to eq 'not_found'
+                      expect(response.errors.first[:title]).to eq 'Not Found'
+                      expect(response.errors.first[:detail]).to eq "Couldn't find #{type.classify}"
+                    end
+                  end
+                else
+                  response 403, 'forbidden' do
+                    schema schema_reference
+
+                    run_test! do |response|
+                      expect(response.errors.first[:status]).to eq '403'
+                      expect(response.errors.first[:code]).to eq 'forbidden'
+                      expect(response.errors.first[:title]).to eq 'Forbidden'
+                      expect(response.errors.first[:detail]).to eq(
+                        "You are not allowed to modify the given #{type.classify}."
+                      )
+                    end
                   end
                 end
               end

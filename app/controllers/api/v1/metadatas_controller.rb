@@ -1,13 +1,13 @@
 module Api
   module V1
     class MetadatasController < JsonApiController
+      before_action :can_modify!, only: [ :update, :destroy ]
+
       def index
         render_metadata metadatas: current_application.metadatas
       end
 
       def show
-        get_metadata
-
         render_metadata
       end
 
@@ -18,21 +18,26 @@ module Api
       end
 
       def update
-        get_metadata.update_attributes! metadata_update_params
+        metadata.update_attributes! metadata_update_params
 
         render_metadata
       end
 
       def destroy
-        get_metadata.destroy!
+        metadata.destroy!
 
         render_metadata
       end
 
       protected
 
-      def get_metadata
-        @metadata ||= Metadata.find_by!(application: current_application, uuid: path_id_param)
+      def metadata
+        @metadata ||= Metadata.find_by(application: current_application, uuid: path_id_param) ||
+                      Metadata.order(:id).find_by!(uuid: path_id_param)
+      end
+
+      def can_modify!
+        raise SecurityTransgression, metadata unless metadata.application == current_application
       end
 
       def metadata_attribute_params
@@ -68,7 +73,7 @@ module Api
         )
       end
 
-      def render_metadata(metadatas: get_metadata, status: 200)
+      def render_metadata(metadatas: metadata, status: 200)
         render json: MetadataSerializer.new(metadatas).serializable_hash, status: status
       end
     end

@@ -6,8 +6,6 @@ module Api
       end
 
       def show
-        get_application_user
-
         render_application_user
       end
 
@@ -18,13 +16,13 @@ module Api
       end
 
       def update
-        get_application_user.update_attributes! application_user_update_params
+        application_user.update_attributes! application_user_update_params
 
         render_application_user
       end
 
       def destroy
-        get_application_user.destroy!
+        application_user.destroy!
 
         render_application_user
       end
@@ -35,7 +33,7 @@ module Api
         params.permit(filter: [ :query, :language ]).fetch(:filter, {})
       end
 
-      def get_application_user
+      def application_user
         @application_user ||= ApplicationUser.find_by!(
           application: current_application, uuid: path_id_param
         )
@@ -51,7 +49,7 @@ module Api
         )
       end
 
-      def render_application_user(application_users: get_application_user, status: 200)
+      def render_application_user(application_users: application_user, status: 200)
         render json: ApplicationUserSerializer.new(application_users).serializable_hash,
                status: status
       end
