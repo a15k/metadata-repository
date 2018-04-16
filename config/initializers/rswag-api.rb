@@ -11,14 +11,35 @@ Rswag::Api.configure do |c|
   c.swagger_filter = ->(swagger, env) do
     request = Rack::Request.new(env)
 
-    swagger['host'] = request.host_with_port
+    swagger['servers'] = [
+      {
+        url: request.host_with_port,
+        description: 'The metadata repository server'
+      }
+    ]
 
-    next unless swagger.has_key? 'definitions'
+    next unless swagger.has_key?('components') && swagger['components'].has_key?('schemas')
 
-    swagger['definitions'].each_value do |definition|
+    swagger['components']['schemas'].each_value do |definition|
       next definition unless definition.has_key? '$ref'
 
       definition['$ref'].sub! 'public', request.base_url
+    end
+
+    # Fix for swagger-ui bug: expects examples in the wrong place according to OAS 3.0
+    swagger['paths'].each_value do |path|
+      path.each_value do |operation|
+        operation['responses'].each_value do |response|
+          content = response['content']
+          content.each do |key, value|
+            next unless value.has_key? 'examples'
+
+            response['examples'] = value.delete 'examples'
+
+            content.delete(key) if value.empty?
+          end
+        end
+      end
     end
   end
 end
