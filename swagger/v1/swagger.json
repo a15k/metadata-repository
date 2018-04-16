@@ -19,20 +19,18 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/application_user"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
                                             "data": [
                                                 {
-                                                    "id": "88002ac9-0c5b-4078-8d74-ccd45e402495",
+                                                    "id": "63914cc0-0965-4d80-a27e-7fd8471e7a18",
                                                     "type": "application_user",
                                                     "relationships": {
                                                         "application": {
                                                             "data": {
-                                                                "id": "9ab0ec12-eccb-45cf-8d02-1d190ba6ca08",
+                                                                "id": "f9546046-6b42-4d52-8cd0-29d652d5540d",
                                                                 "type": "application"
                                                             }
                                                         }
@@ -51,9 +49,7 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/application_user"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
@@ -77,9 +73,7 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/application_user"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
@@ -88,7 +82,7 @@
                                                     "status": "403",
                                                     "code": "invalid_api_token",
                                                     "title": "Invalid api token",
-                                                    "detail": "The API token provided in the Metadata-Api-Token header (c4935e8e5687b728921890610059905e4f3a32465c4f5bb1739dc7464465d8c8) is invalid."
+                                                    "detail": "The API token provided in the Metadata-Api-Token header (afe6fa0f08c116323b7528db1b59ce14760e1ba6adef910d90ef843fe3be9038) is invalid."
                                                 }
                                             ]
                                         }
@@ -150,19 +144,17 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/application_user"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
                                             "data": {
-                                                "id": "4b11494f-022f-496c-aaa9-b9861cbd1783",
+                                                "id": "3b79ff89-0a30-4cf5-9337-7e6200856afd",
                                                 "type": "application_user",
                                                 "relationships": {
                                                     "application": {
                                                         "data": {
-                                                            "id": "9ab0ec12-eccb-45cf-8d02-1d190ba6ca08",
+                                                            "id": "f9546046-6b42-4d52-8cd0-29d652d5540d",
                                                             "type": "application"
                                                         }
                                                     }
@@ -180,9 +172,7 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/application_user"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
@@ -206,9 +196,7 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/application_user"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
@@ -217,7 +205,7 @@
                                                     "status": "403",
                                                     "code": "forbidden_application_id",
                                                     "title": "Forbidden application id",
-                                                    "detail": "You are only allowed to provide your own application id (9ab0ec12-eccb-45cf-8d02-1d190ba6ca08)."
+                                                    "detail": "You are only allowed to provide your own application id (f9546046-6b42-4d52-8cd0-29d652d5540d)."
                                                 }
                                             ]
                                         }
@@ -232,9 +220,7 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/application_user"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
@@ -311,19 +297,17 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/application_user"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
                                             "data": {
-                                                "id": "88002ac9-0c5b-4078-8d74-ccd45e402495",
+                                                "id": "63914cc0-0965-4d80-a27e-7fd8471e7a18",
                                                 "type": "application_user",
                                                 "relationships": {
                                                     "application": {
                                                         "data": {
-                                                            "id": "9ab0ec12-eccb-45cf-8d02-1d190ba6ca08",
+                                                            "id": "f9546046-6b42-4d52-8cd0-29d652d5540d",
                                                             "type": "application"
                                                         }
                                                     }
@@ -341,9 +325,7 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/application_user"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
@@ -367,9 +349,7 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/application_user"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
@@ -378,7 +358,7 @@
                                                     "status": "403",
                                                     "code": "invalid_api_token",
                                                     "title": "Invalid api token",
-                                                    "detail": "The API token provided in the Metadata-Api-Token header (526901732fcdf2510a34db428b8c0a97b03efeeffbd4071df7b436353e47faa8) is invalid."
+                                                    "detail": "The API token provided in the Metadata-Api-Token header (893ce180cb4f8653b54fa042ea8d678e40077f71ecc89b2c2e35aac6d9e991fc) is invalid."
                                                 }
                                             ]
                                         }
@@ -431,19 +411,17 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/application_user"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
                                             "data": {
-                                                "id": "88002ac9-0c5b-4078-8d74-ccd45e402495",
+                                                "id": "63914cc0-0965-4d80-a27e-7fd8471e7a18",
                                                 "type": "application_user",
                                                 "relationships": {
                                                     "application": {
                                                         "data": {
-                                                            "id": "9ab0ec12-eccb-45cf-8d02-1d190ba6ca08",
+                                                            "id": "f9546046-6b42-4d52-8cd0-29d652d5540d",
                                                             "type": "application"
                                                         }
                                                     }
@@ -461,9 +439,7 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/application_user"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
@@ -487,9 +463,7 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/application_user"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
@@ -498,7 +472,7 @@
                                                     "status": "403",
                                                     "code": "invalid_api_token",
                                                     "title": "Invalid api token",
-                                                    "detail": "The API token provided in the Metadata-Api-Token header (13100977d772234ade818b2bd9d3df67fdf9143d4c3595e03f43db46829c0280) is invalid."
+                                                    "detail": "The API token provided in the Metadata-Api-Token header (47e5b04c30f909c35d3a6727b4fafd90a37ee0dd36c2e09952d6821376a6d3e2) is invalid."
                                                 }
                                             ]
                                         }
@@ -551,19 +525,17 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/application_user"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
                                             "data": {
-                                                "id": "88002ac9-0c5b-4078-8d74-ccd45e402495",
+                                                "id": "63914cc0-0965-4d80-a27e-7fd8471e7a18",
                                                 "type": "application_user",
                                                 "relationships": {
                                                     "application": {
                                                         "data": {
-                                                            "id": "9ab0ec12-eccb-45cf-8d02-1d190ba6ca08",
+                                                            "id": "f9546046-6b42-4d52-8cd0-29d652d5540d",
                                                             "type": "application"
                                                         }
                                                     }
@@ -581,9 +553,7 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/application_user"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
@@ -607,9 +577,7 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/application_user"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
@@ -618,7 +586,7 @@
                                                     "status": "403",
                                                     "code": "forbidden_application_id",
                                                     "title": "Forbidden application id",
-                                                    "detail": "You are only allowed to provide your own application id (9ab0ec12-eccb-45cf-8d02-1d190ba6ca08)."
+                                                    "detail": "You are only allowed to provide your own application id (f9546046-6b42-4d52-8cd0-29d652d5540d)."
                                                 }
                                             ]
                                         }
@@ -633,9 +601,7 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/application_user"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
@@ -700,9 +666,7 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/application_user"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
@@ -726,9 +690,7 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/application_user"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
@@ -737,7 +699,7 @@
                                                     "status": "403",
                                                     "code": "forbidden_application_id",
                                                     "title": "Forbidden application id",
-                                                    "detail": "You are only allowed to provide your own application id (9ab0ec12-eccb-45cf-8d02-1d190ba6ca08)."
+                                                    "detail": "You are only allowed to provide your own application id (f9546046-6b42-4d52-8cd0-29d652d5540d)."
                                                 }
                                             ]
                                         }
@@ -752,9 +714,7 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/application_user"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
@@ -778,9 +738,7 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/application_user"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
@@ -845,9 +803,7 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/application_user"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
@@ -871,9 +827,7 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/application_user"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
@@ -882,7 +836,7 @@
                                                     "status": "403",
                                                     "code": "forbidden_application_id",
                                                     "title": "Forbidden application id",
-                                                    "detail": "You are only allowed to provide your own application id (9ab0ec12-eccb-45cf-8d02-1d190ba6ca08)."
+                                                    "detail": "You are only allowed to provide your own application id (f9546046-6b42-4d52-8cd0-29d652d5540d)."
                                                 }
                                             ]
                                         }
@@ -897,9 +851,7 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/application_user"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
@@ -923,9 +875,7 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/application_user"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
@@ -992,15 +942,13 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/metadata"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
                                             "data": [
                                                 {
-                                                    "id": "2439cd33-3d58-420a-aec5-804b626bfac2",
+                                                    "id": "e74fe819-37bc-4704-9575-3ec8502a9178",
                                                     "type": "metadata",
                                                     "attributes": {
                                                         "value": {
@@ -1010,25 +958,25 @@
                                                     "relationships": {
                                                         "application": {
                                                             "data": {
-                                                                "id": "7a2d40cb-a05c-44b7-b836-40d68d2a4bab",
+                                                                "id": "255f4feb-73e7-4fbd-b522-6fc5ccfcb229",
                                                                 "type": "application"
                                                             }
                                                         },
                                                         "application_user": {
                                                             "data": {
-                                                                "id": "62552f33-6323-462a-a283-4eeeb510e5a1",
+                                                                "id": "ca861bdd-c190-4604-b589-3a375a98498b",
                                                                 "type": "application_user"
                                                             }
                                                         },
                                                         "resource": {
                                                             "data": {
-                                                                "id": "f25e9437-5bf9-4e8a-b2ed-2f3554c107ea",
+                                                                "id": "ca635a63-4937-4e30-ab52-2196828da49e",
                                                                 "type": "resource"
                                                             }
                                                         },
                                                         "format": {
                                                             "data": {
-                                                                "id": "ex neque ratione eveniet ea dignissimos repellendus aut dolorem sit",
+                                                                "id": "repellendus ut et voluptatem earum blanditiis quisquam dolores dolor libero",
                                                                 "type": "format"
                                                             }
                                                         }
@@ -1047,9 +995,7 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/metadata"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
@@ -1073,9 +1019,7 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/metadata"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
@@ -1084,7 +1028,7 @@
                                                     "status": "403",
                                                     "code": "invalid_api_token",
                                                     "title": "Invalid api token",
-                                                    "detail": "The API token provided in the Metadata-Api-Token header (bc1c4a86f8a2931a5bc56d1643168f6ec9fc78e3f5a1504ab53d072f616c0231) is invalid."
+                                                    "detail": "The API token provided in the Metadata-Api-Token header (006d0747c3e0907358c87b31edfe40fae1756cf62aa9624fc285eb45e26ed5b6) is invalid."
                                                 }
                                             ]
                                         }
@@ -1137,14 +1081,12 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/metadata"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
                                             "data": {
-                                                "id": "d4b0eb61-a26a-4974-adad-130fadedac39",
+                                                "id": "747cb48b-99a4-450b-a8eb-bf21ac01b2db",
                                                 "type": "metadata",
                                                 "attributes": {
                                                     "value": {
@@ -1154,25 +1096,25 @@
                                                 "relationships": {
                                                     "application": {
                                                         "data": {
-                                                            "id": "7a2d40cb-a05c-44b7-b836-40d68d2a4bab",
+                                                            "id": "255f4feb-73e7-4fbd-b522-6fc5ccfcb229",
                                                             "type": "application"
                                                         }
                                                     },
                                                     "application_user": {
                                                         "data": {
-                                                            "id": "62552f33-6323-462a-a283-4eeeb510e5a1",
+                                                            "id": "ca861bdd-c190-4604-b589-3a375a98498b",
                                                             "type": "application_user"
                                                         }
                                                     },
                                                     "resource": {
                                                         "data": {
-                                                            "id": "f25e9437-5bf9-4e8a-b2ed-2f3554c107ea",
+                                                            "id": "ca635a63-4937-4e30-ab52-2196828da49e",
                                                             "type": "resource"
                                                         }
                                                     },
                                                     "format": {
                                                         "data": {
-                                                            "id": "ex neque ratione eveniet ea dignissimos repellendus aut dolorem sit",
+                                                            "id": "repellendus ut et voluptatem earum blanditiis quisquam dolores dolor libero",
                                                             "type": "format"
                                                         }
                                                     }
@@ -1190,9 +1132,7 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/metadata"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
@@ -1216,9 +1156,7 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/metadata"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
@@ -1227,7 +1165,7 @@
                                                     "status": "403",
                                                     "code": "forbidden_application_id",
                                                     "title": "Forbidden application id",
-                                                    "detail": "You are only allowed to provide your own application id (7a2d40cb-a05c-44b7-b836-40d68d2a4bab)."
+                                                    "detail": "You are only allowed to provide your own application id (255f4feb-73e7-4fbd-b522-6fc5ccfcb229)."
                                                 }
                                             ]
                                         }
@@ -1242,9 +1180,7 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/metadata"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
@@ -1320,14 +1256,12 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/metadata"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
                                             "data": {
-                                                "id": "2439cd33-3d58-420a-aec5-804b626bfac2",
+                                                "id": "e74fe819-37bc-4704-9575-3ec8502a9178",
                                                 "type": "metadata",
                                                 "attributes": {
                                                     "value": {
@@ -1337,25 +1271,25 @@
                                                 "relationships": {
                                                     "application": {
                                                         "data": {
-                                                            "id": "7a2d40cb-a05c-44b7-b836-40d68d2a4bab",
+                                                            "id": "255f4feb-73e7-4fbd-b522-6fc5ccfcb229",
                                                             "type": "application"
                                                         }
                                                     },
                                                     "application_user": {
                                                         "data": {
-                                                            "id": "62552f33-6323-462a-a283-4eeeb510e5a1",
+                                                            "id": "ca861bdd-c190-4604-b589-3a375a98498b",
                                                             "type": "application_user"
                                                         }
                                                     },
                                                     "resource": {
                                                         "data": {
-                                                            "id": "f25e9437-5bf9-4e8a-b2ed-2f3554c107ea",
+                                                            "id": "ca635a63-4937-4e30-ab52-2196828da49e",
                                                             "type": "resource"
                                                         }
                                                     },
                                                     "format": {
                                                         "data": {
-                                                            "id": "ex neque ratione eveniet ea dignissimos repellendus aut dolorem sit",
+                                                            "id": "repellendus ut et voluptatem earum blanditiis quisquam dolores dolor libero",
                                                             "type": "format"
                                                         }
                                                     }
@@ -1373,9 +1307,7 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/metadata"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
@@ -1399,9 +1331,7 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/metadata"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
@@ -1410,7 +1340,7 @@
                                                     "status": "403",
                                                     "code": "invalid_api_token",
                                                     "title": "Invalid api token",
-                                                    "detail": "The API token provided in the Metadata-Api-Token header (e0f45663d88c315337bc2609886c8d0545f4ca0ecd19c7880661fead9b8ab693) is invalid."
+                                                    "detail": "The API token provided in the Metadata-Api-Token header (dbc7968f593a2ef5cc1c0be233e9894b8cd9958770567d3485a7a2466c32a889) is invalid."
                                                 }
                                             ]
                                         }
@@ -1472,14 +1402,12 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/metadata"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
                                             "data": {
-                                                "id": "2439cd33-3d58-420a-aec5-804b626bfac2",
+                                                "id": "e74fe819-37bc-4704-9575-3ec8502a9178",
                                                 "type": "metadata",
                                                 "attributes": {
                                                     "value": {
@@ -1489,25 +1417,25 @@
                                                 "relationships": {
                                                     "application": {
                                                         "data": {
-                                                            "id": "7a2d40cb-a05c-44b7-b836-40d68d2a4bab",
+                                                            "id": "255f4feb-73e7-4fbd-b522-6fc5ccfcb229",
                                                             "type": "application"
                                                         }
                                                     },
                                                     "application_user": {
                                                         "data": {
-                                                            "id": "62552f33-6323-462a-a283-4eeeb510e5a1",
+                                                            "id": "ca861bdd-c190-4604-b589-3a375a98498b",
                                                             "type": "application_user"
                                                         }
                                                     },
                                                     "resource": {
                                                         "data": {
-                                                            "id": "f25e9437-5bf9-4e8a-b2ed-2f3554c107ea",
+                                                            "id": "ca635a63-4937-4e30-ab52-2196828da49e",
                                                             "type": "resource"
                                                         }
                                                     },
                                                     "format": {
                                                         "data": {
-                                                            "id": "ex neque ratione eveniet ea dignissimos repellendus aut dolorem sit",
+                                                            "id": "repellendus ut et voluptatem earum blanditiis quisquam dolores dolor libero",
                                                             "type": "format"
                                                         }
                                                     }
@@ -1525,9 +1453,7 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/metadata"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
@@ -1551,9 +1477,7 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/metadata"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
@@ -1562,7 +1486,7 @@
                                                     "status": "403",
                                                     "code": "invalid_api_token",
                                                     "title": "Invalid api token",
-                                                    "detail": "The API token provided in the Metadata-Api-Token header (e9a786f77265da6b3f40db9e39ebbacffceec28bab38ffbb0acdff97fe55b0dd) is invalid."
+                                                    "detail": "The API token provided in the Metadata-Api-Token header (37cbe2ccf8cb17dec4f7f88d31621d24033887f57efb5934bb4b05f7840ec6d5) is invalid."
                                                 }
                                             ]
                                         }
@@ -1624,14 +1548,12 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/metadata"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
                                             "data": {
-                                                "id": "2439cd33-3d58-420a-aec5-804b626bfac2",
+                                                "id": "e74fe819-37bc-4704-9575-3ec8502a9178",
                                                 "type": "metadata",
                                                 "attributes": {
                                                     "value": {
@@ -1641,25 +1563,25 @@
                                                 "relationships": {
                                                     "application": {
                                                         "data": {
-                                                            "id": "7a2d40cb-a05c-44b7-b836-40d68d2a4bab",
+                                                            "id": "255f4feb-73e7-4fbd-b522-6fc5ccfcb229",
                                                             "type": "application"
                                                         }
                                                     },
                                                     "application_user": {
                                                         "data": {
-                                                            "id": "62552f33-6323-462a-a283-4eeeb510e5a1",
+                                                            "id": "ca861bdd-c190-4604-b589-3a375a98498b",
                                                             "type": "application_user"
                                                         }
                                                     },
                                                     "resource": {
                                                         "data": {
-                                                            "id": "f25e9437-5bf9-4e8a-b2ed-2f3554c107ea",
+                                                            "id": "ca635a63-4937-4e30-ab52-2196828da49e",
                                                             "type": "resource"
                                                         }
                                                     },
                                                     "format": {
                                                         "data": {
-                                                            "id": "ex neque ratione eveniet ea dignissimos repellendus aut dolorem sit",
+                                                            "id": "repellendus ut et voluptatem earum blanditiis quisquam dolores dolor libero",
                                                             "type": "format"
                                                         }
                                                     }
@@ -1677,9 +1599,7 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/metadata"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
@@ -1703,9 +1623,7 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/metadata"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
@@ -1714,7 +1632,7 @@
                                                     "status": "403",
                                                     "code": "forbidden_application_id",
                                                     "title": "Forbidden application id",
-                                                    "detail": "You are only allowed to provide your own application id (7a2d40cb-a05c-44b7-b836-40d68d2a4bab)."
+                                                    "detail": "You are only allowed to provide your own application id (255f4feb-73e7-4fbd-b522-6fc5ccfcb229)."
                                                 }
                                             ]
                                         }
@@ -1729,9 +1647,7 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/metadata"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
@@ -1805,14 +1721,12 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/metadata"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
                                             "data": {
-                                                "id": "2439cd33-3d58-420a-aec5-804b626bfac2",
+                                                "id": "e74fe819-37bc-4704-9575-3ec8502a9178",
                                                 "type": "metadata",
                                                 "attributes": {
                                                     "value": {
@@ -1822,7 +1736,7 @@
                                                 "relationships": {
                                                     "application": {
                                                         "data": {
-                                                            "id": "7a2d40cb-a05c-44b7-b836-40d68d2a4bab",
+                                                            "id": "255f4feb-73e7-4fbd-b522-6fc5ccfcb229",
                                                             "type": "application"
                                                         }
                                                     },
@@ -1831,13 +1745,13 @@
                                                     },
                                                     "resource": {
                                                         "data": {
-                                                            "id": "f25e9437-5bf9-4e8a-b2ed-2f3554c107ea",
+                                                            "id": "ca635a63-4937-4e30-ab52-2196828da49e",
                                                             "type": "resource"
                                                         }
                                                     },
                                                     "format": {
                                                         "data": {
-                                                            "id": "expedita odio provident vero tempora totam explicabo voluptatem dolore et",
+                                                            "id": "ea quod ut odit est quia asperiores sint voluptas assumenda",
                                                             "type": "format"
                                                         }
                                                     }
@@ -1855,9 +1769,7 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/metadata"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
@@ -1881,9 +1793,7 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/metadata"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
@@ -1892,7 +1802,7 @@
                                                     "status": "403",
                                                     "code": "forbidden_application_id",
                                                     "title": "Forbidden application id",
-                                                    "detail": "You are only allowed to provide your own application id (7a2d40cb-a05c-44b7-b836-40d68d2a4bab)."
+                                                    "detail": "You are only allowed to provide your own application id (255f4feb-73e7-4fbd-b522-6fc5ccfcb229)."
                                                 }
                                             ]
                                         }
@@ -1907,9 +1817,7 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/metadata"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
@@ -1933,9 +1841,7 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/metadata"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
@@ -2009,14 +1915,12 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/metadata"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
                                             "data": {
-                                                "id": "2439cd33-3d58-420a-aec5-804b626bfac2",
+                                                "id": "e74fe819-37bc-4704-9575-3ec8502a9178",
                                                 "type": "metadata",
                                                 "attributes": {
                                                     "value": {
@@ -2026,7 +1930,7 @@
                                                 "relationships": {
                                                     "application": {
                                                         "data": {
-                                                            "id": "7a2d40cb-a05c-44b7-b836-40d68d2a4bab",
+                                                            "id": "255f4feb-73e7-4fbd-b522-6fc5ccfcb229",
                                                             "type": "application"
                                                         }
                                                     },
@@ -2035,13 +1939,13 @@
                                                     },
                                                     "resource": {
                                                         "data": {
-                                                            "id": "f25e9437-5bf9-4e8a-b2ed-2f3554c107ea",
+                                                            "id": "ca635a63-4937-4e30-ab52-2196828da49e",
                                                             "type": "resource"
                                                         }
                                                     },
                                                     "format": {
                                                         "data": {
-                                                            "id": "expedita odio provident vero tempora totam explicabo voluptatem dolore et",
+                                                            "id": "ea quod ut odit est quia asperiores sint voluptas assumenda",
                                                             "type": "format"
                                                         }
                                                     }
@@ -2059,9 +1963,7 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/metadata"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
@@ -2085,9 +1987,7 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/metadata"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
@@ -2096,7 +1996,7 @@
                                                     "status": "403",
                                                     "code": "forbidden_application_id",
                                                     "title": "Forbidden application id",
-                                                    "detail": "You are only allowed to provide your own application id (7a2d40cb-a05c-44b7-b836-40d68d2a4bab)."
+                                                    "detail": "You are only allowed to provide your own application id (255f4feb-73e7-4fbd-b522-6fc5ccfcb229)."
                                                 }
                                             ]
                                         }
@@ -2111,9 +2011,7 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/metadata"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
@@ -2137,9 +2035,7 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/metadata"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
@@ -2187,18 +2083,16 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/resource"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
                                             "data": [
                                                 {
-                                                    "id": "dff81970-fe2f-4948-8bad-c75c281b3569",
+                                                    "id": "aa355b9e-615e-4056-97ac-6edaea0a1f39",
                                                     "type": "resource",
                                                     "attributes": {
-                                                        "uri": "https://example.com/assessments/dff81970-fe2f-4948-8bad-c75c281b3569",
+                                                        "uri": "https://example.com/assessments/aa355b9e-615e-4056-97ac-6edaea0a1f39",
                                                         "resource_type": "assessment",
                                                         "title": "The fox and the dog",
                                                         "content": "The quick brown fox jumps over the lazy dog.",
@@ -2207,19 +2101,19 @@
                                                     "relationships": {
                                                         "application": {
                                                             "data": {
-                                                                "id": "506774de-07a2-4f86-9b6d-92e40871b5db",
+                                                                "id": "231af260-a2f5-4bf4-9693-6a966612a846",
                                                                 "type": "application"
                                                             }
                                                         },
                                                         "application_user": {
                                                             "data": {
-                                                                "id": "102eb9f5-a80f-43f8-b717-459e2e6d4561",
+                                                                "id": "afea77b1-f892-4404-8e60-132035f82cfa",
                                                                 "type": "application_user"
                                                             }
                                                         },
                                                         "format": {
                                                             "data": {
-                                                                "id": "accusamus corrupti ad excepturi enim eos quis sed neque aut",
+                                                                "id": "reiciendis et et unde facilis eaque suscipit alias aperiam vero",
                                                                 "type": "format"
                                                             }
                                                         },
@@ -2244,9 +2138,7 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/resource"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
@@ -2270,9 +2162,7 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/resource"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
@@ -2281,7 +2171,7 @@
                                                     "status": "403",
                                                     "code": "invalid_api_token",
                                                     "title": "Invalid api token",
-                                                    "detail": "The API token provided in the Metadata-Api-Token header (9978f590e3b2e66a6df64e2d460cc24563e62e8f26eb1f4e50ef4fb9db072d62) is invalid."
+                                                    "detail": "The API token provided in the Metadata-Api-Token header (550ad22e19a1b253a98f7058a59584c1fccad62198ccd6174ef5c5aff413ec41) is invalid."
                                                 }
                                             ]
                                         }
@@ -2343,44 +2233,42 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/resource"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
                                             "data": {
-                                                "id": "e6e13e79-a611-4cbe-965c-b135dc3d4eac",
+                                                "id": "3a8e5c7e-f70c-48af-a15e-ba7a28389116",
                                                 "type": "resource",
                                                 "attributes": {
-                                                    "uri": "https://example.com/assessments/2b3eee78-bf01-44ce-909d-a38babc2a872",
+                                                    "uri": "https://example.com/assessments/37b4bc6b-6f72-4d85-8ea0-f9b8d454b171",
                                                     "resource_type": "assessment",
                                                     "title": null,
-                                                    "content": "eos provident et quisquam similique sint a et ad odio",
+                                                    "content": "nemo molestiae reiciendis ipsum ipsa accusamus est sunt fugiat omnis",
                                                     "highlight": null
                                                 },
                                                 "relationships": {
                                                     "application": {
                                                         "data": {
-                                                            "id": "506774de-07a2-4f86-9b6d-92e40871b5db",
+                                                            "id": "231af260-a2f5-4bf4-9693-6a966612a846",
                                                             "type": "application"
                                                         }
                                                     },
                                                     "application_user": {
                                                         "data": {
-                                                            "id": "25325258-22db-4298-b81f-ceb05ed1ea3b",
+                                                            "id": "e69bf8e9-d560-4df8-9f46-9cac8d58c61b",
                                                             "type": "application_user"
                                                         }
                                                     },
                                                     "format": {
                                                         "data": {
-                                                            "id": "consequatur nobis quaerat cumque molestiae omnis molestias ut inventore occaecati",
+                                                            "id": "vel quo sint molestiae ut autem eum quis qui dolore",
                                                             "type": "format"
                                                         }
                                                     },
                                                     "language": {
                                                         "data": {
-                                                            "id": "ipsum sint quibusdam est accusantium debitis qui nulla saepe corrupti",
+                                                            "id": "quibusdam ut in dolor quisquam aut placeat impedit deleniti illum",
                                                             "type": "language"
                                                         }
                                                     }
@@ -2398,9 +2286,7 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/resource"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
@@ -2424,9 +2310,7 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/resource"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
@@ -2435,7 +2319,7 @@
                                                     "status": "403",
                                                     "code": "forbidden_application_id",
                                                     "title": "Forbidden application id",
-                                                    "detail": "You are only allowed to provide your own application id (506774de-07a2-4f86-9b6d-92e40871b5db)."
+                                                    "detail": "You are only allowed to provide your own application id (231af260-a2f5-4bf4-9693-6a966612a846)."
                                                 }
                                             ]
                                         }
@@ -2450,9 +2334,7 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/resource"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
@@ -2529,44 +2411,42 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/resource"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
                                             "data": {
-                                                "id": "21565d12-d075-4b97-944d-40ed6c418b06",
+                                                "id": "78f342d4-f2cc-4d38-806d-b848639ba91e",
                                                 "type": "resource",
                                                 "attributes": {
-                                                    "uri": "https://example.com/assessments/21565d12-d075-4b97-944d-40ed6c418b06",
+                                                    "uri": "https://example.com/assessments/78f342d4-f2cc-4d38-806d-b848639ba91e",
                                                     "resource_type": "assessment",
                                                     "title": null,
-                                                    "content": "eos provident et quisquam similique sint a et ad odio",
+                                                    "content": "nemo molestiae reiciendis ipsum ipsa accusamus est sunt fugiat omnis",
                                                     "highlight": null
                                                 },
                                                 "relationships": {
                                                     "application": {
                                                         "data": {
-                                                            "id": "506774de-07a2-4f86-9b6d-92e40871b5db",
+                                                            "id": "231af260-a2f5-4bf4-9693-6a966612a846",
                                                             "type": "application"
                                                         }
                                                     },
                                                     "application_user": {
                                                         "data": {
-                                                            "id": "25325258-22db-4298-b81f-ceb05ed1ea3b",
+                                                            "id": "e69bf8e9-d560-4df8-9f46-9cac8d58c61b",
                                                             "type": "application_user"
                                                         }
                                                     },
                                                     "format": {
                                                         "data": {
-                                                            "id": "consequatur nobis quaerat cumque molestiae omnis molestias ut inventore occaecati",
+                                                            "id": "vel quo sint molestiae ut autem eum quis qui dolore",
                                                             "type": "format"
                                                         }
                                                     },
                                                     "language": {
                                                         "data": {
-                                                            "id": "ipsum sint quibusdam est accusantium debitis qui nulla saepe corrupti",
+                                                            "id": "quibusdam ut in dolor quisquam aut placeat impedit deleniti illum",
                                                             "type": "language"
                                                         }
                                                     }
@@ -2584,9 +2464,7 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/resource"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
@@ -2610,9 +2488,7 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/resource"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
@@ -2621,7 +2497,7 @@
                                                     "status": "403",
                                                     "code": "invalid_api_token",
                                                     "title": "Invalid api token",
-                                                    "detail": "The API token provided in the Metadata-Api-Token header (b20385183b15ccac704f7c1dc0cbfecdd3e6df5a7bf7f891d53ce48e8ec33b6c) is invalid."
+                                                    "detail": "The API token provided in the Metadata-Api-Token header (e87117543ff665ed35d84bdb12243fa741bd32e12bbaadb3c24aa31e48d9b722) is invalid."
                                                 }
                                             ]
                                         }
@@ -2674,44 +2550,42 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/resource"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
                                             "data": {
-                                                "id": "21565d12-d075-4b97-944d-40ed6c418b06",
+                                                "id": "78f342d4-f2cc-4d38-806d-b848639ba91e",
                                                 "type": "resource",
                                                 "attributes": {
-                                                    "uri": "https://example.com/assessments/21565d12-d075-4b97-944d-40ed6c418b06",
+                                                    "uri": "https://example.com/assessments/78f342d4-f2cc-4d38-806d-b848639ba91e",
                                                     "resource_type": "assessment",
                                                     "title": null,
-                                                    "content": "eos provident et quisquam similique sint a et ad odio",
+                                                    "content": "nemo molestiae reiciendis ipsum ipsa accusamus est sunt fugiat omnis",
                                                     "highlight": null
                                                 },
                                                 "relationships": {
                                                     "application": {
                                                         "data": {
-                                                            "id": "506774de-07a2-4f86-9b6d-92e40871b5db",
+                                                            "id": "231af260-a2f5-4bf4-9693-6a966612a846",
                                                             "type": "application"
                                                         }
                                                     },
                                                     "application_user": {
                                                         "data": {
-                                                            "id": "25325258-22db-4298-b81f-ceb05ed1ea3b",
+                                                            "id": "e69bf8e9-d560-4df8-9f46-9cac8d58c61b",
                                                             "type": "application_user"
                                                         }
                                                     },
                                                     "format": {
                                                         "data": {
-                                                            "id": "consequatur nobis quaerat cumque molestiae omnis molestias ut inventore occaecati",
+                                                            "id": "vel quo sint molestiae ut autem eum quis qui dolore",
                                                             "type": "format"
                                                         }
                                                     },
                                                     "language": {
                                                         "data": {
-                                                            "id": "ipsum sint quibusdam est accusantium debitis qui nulla saepe corrupti",
+                                                            "id": "quibusdam ut in dolor quisquam aut placeat impedit deleniti illum",
                                                             "type": "language"
                                                         }
                                                     }
@@ -2729,9 +2603,7 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/resource"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
@@ -2755,9 +2627,7 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/resource"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
@@ -2766,7 +2636,7 @@
                                                     "status": "403",
                                                     "code": "invalid_api_token",
                                                     "title": "Invalid api token",
-                                                    "detail": "The API token provided in the Metadata-Api-Token header (53f714de1153cf8f16ab9feb022a106af99d8fea5f78943541b11fb658981c81) is invalid."
+                                                    "detail": "The API token provided in the Metadata-Api-Token header (4d02eb2e675a4a327a0d24bcc6b7a1afe2d6f34ee6582e6d6444f1374d5e2685) is invalid."
                                                 }
                                             ]
                                         }
@@ -2819,44 +2689,42 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/resource"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
                                             "data": {
-                                                "id": "21565d12-d075-4b97-944d-40ed6c418b06",
+                                                "id": "78f342d4-f2cc-4d38-806d-b848639ba91e",
                                                 "type": "resource",
                                                 "attributes": {
-                                                    "uri": "https://example.com/assessments/21565d12-d075-4b97-944d-40ed6c418b06",
+                                                    "uri": "https://example.com/assessments/78f342d4-f2cc-4d38-806d-b848639ba91e",
                                                     "resource_type": "assessment",
                                                     "title": null,
-                                                    "content": "eos provident et quisquam similique sint a et ad odio",
+                                                    "content": "nemo molestiae reiciendis ipsum ipsa accusamus est sunt fugiat omnis",
                                                     "highlight": null
                                                 },
                                                 "relationships": {
                                                     "application": {
                                                         "data": {
-                                                            "id": "506774de-07a2-4f86-9b6d-92e40871b5db",
+                                                            "id": "231af260-a2f5-4bf4-9693-6a966612a846",
                                                             "type": "application"
                                                         }
                                                     },
                                                     "application_user": {
                                                         "data": {
-                                                            "id": "25325258-22db-4298-b81f-ceb05ed1ea3b",
+                                                            "id": "e69bf8e9-d560-4df8-9f46-9cac8d58c61b",
                                                             "type": "application_user"
                                                         }
                                                     },
                                                     "format": {
                                                         "data": {
-                                                            "id": "consequatur nobis quaerat cumque molestiae omnis molestias ut inventore occaecati",
+                                                            "id": "vel quo sint molestiae ut autem eum quis qui dolore",
                                                             "type": "format"
                                                         }
                                                     },
                                                     "language": {
                                                         "data": {
-                                                            "id": "ipsum sint quibusdam est accusantium debitis qui nulla saepe corrupti",
+                                                            "id": "quibusdam ut in dolor quisquam aut placeat impedit deleniti illum",
                                                             "type": "language"
                                                         }
                                                     }
@@ -2874,9 +2742,7 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/resource"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
@@ -2900,9 +2766,7 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/resource"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
@@ -2911,7 +2775,7 @@
                                                     "status": "403",
                                                     "code": "forbidden_application_id",
                                                     "title": "Forbidden application id",
-                                                    "detail": "You are only allowed to provide your own application id (506774de-07a2-4f86-9b6d-92e40871b5db)."
+                                                    "detail": "You are only allowed to provide your own application id (231af260-a2f5-4bf4-9693-6a966612a846)."
                                                 }
                                             ]
                                         }
@@ -2926,9 +2790,7 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/resource"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
@@ -2999,26 +2861,24 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/resource"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
                                             "data": {
-                                                "id": "21565d12-d075-4b97-944d-40ed6c418b06",
+                                                "id": "78f342d4-f2cc-4d38-806d-b848639ba91e",
                                                 "type": "resource",
                                                 "attributes": {
-                                                    "uri": "https://example.com/assessments/a46ba897-19e1-46c8-bfcd-91ac50ac7034",
+                                                    "uri": "https://example.com/assessments/557e42b7-edb7-42cd-a7dd-076e1dba9e7f",
                                                     "resource_type": "assessment",
                                                     "title": null,
-                                                    "content": "architecto quidem laboriosam incidunt qui consequuntur alias sequi est delectus",
+                                                    "content": "voluptatum ex voluptate quisquam quis sunt nisi vitae facere soluta",
                                                     "highlight": null
                                                 },
                                                 "relationships": {
                                                     "application": {
                                                         "data": {
-                                                            "id": "506774de-07a2-4f86-9b6d-92e40871b5db",
+                                                            "id": "231af260-a2f5-4bf4-9693-6a966612a846",
                                                             "type": "application"
                                                         }
                                                     },
@@ -3027,13 +2887,13 @@
                                                     },
                                                     "format": {
                                                         "data": {
-                                                            "id": "eum aut aspernatur quis distinctio placeat sint quo rerum optio",
+                                                            "id": "animi laudantium ullam ducimus et qui qui velit minima reiciendis",
                                                             "type": "format"
                                                         }
                                                     },
                                                     "language": {
                                                         "data": {
-                                                            "id": "qui et quod nam sint omnis dolor voluptatem nobis eum",
+                                                            "id": "eius tempore accusantium quam nulla quaerat sunt veniam reiciendis consequuntur",
                                                             "type": "language"
                                                         }
                                                     }
@@ -3051,9 +2911,7 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/resource"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
@@ -3077,9 +2935,7 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/resource"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
@@ -3088,7 +2944,7 @@
                                                     "status": "403",
                                                     "code": "forbidden_application_id",
                                                     "title": "Forbidden application id",
-                                                    "detail": "You are only allowed to provide your own application id (506774de-07a2-4f86-9b6d-92e40871b5db)."
+                                                    "detail": "You are only allowed to provide your own application id (231af260-a2f5-4bf4-9693-6a966612a846)."
                                                 }
                                             ]
                                         }
@@ -3103,9 +2959,7 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/resource"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
@@ -3129,9 +2983,7 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/resource"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
@@ -3196,26 +3048,24 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/resource"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
                                             "data": {
-                                                "id": "21565d12-d075-4b97-944d-40ed6c418b06",
+                                                "id": "78f342d4-f2cc-4d38-806d-b848639ba91e",
                                                 "type": "resource",
                                                 "attributes": {
-                                                    "uri": "https://example.com/assessments/a46ba897-19e1-46c8-bfcd-91ac50ac7034",
+                                                    "uri": "https://example.com/assessments/557e42b7-edb7-42cd-a7dd-076e1dba9e7f",
                                                     "resource_type": "assessment",
                                                     "title": null,
-                                                    "content": "architecto quidem laboriosam incidunt qui consequuntur alias sequi est delectus",
+                                                    "content": "voluptatum ex voluptate quisquam quis sunt nisi vitae facere soluta",
                                                     "highlight": null
                                                 },
                                                 "relationships": {
                                                     "application": {
                                                         "data": {
-                                                            "id": "506774de-07a2-4f86-9b6d-92e40871b5db",
+                                                            "id": "231af260-a2f5-4bf4-9693-6a966612a846",
                                                             "type": "application"
                                                         }
                                                     },
@@ -3224,13 +3074,13 @@
                                                     },
                                                     "format": {
                                                         "data": {
-                                                            "id": "eum aut aspernatur quis distinctio placeat sint quo rerum optio",
+                                                            "id": "animi laudantium ullam ducimus et qui qui velit minima reiciendis",
                                                             "type": "format"
                                                         }
                                                     },
                                                     "language": {
                                                         "data": {
-                                                            "id": "qui et quod nam sint omnis dolor voluptatem nobis eum",
+                                                            "id": "eius tempore accusantium quam nulla quaerat sunt veniam reiciendis consequuntur",
                                                             "type": "language"
                                                         }
                                                     }
@@ -3248,9 +3098,7 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/resource"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
@@ -3274,9 +3122,7 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/resource"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
@@ -3285,7 +3131,7 @@
                                                     "status": "403",
                                                     "code": "forbidden_application_id",
                                                     "title": "Forbidden application id",
-                                                    "detail": "You are only allowed to provide your own application id (506774de-07a2-4f86-9b6d-92e40871b5db)."
+                                                    "detail": "You are only allowed to provide your own application id (231af260-a2f5-4bf4-9693-6a966612a846)."
                                                 }
                                             ]
                                         }
@@ -3300,9 +3146,7 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/resource"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
@@ -3326,9 +3170,7 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/resource"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
@@ -3395,15 +3237,13 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/stats"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
                                             "data": [
                                                 {
-                                                    "id": "57735cd4-948c-4a1c-956a-8bcfdf7fa6e2",
+                                                    "id": "56df6467-6910-4707-b27a-0fb91982e924",
                                                     "type": "stats",
                                                     "attributes": {
                                                         "value": {
@@ -3413,25 +3253,25 @@
                                                     "relationships": {
                                                         "application": {
                                                             "data": {
-                                                                "id": "a8148c57-f6f5-47d2-bd4c-1eae9c6981c0",
+                                                                "id": "351abdb7-4a6f-49cd-9e1f-ca828aa22282",
                                                                 "type": "application"
                                                             }
                                                         },
                                                         "application_user": {
                                                             "data": {
-                                                                "id": "b5f6f52f-20ef-4cbb-bbe3-8fb5a2f93c50",
+                                                                "id": "4c2390be-38c9-48b4-83ce-40b5e1c60ec4",
                                                                 "type": "application_user"
                                                             }
                                                         },
                                                         "resource": {
                                                             "data": {
-                                                                "id": "dd9d9401-103c-43a9-9804-efcb3fc636cf",
+                                                                "id": "8b425371-4e96-4f0a-ad0d-ad4815dee33f",
                                                                 "type": "resource"
                                                             }
                                                         },
                                                         "format": {
                                                             "data": {
-                                                                "id": "omnis voluptatem voluptatem exercitationem velit excepturi voluptate et est consectetur",
+                                                                "id": "vitae odit est accusamus corrupti provident eius minus fugit omnis",
                                                                 "type": "format"
                                                             }
                                                         }
@@ -3450,9 +3290,7 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/stats"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
@@ -3476,9 +3314,7 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/stats"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
@@ -3487,7 +3323,7 @@
                                                     "status": "403",
                                                     "code": "invalid_api_token",
                                                     "title": "Invalid api token",
-                                                    "detail": "The API token provided in the Metadata-Api-Token header (a75c7af477d9b52245a943adc24c2f9f8594974fd71a96dd4e0ed379b5287b2a) is invalid."
+                                                    "detail": "The API token provided in the Metadata-Api-Token header (425af5a13e6e4a23d2bc16b76c0731aeb00982ab0a3ad7ccd9ca0c1a196b1a4c) is invalid."
                                                 }
                                             ]
                                         }
@@ -3540,14 +3376,12 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/stats"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
                                             "data": {
-                                                "id": "e2068917-e51b-49cc-9d4f-c2c35824a964",
+                                                "id": "76654ebd-205d-48c3-8996-a3eaf7ef497b",
                                                 "type": "stats",
                                                 "attributes": {
                                                     "value": {
@@ -3557,25 +3391,25 @@
                                                 "relationships": {
                                                     "application": {
                                                         "data": {
-                                                            "id": "a8148c57-f6f5-47d2-bd4c-1eae9c6981c0",
+                                                            "id": "351abdb7-4a6f-49cd-9e1f-ca828aa22282",
                                                             "type": "application"
                                                         }
                                                     },
                                                     "application_user": {
                                                         "data": {
-                                                            "id": "b5f6f52f-20ef-4cbb-bbe3-8fb5a2f93c50",
+                                                            "id": "4c2390be-38c9-48b4-83ce-40b5e1c60ec4",
                                                             "type": "application_user"
                                                         }
                                                     },
                                                     "resource": {
                                                         "data": {
-                                                            "id": "dd9d9401-103c-43a9-9804-efcb3fc636cf",
+                                                            "id": "8b425371-4e96-4f0a-ad0d-ad4815dee33f",
                                                             "type": "resource"
                                                         }
                                                     },
                                                     "format": {
                                                         "data": {
-                                                            "id": "omnis voluptatem voluptatem exercitationem velit excepturi voluptate et est consectetur",
+                                                            "id": "vitae odit est accusamus corrupti provident eius minus fugit omnis",
                                                             "type": "format"
                                                         }
                                                     }
@@ -3593,9 +3427,7 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/stats"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
@@ -3619,9 +3451,7 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/stats"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
@@ -3630,7 +3460,7 @@
                                                     "status": "403",
                                                     "code": "forbidden_application_id",
                                                     "title": "Forbidden application id",
-                                                    "detail": "You are only allowed to provide your own application id (a8148c57-f6f5-47d2-bd4c-1eae9c6981c0)."
+                                                    "detail": "You are only allowed to provide your own application id (351abdb7-4a6f-49cd-9e1f-ca828aa22282)."
                                                 }
                                             ]
                                         }
@@ -3645,9 +3475,7 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/stats"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
@@ -3723,14 +3551,12 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/stats"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
                                             "data": {
-                                                "id": "57735cd4-948c-4a1c-956a-8bcfdf7fa6e2",
+                                                "id": "56df6467-6910-4707-b27a-0fb91982e924",
                                                 "type": "stats",
                                                 "attributes": {
                                                     "value": {
@@ -3740,25 +3566,25 @@
                                                 "relationships": {
                                                     "application": {
                                                         "data": {
-                                                            "id": "a8148c57-f6f5-47d2-bd4c-1eae9c6981c0",
+                                                            "id": "351abdb7-4a6f-49cd-9e1f-ca828aa22282",
                                                             "type": "application"
                                                         }
                                                     },
                                                     "application_user": {
                                                         "data": {
-                                                            "id": "b5f6f52f-20ef-4cbb-bbe3-8fb5a2f93c50",
+                                                            "id": "4c2390be-38c9-48b4-83ce-40b5e1c60ec4",
                                                             "type": "application_user"
                                                         }
                                                     },
                                                     "resource": {
                                                         "data": {
-                                                            "id": "dd9d9401-103c-43a9-9804-efcb3fc636cf",
+                                                            "id": "8b425371-4e96-4f0a-ad0d-ad4815dee33f",
                                                             "type": "resource"
                                                         }
                                                     },
                                                     "format": {
                                                         "data": {
-                                                            "id": "omnis voluptatem voluptatem exercitationem velit excepturi voluptate et est consectetur",
+                                                            "id": "vitae odit est accusamus corrupti provident eius minus fugit omnis",
                                                             "type": "format"
                                                         }
                                                     }
@@ -3776,9 +3602,7 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/stats"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
@@ -3802,9 +3626,7 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/stats"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
@@ -3813,7 +3635,7 @@
                                                     "status": "403",
                                                     "code": "invalid_api_token",
                                                     "title": "Invalid api token",
-                                                    "detail": "The API token provided in the Metadata-Api-Token header (ee2fe1f26766b647bf527db6ef6ff350b0918d992d76c558486fd2135b7169c1) is invalid."
+                                                    "detail": "The API token provided in the Metadata-Api-Token header (95e2b5981ec5ef5c27e7e1a8ad1a640d8430a551932fd5c9307f89aebcf8c414) is invalid."
                                                 }
                                             ]
                                         }
@@ -3875,14 +3697,12 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/stats"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
                                             "data": {
-                                                "id": "57735cd4-948c-4a1c-956a-8bcfdf7fa6e2",
+                                                "id": "56df6467-6910-4707-b27a-0fb91982e924",
                                                 "type": "stats",
                                                 "attributes": {
                                                     "value": {
@@ -3892,25 +3712,25 @@
                                                 "relationships": {
                                                     "application": {
                                                         "data": {
-                                                            "id": "a8148c57-f6f5-47d2-bd4c-1eae9c6981c0",
+                                                            "id": "351abdb7-4a6f-49cd-9e1f-ca828aa22282",
                                                             "type": "application"
                                                         }
                                                     },
                                                     "application_user": {
                                                         "data": {
-                                                            "id": "b5f6f52f-20ef-4cbb-bbe3-8fb5a2f93c50",
+                                                            "id": "4c2390be-38c9-48b4-83ce-40b5e1c60ec4",
                                                             "type": "application_user"
                                                         }
                                                     },
                                                     "resource": {
                                                         "data": {
-                                                            "id": "dd9d9401-103c-43a9-9804-efcb3fc636cf",
+                                                            "id": "8b425371-4e96-4f0a-ad0d-ad4815dee33f",
                                                             "type": "resource"
                                                         }
                                                     },
                                                     "format": {
                                                         "data": {
-                                                            "id": "omnis voluptatem voluptatem exercitationem velit excepturi voluptate et est consectetur",
+                                                            "id": "vitae odit est accusamus corrupti provident eius minus fugit omnis",
                                                             "type": "format"
                                                         }
                                                     }
@@ -3928,9 +3748,7 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/stats"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
@@ -3954,9 +3772,7 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/stats"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
@@ -3965,7 +3781,7 @@
                                                     "status": "403",
                                                     "code": "invalid_api_token",
                                                     "title": "Invalid api token",
-                                                    "detail": "The API token provided in the Metadata-Api-Token header (4b537cf34dd02823f7fd9b690681b60019b282ea715f0cd22769ec7e03adb368) is invalid."
+                                                    "detail": "The API token provided in the Metadata-Api-Token header (123818ccdd5c62f5f9d7d5d40c26154d7da5b88cf74c0182f04539c51798fd00) is invalid."
                                                 }
                                             ]
                                         }
@@ -4027,14 +3843,12 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/stats"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
                                             "data": {
-                                                "id": "57735cd4-948c-4a1c-956a-8bcfdf7fa6e2",
+                                                "id": "56df6467-6910-4707-b27a-0fb91982e924",
                                                 "type": "stats",
                                                 "attributes": {
                                                     "value": {
@@ -4044,25 +3858,25 @@
                                                 "relationships": {
                                                     "application": {
                                                         "data": {
-                                                            "id": "a8148c57-f6f5-47d2-bd4c-1eae9c6981c0",
+                                                            "id": "351abdb7-4a6f-49cd-9e1f-ca828aa22282",
                                                             "type": "application"
                                                         }
                                                     },
                                                     "application_user": {
                                                         "data": {
-                                                            "id": "b5f6f52f-20ef-4cbb-bbe3-8fb5a2f93c50",
+                                                            "id": "4c2390be-38c9-48b4-83ce-40b5e1c60ec4",
                                                             "type": "application_user"
                                                         }
                                                     },
                                                     "resource": {
                                                         "data": {
-                                                            "id": "dd9d9401-103c-43a9-9804-efcb3fc636cf",
+                                                            "id": "8b425371-4e96-4f0a-ad0d-ad4815dee33f",
                                                             "type": "resource"
                                                         }
                                                     },
                                                     "format": {
                                                         "data": {
-                                                            "id": "omnis voluptatem voluptatem exercitationem velit excepturi voluptate et est consectetur",
+                                                            "id": "vitae odit est accusamus corrupti provident eius minus fugit omnis",
                                                             "type": "format"
                                                         }
                                                     }
@@ -4080,9 +3894,7 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/stats"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
@@ -4106,9 +3918,7 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/stats"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
@@ -4117,7 +3927,7 @@
                                                     "status": "403",
                                                     "code": "forbidden_application_id",
                                                     "title": "Forbidden application id",
-                                                    "detail": "You are only allowed to provide your own application id (a8148c57-f6f5-47d2-bd4c-1eae9c6981c0)."
+                                                    "detail": "You are only allowed to provide your own application id (351abdb7-4a6f-49cd-9e1f-ca828aa22282)."
                                                 }
                                             ]
                                         }
@@ -4132,9 +3942,7 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/stats"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
@@ -4208,14 +4016,12 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/stats"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
                                             "data": {
-                                                "id": "57735cd4-948c-4a1c-956a-8bcfdf7fa6e2",
+                                                "id": "56df6467-6910-4707-b27a-0fb91982e924",
                                                 "type": "stats",
                                                 "attributes": {
                                                     "value": {
@@ -4225,7 +4031,7 @@
                                                 "relationships": {
                                                     "application": {
                                                         "data": {
-                                                            "id": "a8148c57-f6f5-47d2-bd4c-1eae9c6981c0",
+                                                            "id": "351abdb7-4a6f-49cd-9e1f-ca828aa22282",
                                                             "type": "application"
                                                         }
                                                     },
@@ -4234,13 +4040,13 @@
                                                     },
                                                     "resource": {
                                                         "data": {
-                                                            "id": "dd9d9401-103c-43a9-9804-efcb3fc636cf",
+                                                            "id": "8b425371-4e96-4f0a-ad0d-ad4815dee33f",
                                                             "type": "resource"
                                                         }
                                                     },
                                                     "format": {
                                                         "data": {
-                                                            "id": "quia iusto earum est quis ut ipsa rerum aut corporis",
+                                                            "id": "magnam impedit voluptates consequuntur ut sit animi voluptate dolores totam",
                                                             "type": "format"
                                                         }
                                                     }
@@ -4258,9 +4064,7 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/stats"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
@@ -4284,9 +4088,7 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/stats"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
@@ -4295,7 +4097,7 @@
                                                     "status": "403",
                                                     "code": "forbidden_application_id",
                                                     "title": "Forbidden application id",
-                                                    "detail": "You are only allowed to provide your own application id (a8148c57-f6f5-47d2-bd4c-1eae9c6981c0)."
+                                                    "detail": "You are only allowed to provide your own application id (351abdb7-4a6f-49cd-9e1f-ca828aa22282)."
                                                 }
                                             ]
                                         }
@@ -4310,9 +4112,7 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/stats"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
@@ -4336,9 +4136,7 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/stats"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
@@ -4412,14 +4210,12 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/stats"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
                                             "data": {
-                                                "id": "57735cd4-948c-4a1c-956a-8bcfdf7fa6e2",
+                                                "id": "56df6467-6910-4707-b27a-0fb91982e924",
                                                 "type": "stats",
                                                 "attributes": {
                                                     "value": {
@@ -4429,7 +4225,7 @@
                                                 "relationships": {
                                                     "application": {
                                                         "data": {
-                                                            "id": "a8148c57-f6f5-47d2-bd4c-1eae9c6981c0",
+                                                            "id": "351abdb7-4a6f-49cd-9e1f-ca828aa22282",
                                                             "type": "application"
                                                         }
                                                     },
@@ -4438,13 +4234,13 @@
                                                     },
                                                     "resource": {
                                                         "data": {
-                                                            "id": "dd9d9401-103c-43a9-9804-efcb3fc636cf",
+                                                            "id": "8b425371-4e96-4f0a-ad0d-ad4815dee33f",
                                                             "type": "resource"
                                                         }
                                                     },
                                                     "format": {
                                                         "data": {
-                                                            "id": "quia iusto earum est quis ut ipsa rerum aut corporis",
+                                                            "id": "magnam impedit voluptates consequuntur ut sit animi voluptate dolores totam",
                                                             "type": "format"
                                                         }
                                                     }
@@ -4462,9 +4258,7 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/stats"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
@@ -4488,9 +4282,7 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/stats"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
@@ -4499,7 +4291,7 @@
                                                     "status": "403",
                                                     "code": "forbidden_application_id",
                                                     "title": "Forbidden application id",
-                                                    "detail": "You are only allowed to provide your own application id (a8148c57-f6f5-47d2-bd4c-1eae9c6981c0)."
+                                                    "detail": "You are only allowed to provide your own application id (351abdb7-4a6f-49cd-9e1f-ca828aa22282)."
                                                 }
                                             ]
                                         }
@@ -4514,9 +4306,7 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/stats"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {
@@ -4540,9 +4330,7 @@
                             "application/vnd.api.metadata.a15k.org+json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/stats"
-                                }
-                            },
-                            "application/json": {
+                                },
                                 "examples": {
                                     "response": {
                                         "value": {

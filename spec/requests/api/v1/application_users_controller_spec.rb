@@ -53,7 +53,7 @@ RSpec.describe Api::V1::ApplicationUsersController, type: :request do
 
   after do |example|
     example.metadata[:response][:examples] = {
-      'application/json' => JSON.parse(response.body, symbolize_names: true)
+      CONTENT_TYPE => JSON.parse(response.body, symbolize_names: true)
     }
   end
 

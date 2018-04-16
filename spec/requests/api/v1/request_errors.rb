@@ -75,7 +75,7 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
 
   after do |example|
     example.metadata[:response][:examples] = {
-      'application/json' => JSON.parse(response.body, symbolize_names: true)
+      CONTENT_TYPE => JSON.parse(response.body, symbolize_names: true)
     }
   end
 
