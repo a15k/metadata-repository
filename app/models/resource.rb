@@ -110,4 +110,19 @@ class Resource < ApplicationRecord
 
     "#{prefix}#{pg_search_highlight}#{suffix}"
   end
+
+  def same_resource_uuid_metadatas
+    @same_resource_uuid_metadatas ||= Metadata.joins(:resource).where(resources: { uuid: uuid })
+  end
+
+  def same_resource_uuid_stats
+    @same_resource_uuid_stats ||= Stats.joins(:resource).where(resources: { uuid: uuid })
+  end
+
+  def reload
+    @same_resource_uuid_metadatas = nil
+    @same_resource_uuid_stats = nil
+
+    super
+  end
 end

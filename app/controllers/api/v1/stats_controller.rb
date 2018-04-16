@@ -4,7 +4,7 @@ module Api
       before_action :can_modify!, only: [ :update, :destroy ]
 
       def index
-        render_stats stats: resource.stats
+        render_stats stats: resource.same_resource_uuid_stats
       end
 
       def show
@@ -38,8 +38,9 @@ module Api
       end
 
       def stats
-        @stats ||= resource.stats.find_by(application: current_application, uuid: path_id_param) ||
-                   resource.stats.order(:id).find_by!(uuid: path_id_param)
+        @stats ||= resource.same_resource_uuid_stats.find_by(
+          application: current_application, uuid: path_id_param
+        ) || resource.same_resource_uuid_stats.order(:id).find_by!(uuid: path_id_param)
       end
 
       def can_modify!

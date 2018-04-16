@@ -4,7 +4,7 @@ module Api
       before_action :can_modify!, only: [ :update, :destroy ]
 
       def index
-        render_metadata metadatas: resource.metadatas
+        render_metadata metadatas: resource.same_resource_uuid_metadatas
       end
 
       def show
@@ -38,9 +38,9 @@ module Api
       end
 
       def metadata
-        @metadata ||= resource.metadatas.find_by(
+        @metadata ||= resource.same_resource_uuid_metadatas.find_by(
           application: current_application, uuid: path_id_param
-        ) || resource.metadatas.order(:id).find_by!(uuid: path_id_param)
+        ) || resource.same_resource_uuid_metadatas.order(:id).find_by!(uuid: path_id_param)
       end
 
       def can_modify!
