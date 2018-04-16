@@ -17,13 +17,14 @@ RSpec.describe Api::V1::MetadatasController, type: :request do
                    base_path_template: '/resources/{resource_id}/metadatas',
                    schema_reference: metadata_schema_reference,
                    valid_type: valid_type,
-                   id_scope: 'Resource',
                    path_params_proc: -> do
                      parameter name: :resource_id, in: :path, type: :string,
                                description: "The associated Resource's Id"
 
                      let(:resource_id) { @resource.uuid }
-                   end
+                   end,
+                   scope_proc: -> { @resource },
+                   scope_class: 'Resource'
 
   no_data_setup = ->(on) do
     tags valid_type.classify

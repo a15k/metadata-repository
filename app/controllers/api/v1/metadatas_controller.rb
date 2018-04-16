@@ -4,7 +4,7 @@ module Api
       before_action :can_modify!, only: [ :update, :destroy ]
 
       def index
-        render_metadata metadatas: current_application.metadatas
+        render_metadata metadatas: resource.metadatas
       end
 
       def show
@@ -31,9 +31,16 @@ module Api
 
       protected
 
+      def resource
+        @resource ||= Resource.find_by(
+          application: current_application, uuid: params[:resource_uuid]
+        ) || Resource.order(:id).find_by!(uuid: params[:resource_uuid])
+      end
+
       def metadata
-        @metadata ||= Metadata.find_by(application: current_application, uuid: path_id_param) ||
-                      Metadata.order(:id).find_by!(uuid: path_id_param)
+        @metadata ||= resource.metadatas.find_by(
+          application: current_application, uuid: path_id_param
+        ) || resource.metadatas.order(:id).find_by!(uuid: path_id_param)
       end
 
       def can_modify!
@@ -57,9 +64,6 @@ module Api
           hash[:application_user] = current_application.application_users.find_by(
             uuid: metadata_relationship_params[:application_user_id]
           ) if metadata_relationship_params.has_key? :application_user_id
-          hash[:resource] = current_application.resources.find_by(
-            uuid: metadata_relationship_params[:resource_id]
-          ) if metadata_relationship_params.has_key? :resource_id
           hash[:format] = Format.find_or_create_by!(
             name: metadata_relationship_params[:format_id]
           ) if metadata_relationship_params.has_key? :format_id
@@ -69,6 +73,7 @@ module Api
       def metadata_create_params
         @metadata_create_params ||= metadata_update_params.merge(
           application: current_application,
+          resource: resource,
           uuid: metadata_attribute_params[:uuid]
         )
       end

@@ -4,58 +4,59 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
                                                   base_path_template:,
                                                   schema_reference:,
                                                   valid_type:,
-                                                  id_scope: '',
                                                   description_scope: nil,
                                                   path_params_proc: -> {},
+                                                  scope_proc: -> {},
+                                                  scope_class: nil,
                                                   fully_scoped: false|
   class_name = valid_type.classify
   pluralized_class_name = class_name.pluralize
-  description_scope ||= id_scope.blank? ? '' : "for the given #{id_scope}"
+  description_scope_class ||= scope_class.blank? ? '' : "for the given #{scope_class}"
 
   no_data_requests = [
     [
       :get,
       :collection,
-      "get#{id_scope}#{pluralized_class_name}",
-      "List #{pluralized_class_name} created by all applications #{description_scope}".strip
+      "get#{scope_class}#{pluralized_class_name}",
+      "List #{pluralized_class_name} created by all applications #{description_scope_class}".strip
     ],
     [
       :get,
       :member,
-      "get#{id_scope}#{class_name}WithId",
-      "View the #{class_name} with the given Id #{description_scope}".strip
+      "get#{scope_class}#{class_name}WithId",
+      "View the #{class_name} with the given Id #{description_scope_class}".strip
     ],
     [
       :delete,
       :member,
-      "delete#{id_scope}#{class_name}WithId",
-      "Delete the #{class_name} with the given Id #{description_scope}".strip
+      "delete#{scope_class}#{class_name}WithId",
+      "Delete the #{class_name} with the given Id #{description_scope_class}".strip
     ]
   ]
   data_requests = [
     [
       :post,
       :collection,
-      "create#{id_scope}#{class_name}",
-      "Create a new #{class_name} with a random Id #{description_scope}".strip
+      "create#{scope_class}#{class_name}",
+      "Create a new #{class_name} with a random Id #{description_scope_class}".strip
     ],
     [
       :post,
       :member,
-      "create#{id_scope}#{class_name}WithId",
-      "Create a new #{class_name} with the given Id #{description_scope}".strip
+      "create#{scope_class}#{class_name}WithId",
+      "Create a new #{class_name} with the given Id #{description_scope_class}".strip
     ],
     [
       :put,
       :member,
-      "update#{id_scope}#{class_name}WithId",
-      "Update the #{class_name} with the given Id #{description_scope}".strip
+      "update#{scope_class}#{class_name}WithId",
+      "Update the #{class_name} with the given Id #{description_scope_class}".strip
     ],
     [
       :patch,
       :member,
       "update#{class_name}WithId",
-      "Update the #{class_name} with the given Id #{description_scope}".strip
+      "Update the #{class_name} with the given Id #{description_scope_class}".strip
     ]
   ]
   requests = no_data_requests + data_requests
@@ -63,7 +64,10 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
   param_name = valid_type.to_sym
 
   let!(:application) { instance_exec &application_proc }
+  let!(:scope)       { instance_exec &scope_proc }
+
   let(:api_token)    { application.token }
+  let(:scope_hash)   { scope.nil? ? {} : { scope.class.name.underscore.to_sym => scope } }
 
   let(:id)           { SecureRandom.uuid }
 
@@ -330,7 +334,7 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
         end
 
         context 'with an id that was created by a different application' do
-          let!(:model)    { FactoryBot.create type, uuid: id }
+          let!(:model)    { FactoryBot.create type, scope_hash.merge(uuid: id) }
           let(param_name) { { data: { type: type, id: id } } }
 
           data_requests.reject { |verb, _| verb == :post }
@@ -373,7 +377,9 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
         end
 
         context 'with a valid id' do
-          let!(:model) { FactoryBot.create type, uuid: id, application: application }
+          let!(:model) do
+            FactoryBot.create type, scope_hash.merge(uuid: id, application: application)
+          end
 
           context 'with a relationship' do
             context 'with no data member' do
