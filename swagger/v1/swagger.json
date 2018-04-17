@@ -25,12 +25,12 @@
                                         "value": {
                                             "data": [
                                                 {
-                                                    "id": "63914cc0-0965-4d80-a27e-7fd8471e7a18",
+                                                    "id": "93e63640-c25c-4c1c-97c3-ae8627c10412",
                                                     "type": "application_user",
                                                     "relationships": {
                                                         "application": {
                                                             "data": {
-                                                                "id": "f9546046-6b42-4d52-8cd0-29d652d5540d",
+                                                                "id": "89d7a618-af94-4314-a4fa-989044146c6c",
                                                                 "type": "application"
                                                             }
                                                         }
@@ -82,7 +82,7 @@
                                                     "status": "403",
                                                     "code": "invalid_api_token",
                                                     "title": "Invalid api token",
-                                                    "detail": "The API token provided in the Metadata-Api-Token header (afe6fa0f08c116323b7528db1b59ce14760e1ba6adef910d90ef843fe3be9038) is invalid."
+                                                    "detail": "The API token provided in the Metadata-Api-Token header (fea42f9a164dccfff22959370d1558d819736482e6b15f14c694d2c51ee43b54) is invalid."
                                                 }
                                             ]
                                         }
@@ -95,34 +95,6 @@
                 "security": [
                     {
                         "apiToken": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "filter[query]",
-                        "in": "query",
-                        "required": false,
-                        "description": "Query used for full text search on the ApplicationUsers",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "filter[language]",
-                        "in": "query",
-                        "required": false,
-                        "description": "Language used for full text search on the ApplicationUsers",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "Metadata-Api-Token",
-                        "in": "header",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
                     }
                 ],
                 "servers": [
@@ -149,12 +121,12 @@
                                     "response": {
                                         "value": {
                                             "data": {
-                                                "id": "3b79ff89-0a30-4cf5-9337-7e6200856afd",
+                                                "id": "e3a30243-31d6-4e0e-82a5-2fed06315250",
                                                 "type": "application_user",
                                                 "relationships": {
                                                     "application": {
                                                         "data": {
-                                                            "id": "f9546046-6b42-4d52-8cd0-29d652d5540d",
+                                                            "id": "89d7a618-af94-4314-a4fa-989044146c6c",
                                                             "type": "application"
                                                         }
                                                     }
@@ -205,7 +177,7 @@
                                                     "status": "403",
                                                     "code": "forbidden_application_id",
                                                     "title": "Forbidden application id",
-                                                    "detail": "You are only allowed to provide your own application id (f9546046-6b42-4d52-8cd0-29d652d5540d)."
+                                                    "detail": "You are only allowed to provide your own application id (89d7a618-af94-4314-a4fa-989044146c6c)."
                                                 }
                                             ]
                                         }
@@ -276,10 +248,12 @@
                         "name": "id",
                         "in": "path",
                         "description": "The ApplicationUser object's Id",
-                        "required": true,
                         "schema": {
-                            "type": "string"
-                        }
+                            "type": "string",
+                            "format": "uuid"
+                        },
+                        "example": "ed7d8566-0933-4a6d-847f-cd66baa3561e",
+                        "required": true
                     },
                     {
                         "name": "Metadata-Api-Token",
@@ -302,12 +276,12 @@
                                     "response": {
                                         "value": {
                                             "data": {
-                                                "id": "63914cc0-0965-4d80-a27e-7fd8471e7a18",
+                                                "id": "93e63640-c25c-4c1c-97c3-ae8627c10412",
                                                 "type": "application_user",
                                                 "relationships": {
                                                     "application": {
                                                         "data": {
-                                                            "id": "f9546046-6b42-4d52-8cd0-29d652d5540d",
+                                                            "id": "89d7a618-af94-4314-a4fa-989044146c6c",
                                                             "type": "application"
                                                         }
                                                     }
@@ -358,7 +332,7 @@
                                                     "status": "403",
                                                     "code": "invalid_api_token",
                                                     "title": "Invalid api token",
-                                                    "detail": "The API token provided in the Metadata-Api-Token header (893ce180cb4f8653b54fa042ea8d678e40077f71ecc89b2c2e35aac6d9e991fc) is invalid."
+                                                    "detail": "The API token provided in the Metadata-Api-Token header (62e0c9e832a03724445c03e49b99445b1e1c875dc0c9f1af1227e619388b104e) is invalid."
                                                 }
                                             ]
                                         }
@@ -390,10 +364,12 @@
                         "name": "id",
                         "in": "path",
                         "description": "The ApplicationUser object's Id",
-                        "required": true,
                         "schema": {
-                            "type": "string"
-                        }
+                            "type": "string",
+                            "format": "uuid"
+                        },
+                        "example": "c718a3c8-b038-45ee-80b8-100109172f6f",
+                        "required": true
                     },
                     {
                         "name": "Metadata-Api-Token",
@@ -416,12 +392,12 @@
                                     "response": {
                                         "value": {
                                             "data": {
-                                                "id": "63914cc0-0965-4d80-a27e-7fd8471e7a18",
+                                                "id": "93e63640-c25c-4c1c-97c3-ae8627c10412",
                                                 "type": "application_user",
                                                 "relationships": {
                                                     "application": {
                                                         "data": {
-                                                            "id": "f9546046-6b42-4d52-8cd0-29d652d5540d",
+                                                            "id": "89d7a618-af94-4314-a4fa-989044146c6c",
                                                             "type": "application"
                                                         }
                                                     }
@@ -472,7 +448,7 @@
                                                     "status": "403",
                                                     "code": "invalid_api_token",
                                                     "title": "Invalid api token",
-                                                    "detail": "The API token provided in the Metadata-Api-Token header (47e5b04c30f909c35d3a6727b4fafd90a37ee0dd36c2e09952d6821376a6d3e2) is invalid."
+                                                    "detail": "The API token provided in the Metadata-Api-Token header (2d2cee513be4350f8b1e55c27ac4ff726ccff20aea005289e532694a8eeef5d5) is invalid."
                                                 }
                                             ]
                                         }
@@ -504,10 +480,12 @@
                         "name": "id",
                         "in": "path",
                         "description": "The ApplicationUser object's Id",
-                        "required": true,
                         "schema": {
-                            "type": "string"
-                        }
+                            "type": "string",
+                            "format": "uuid"
+                        },
+                        "example": "35e530c0-41a9-4252-b951-1d98bf5689d6",
+                        "required": true
                     },
                     {
                         "name": "Metadata-Api-Token",
@@ -530,12 +508,12 @@
                                     "response": {
                                         "value": {
                                             "data": {
-                                                "id": "63914cc0-0965-4d80-a27e-7fd8471e7a18",
+                                                "id": "93e63640-c25c-4c1c-97c3-ae8627c10412",
                                                 "type": "application_user",
                                                 "relationships": {
                                                     "application": {
                                                         "data": {
-                                                            "id": "f9546046-6b42-4d52-8cd0-29d652d5540d",
+                                                            "id": "89d7a618-af94-4314-a4fa-989044146c6c",
                                                             "type": "application"
                                                         }
                                                     }
@@ -586,7 +564,7 @@
                                                     "status": "403",
                                                     "code": "forbidden_application_id",
                                                     "title": "Forbidden application id",
-                                                    "detail": "You are only allowed to provide your own application id (f9546046-6b42-4d52-8cd0-29d652d5540d)."
+                                                    "detail": "You are only allowed to provide your own application id (89d7a618-af94-4314-a4fa-989044146c6c)."
                                                 }
                                             ]
                                         }
@@ -699,7 +677,7 @@
                                                     "status": "403",
                                                     "code": "forbidden_application_id",
                                                     "title": "Forbidden application id",
-                                                    "detail": "You are only allowed to provide your own application id (f9546046-6b42-4d52-8cd0-29d652d5540d)."
+                                                    "detail": "You are only allowed to provide your own application id (89d7a618-af94-4314-a4fa-989044146c6c)."
                                                 }
                                             ]
                                         }
@@ -836,7 +814,7 @@
                                                     "status": "403",
                                                     "code": "forbidden_application_id",
                                                     "title": "Forbidden application id",
-                                                    "detail": "You are only allowed to provide your own application id (f9546046-6b42-4d52-8cd0-29d652d5540d)."
+                                                    "detail": "You are only allowed to provide your own application id (89d7a618-af94-4314-a4fa-989044146c6c)."
                                                 }
                                             ]
                                         }
@@ -921,10 +899,12 @@
                         "name": "resource_id",
                         "in": "path",
                         "description": "The associated Resource's Id",
-                        "required": true,
                         "schema": {
-                            "type": "string"
-                        }
+                            "type": "string",
+                            "format": "uuid"
+                        },
+                        "example": "5f285101-f74c-42ec-937e-3f5eb1ae7057",
+                        "required": true
                     },
                     {
                         "name": "Metadata-Api-Token",
@@ -948,7 +928,7 @@
                                         "value": {
                                             "data": [
                                                 {
-                                                    "id": "e74fe819-37bc-4704-9575-3ec8502a9178",
+                                                    "id": "f8349318-e3dd-4a3b-9b63-a44b0c4b335b",
                                                     "type": "metadata",
                                                     "attributes": {
                                                         "value": {
@@ -958,25 +938,25 @@
                                                     "relationships": {
                                                         "application": {
                                                             "data": {
-                                                                "id": "255f4feb-73e7-4fbd-b522-6fc5ccfcb229",
+                                                                "id": "790ffb58-a299-437a-a192-d6ef1acf4fd4",
                                                                 "type": "application"
                                                             }
                                                         },
                                                         "application_user": {
                                                             "data": {
-                                                                "id": "ca861bdd-c190-4604-b589-3a375a98498b",
+                                                                "id": "d40f47ee-b37f-4ffe-a12e-30d3340a419e",
                                                                 "type": "application_user"
                                                             }
                                                         },
                                                         "resource": {
                                                             "data": {
-                                                                "id": "ca635a63-4937-4e30-ab52-2196828da49e",
+                                                                "id": "05f233df-a4f7-4809-acda-8d79f0b71404",
                                                                 "type": "resource"
                                                             }
                                                         },
                                                         "format": {
                                                             "data": {
-                                                                "id": "repellendus ut et voluptatem earum blanditiis quisquam dolores dolor libero",
+                                                                "id": "officia enim velit quidem beatae velit ipsa unde illum officiis",
                                                                 "type": "format"
                                                             }
                                                         }
@@ -1028,7 +1008,7 @@
                                                     "status": "403",
                                                     "code": "invalid_api_token",
                                                     "title": "Invalid api token",
-                                                    "detail": "The API token provided in the Metadata-Api-Token header (006d0747c3e0907358c87b31edfe40fae1756cf62aa9624fc285eb45e26ed5b6) is invalid."
+                                                    "detail": "The API token provided in the Metadata-Api-Token header (d0a429edba836b2d3d3c4f21b473c6416ff45cb62d654a0a7a1c0de95351b704) is invalid."
                                                 }
                                             ]
                                         }
@@ -1060,10 +1040,12 @@
                         "name": "resource_id",
                         "in": "path",
                         "description": "The associated Resource's Id",
-                        "required": true,
                         "schema": {
-                            "type": "string"
-                        }
+                            "type": "string",
+                            "format": "uuid"
+                        },
+                        "example": "ef6b2797-f578-4f3a-ad97-0607640756b0",
+                        "required": true
                     },
                     {
                         "name": "Metadata-Api-Token",
@@ -1086,7 +1068,7 @@
                                     "response": {
                                         "value": {
                                             "data": {
-                                                "id": "747cb48b-99a4-450b-a8eb-bf21ac01b2db",
+                                                "id": "2151bda9-7951-4f01-ac61-9ba54b7a36a6",
                                                 "type": "metadata",
                                                 "attributes": {
                                                     "value": {
@@ -1096,25 +1078,25 @@
                                                 "relationships": {
                                                     "application": {
                                                         "data": {
-                                                            "id": "255f4feb-73e7-4fbd-b522-6fc5ccfcb229",
+                                                            "id": "790ffb58-a299-437a-a192-d6ef1acf4fd4",
                                                             "type": "application"
                                                         }
                                                     },
                                                     "application_user": {
                                                         "data": {
-                                                            "id": "ca861bdd-c190-4604-b589-3a375a98498b",
+                                                            "id": "d40f47ee-b37f-4ffe-a12e-30d3340a419e",
                                                             "type": "application_user"
                                                         }
                                                     },
                                                     "resource": {
                                                         "data": {
-                                                            "id": "ca635a63-4937-4e30-ab52-2196828da49e",
+                                                            "id": "05f233df-a4f7-4809-acda-8d79f0b71404",
                                                             "type": "resource"
                                                         }
                                                     },
                                                     "format": {
                                                         "data": {
-                                                            "id": "repellendus ut et voluptatem earum blanditiis quisquam dolores dolor libero",
+                                                            "id": "officia enim velit quidem beatae velit ipsa unde illum officiis",
                                                             "type": "format"
                                                         }
                                                     }
@@ -1165,7 +1147,7 @@
                                                     "status": "403",
                                                     "code": "forbidden_application_id",
                                                     "title": "Forbidden application id",
-                                                    "detail": "You are only allowed to provide your own application id (255f4feb-73e7-4fbd-b522-6fc5ccfcb229)."
+                                                    "detail": "You are only allowed to provide your own application id (790ffb58-a299-437a-a192-d6ef1acf4fd4)."
                                                 }
                                             ]
                                         }
@@ -1226,19 +1208,23 @@
                         "name": "resource_id",
                         "in": "path",
                         "description": "The associated Resource's Id",
-                        "required": true,
                         "schema": {
-                            "type": "string"
-                        }
+                            "type": "string",
+                            "format": "uuid"
+                        },
+                        "example": "d109aafe-455d-4806-a84f-950a69f10013",
+                        "required": true
                     },
                     {
                         "name": "id",
                         "in": "path",
                         "description": "The Metadata object's Id",
-                        "required": true,
                         "schema": {
-                            "type": "string"
-                        }
+                            "type": "string",
+                            "format": "uuid"
+                        },
+                        "example": "b15b28f1-260e-4bd6-98ad-f1245f5eec93",
+                        "required": true
                     },
                     {
                         "name": "Metadata-Api-Token",
@@ -1261,7 +1247,7 @@
                                     "response": {
                                         "value": {
                                             "data": {
-                                                "id": "e74fe819-37bc-4704-9575-3ec8502a9178",
+                                                "id": "f8349318-e3dd-4a3b-9b63-a44b0c4b335b",
                                                 "type": "metadata",
                                                 "attributes": {
                                                     "value": {
@@ -1271,25 +1257,25 @@
                                                 "relationships": {
                                                     "application": {
                                                         "data": {
-                                                            "id": "255f4feb-73e7-4fbd-b522-6fc5ccfcb229",
+                                                            "id": "790ffb58-a299-437a-a192-d6ef1acf4fd4",
                                                             "type": "application"
                                                         }
                                                     },
                                                     "application_user": {
                                                         "data": {
-                                                            "id": "ca861bdd-c190-4604-b589-3a375a98498b",
+                                                            "id": "d40f47ee-b37f-4ffe-a12e-30d3340a419e",
                                                             "type": "application_user"
                                                         }
                                                     },
                                                     "resource": {
                                                         "data": {
-                                                            "id": "ca635a63-4937-4e30-ab52-2196828da49e",
+                                                            "id": "05f233df-a4f7-4809-acda-8d79f0b71404",
                                                             "type": "resource"
                                                         }
                                                     },
                                                     "format": {
                                                         "data": {
-                                                            "id": "repellendus ut et voluptatem earum blanditiis quisquam dolores dolor libero",
+                                                            "id": "officia enim velit quidem beatae velit ipsa unde illum officiis",
                                                             "type": "format"
                                                         }
                                                     }
@@ -1340,7 +1326,7 @@
                                                     "status": "403",
                                                     "code": "invalid_api_token",
                                                     "title": "Invalid api token",
-                                                    "detail": "The API token provided in the Metadata-Api-Token header (dbc7968f593a2ef5cc1c0be233e9894b8cd9958770567d3485a7a2466c32a889) is invalid."
+                                                    "detail": "The API token provided in the Metadata-Api-Token header (9cd9d9b487330c69c761ee07fffe88096bee22c630630e1b2d365c5862750591) is invalid."
                                                 }
                                             ]
                                         }
@@ -1372,19 +1358,23 @@
                         "name": "resource_id",
                         "in": "path",
                         "description": "The associated Resource's Id",
-                        "required": true,
                         "schema": {
-                            "type": "string"
-                        }
+                            "type": "string",
+                            "format": "uuid"
+                        },
+                        "example": "e120af35-16c0-4548-8df6-d5340a796f76",
+                        "required": true
                     },
                     {
                         "name": "id",
                         "in": "path",
                         "description": "The Metadata object's Id",
-                        "required": true,
                         "schema": {
-                            "type": "string"
-                        }
+                            "type": "string",
+                            "format": "uuid"
+                        },
+                        "example": "32412cad-01b5-4b3a-a2d7-d1fe2fc4bb33",
+                        "required": true
                     },
                     {
                         "name": "Metadata-Api-Token",
@@ -1407,7 +1397,7 @@
                                     "response": {
                                         "value": {
                                             "data": {
-                                                "id": "e74fe819-37bc-4704-9575-3ec8502a9178",
+                                                "id": "f8349318-e3dd-4a3b-9b63-a44b0c4b335b",
                                                 "type": "metadata",
                                                 "attributes": {
                                                     "value": {
@@ -1417,25 +1407,25 @@
                                                 "relationships": {
                                                     "application": {
                                                         "data": {
-                                                            "id": "255f4feb-73e7-4fbd-b522-6fc5ccfcb229",
+                                                            "id": "790ffb58-a299-437a-a192-d6ef1acf4fd4",
                                                             "type": "application"
                                                         }
                                                     },
                                                     "application_user": {
                                                         "data": {
-                                                            "id": "ca861bdd-c190-4604-b589-3a375a98498b",
+                                                            "id": "d40f47ee-b37f-4ffe-a12e-30d3340a419e",
                                                             "type": "application_user"
                                                         }
                                                     },
                                                     "resource": {
                                                         "data": {
-                                                            "id": "ca635a63-4937-4e30-ab52-2196828da49e",
+                                                            "id": "05f233df-a4f7-4809-acda-8d79f0b71404",
                                                             "type": "resource"
                                                         }
                                                     },
                                                     "format": {
                                                         "data": {
-                                                            "id": "repellendus ut et voluptatem earum blanditiis quisquam dolores dolor libero",
+                                                            "id": "officia enim velit quidem beatae velit ipsa unde illum officiis",
                                                             "type": "format"
                                                         }
                                                     }
@@ -1486,7 +1476,7 @@
                                                     "status": "403",
                                                     "code": "invalid_api_token",
                                                     "title": "Invalid api token",
-                                                    "detail": "The API token provided in the Metadata-Api-Token header (37cbe2ccf8cb17dec4f7f88d31621d24033887f57efb5934bb4b05f7840ec6d5) is invalid."
+                                                    "detail": "The API token provided in the Metadata-Api-Token header (a80c9b37a44d2a4e6dd4138d0fcb5bfc7f385d31c0d11dd46fc805ae0b44e7bc) is invalid."
                                                 }
                                             ]
                                         }
@@ -1518,19 +1508,23 @@
                         "name": "resource_id",
                         "in": "path",
                         "description": "The associated Resource's Id",
-                        "required": true,
                         "schema": {
-                            "type": "string"
-                        }
+                            "type": "string",
+                            "format": "uuid"
+                        },
+                        "example": "980e96f1-1ab2-4d88-8521-16d48165051f",
+                        "required": true
                     },
                     {
                         "name": "id",
                         "in": "path",
                         "description": "The Metadata object's Id",
-                        "required": true,
                         "schema": {
-                            "type": "string"
-                        }
+                            "type": "string",
+                            "format": "uuid"
+                        },
+                        "example": "878e649f-3056-4556-80ee-c38a8258d2b5",
+                        "required": true
                     },
                     {
                         "name": "Metadata-Api-Token",
@@ -1553,7 +1547,7 @@
                                     "response": {
                                         "value": {
                                             "data": {
-                                                "id": "e74fe819-37bc-4704-9575-3ec8502a9178",
+                                                "id": "f8349318-e3dd-4a3b-9b63-a44b0c4b335b",
                                                 "type": "metadata",
                                                 "attributes": {
                                                     "value": {
@@ -1563,25 +1557,25 @@
                                                 "relationships": {
                                                     "application": {
                                                         "data": {
-                                                            "id": "255f4feb-73e7-4fbd-b522-6fc5ccfcb229",
+                                                            "id": "790ffb58-a299-437a-a192-d6ef1acf4fd4",
                                                             "type": "application"
                                                         }
                                                     },
                                                     "application_user": {
                                                         "data": {
-                                                            "id": "ca861bdd-c190-4604-b589-3a375a98498b",
+                                                            "id": "d40f47ee-b37f-4ffe-a12e-30d3340a419e",
                                                             "type": "application_user"
                                                         }
                                                     },
                                                     "resource": {
                                                         "data": {
-                                                            "id": "ca635a63-4937-4e30-ab52-2196828da49e",
+                                                            "id": "05f233df-a4f7-4809-acda-8d79f0b71404",
                                                             "type": "resource"
                                                         }
                                                     },
                                                     "format": {
                                                         "data": {
-                                                            "id": "repellendus ut et voluptatem earum blanditiis quisquam dolores dolor libero",
+                                                            "id": "officia enim velit quidem beatae velit ipsa unde illum officiis",
                                                             "type": "format"
                                                         }
                                                     }
@@ -1632,7 +1626,7 @@
                                                     "status": "403",
                                                     "code": "forbidden_application_id",
                                                     "title": "Forbidden application id",
-                                                    "detail": "You are only allowed to provide your own application id (255f4feb-73e7-4fbd-b522-6fc5ccfcb229)."
+                                                    "detail": "You are only allowed to provide your own application id (790ffb58-a299-437a-a192-d6ef1acf4fd4)."
                                                 }
                                             ]
                                         }
@@ -1691,19 +1685,23 @@
                         "name": "resource_id",
                         "in": "path",
                         "description": "The associated Resource's Id",
-                        "required": true,
                         "schema": {
-                            "type": "string"
-                        }
+                            "type": "string",
+                            "format": "uuid"
+                        },
+                        "example": "4a64a346-22e8-4adc-ad59-a5d4a2512bdc",
+                        "required": true
                     },
                     {
                         "name": "id",
                         "in": "path",
                         "description": "The Metadata object's Id",
-                        "required": true,
                         "schema": {
-                            "type": "string"
-                        }
+                            "type": "string",
+                            "format": "uuid"
+                        },
+                        "example": "336fc7ac-6610-48f9-a325-4a9018cd0d8d",
+                        "required": true
                     },
                     {
                         "name": "Metadata-Api-Token",
@@ -1726,7 +1724,7 @@
                                     "response": {
                                         "value": {
                                             "data": {
-                                                "id": "e74fe819-37bc-4704-9575-3ec8502a9178",
+                                                "id": "f8349318-e3dd-4a3b-9b63-a44b0c4b335b",
                                                 "type": "metadata",
                                                 "attributes": {
                                                     "value": {
@@ -1736,7 +1734,7 @@
                                                 "relationships": {
                                                     "application": {
                                                         "data": {
-                                                            "id": "255f4feb-73e7-4fbd-b522-6fc5ccfcb229",
+                                                            "id": "790ffb58-a299-437a-a192-d6ef1acf4fd4",
                                                             "type": "application"
                                                         }
                                                     },
@@ -1745,13 +1743,13 @@
                                                     },
                                                     "resource": {
                                                         "data": {
-                                                            "id": "ca635a63-4937-4e30-ab52-2196828da49e",
+                                                            "id": "05f233df-a4f7-4809-acda-8d79f0b71404",
                                                             "type": "resource"
                                                         }
                                                     },
                                                     "format": {
                                                         "data": {
-                                                            "id": "ea quod ut odit est quia asperiores sint voluptas assumenda",
+                                                            "id": "repellat debitis rem et officia quasi at doloremque nisi consequatur",
                                                             "type": "format"
                                                         }
                                                     }
@@ -1802,7 +1800,7 @@
                                                     "status": "403",
                                                     "code": "forbidden_application_id",
                                                     "title": "Forbidden application id",
-                                                    "detail": "You are only allowed to provide your own application id (255f4feb-73e7-4fbd-b522-6fc5ccfcb229)."
+                                                    "detail": "You are only allowed to provide your own application id (790ffb58-a299-437a-a192-d6ef1acf4fd4)."
                                                 }
                                             ]
                                         }
@@ -1885,19 +1883,23 @@
                         "name": "resource_id",
                         "in": "path",
                         "description": "The associated Resource's Id",
-                        "required": true,
                         "schema": {
-                            "type": "string"
-                        }
+                            "type": "string",
+                            "format": "uuid"
+                        },
+                        "example": "6aae5541-5d39-4c7d-861b-b689b3ada129",
+                        "required": true
                     },
                     {
                         "name": "id",
                         "in": "path",
                         "description": "The Metadata object's Id",
-                        "required": true,
                         "schema": {
-                            "type": "string"
-                        }
+                            "type": "string",
+                            "format": "uuid"
+                        },
+                        "example": "f316fbe2-7d2e-4575-b274-671c3efa753d",
+                        "required": true
                     },
                     {
                         "name": "Metadata-Api-Token",
@@ -1920,7 +1922,7 @@
                                     "response": {
                                         "value": {
                                             "data": {
-                                                "id": "e74fe819-37bc-4704-9575-3ec8502a9178",
+                                                "id": "f8349318-e3dd-4a3b-9b63-a44b0c4b335b",
                                                 "type": "metadata",
                                                 "attributes": {
                                                     "value": {
@@ -1930,7 +1932,7 @@
                                                 "relationships": {
                                                     "application": {
                                                         "data": {
-                                                            "id": "255f4feb-73e7-4fbd-b522-6fc5ccfcb229",
+                                                            "id": "790ffb58-a299-437a-a192-d6ef1acf4fd4",
                                                             "type": "application"
                                                         }
                                                     },
@@ -1939,13 +1941,13 @@
                                                     },
                                                     "resource": {
                                                         "data": {
-                                                            "id": "ca635a63-4937-4e30-ab52-2196828da49e",
+                                                            "id": "05f233df-a4f7-4809-acda-8d79f0b71404",
                                                             "type": "resource"
                                                         }
                                                     },
                                                     "format": {
                                                         "data": {
-                                                            "id": "ea quod ut odit est quia asperiores sint voluptas assumenda",
+                                                            "id": "repellat debitis rem et officia quasi at doloremque nisi consequatur",
                                                             "type": "format"
                                                         }
                                                     }
@@ -1996,7 +1998,7 @@
                                                     "status": "403",
                                                     "code": "forbidden_application_id",
                                                     "title": "Forbidden application id",
-                                                    "detail": "You are only allowed to provide your own application id (255f4feb-73e7-4fbd-b522-6fc5ccfcb229)."
+                                                    "detail": "You are only allowed to provide your own application id (790ffb58-a299-437a-a192-d6ef1acf4fd4)."
                                                 }
                                             ]
                                         }
@@ -2089,10 +2091,10 @@
                                         "value": {
                                             "data": [
                                                 {
-                                                    "id": "aa355b9e-615e-4056-97ac-6edaea0a1f39",
+                                                    "id": "0454fc36-94f9-4ecc-89bf-12898675b193",
                                                     "type": "resource",
                                                     "attributes": {
-                                                        "uri": "https://example.com/assessments/aa355b9e-615e-4056-97ac-6edaea0a1f39",
+                                                        "uri": "https://example.com/assessments/0454fc36-94f9-4ecc-89bf-12898675b193",
                                                         "resource_type": "assessment",
                                                         "title": "The fox and the dog",
                                                         "content": "The quick brown fox jumps over the lazy dog.",
@@ -2101,19 +2103,19 @@
                                                     "relationships": {
                                                         "application": {
                                                             "data": {
-                                                                "id": "231af260-a2f5-4bf4-9693-6a966612a846",
+                                                                "id": "d306d197-c8cf-4536-8a94-a32746124d67",
                                                                 "type": "application"
                                                             }
                                                         },
                                                         "application_user": {
                                                             "data": {
-                                                                "id": "afea77b1-f892-4404-8e60-132035f82cfa",
+                                                                "id": "28a4280a-2e30-44a3-9d6c-a7483b22ea80",
                                                                 "type": "application_user"
                                                             }
                                                         },
                                                         "format": {
                                                             "data": {
-                                                                "id": "reiciendis et et unde facilis eaque suscipit alias aperiam vero",
+                                                                "id": "nihil ullam deserunt libero iure voluptates neque sint consequatur suscipit",
                                                                 "type": "format"
                                                             }
                                                         },
@@ -2171,7 +2173,7 @@
                                                     "status": "403",
                                                     "code": "invalid_api_token",
                                                     "title": "Invalid api token",
-                                                    "detail": "The API token provided in the Metadata-Api-Token header (550ad22e19a1b253a98f7058a59584c1fccad62198ccd6174ef5c5aff413ec41) is invalid."
+                                                    "detail": "The API token provided in the Metadata-Api-Token header (4ddb7ac33ed02c8f63db27bfd55aaf7fc96781b1716f709680cbe97b8396b7b4) is invalid."
                                                 }
                                             ]
                                         }
@@ -2194,7 +2196,8 @@
                         "description": "Query used for full text search on the Resources",
                         "schema": {
                             "type": "string"
-                        }
+                        },
+                        "example": "physics"
                     },
                     {
                         "name": "filter[language]",
@@ -2203,7 +2206,8 @@
                         "description": "Language used for full text search on the Resources",
                         "schema": {
                             "type": "string"
-                        }
+                        },
+                        "example": "english"
                     },
                     {
                         "name": "Metadata-Api-Token",
@@ -2238,37 +2242,37 @@
                                     "response": {
                                         "value": {
                                             "data": {
-                                                "id": "3a8e5c7e-f70c-48af-a15e-ba7a28389116",
+                                                "id": "571c7fad-a195-4d69-af8c-3a00d9e2a2d2",
                                                 "type": "resource",
                                                 "attributes": {
-                                                    "uri": "https://example.com/assessments/37b4bc6b-6f72-4d85-8ea0-f9b8d454b171",
+                                                    "uri": "https://example.com/assessments/4922b1f2-771b-46b0-89ab-e9b9c8ffe7f1",
                                                     "resource_type": "assessment",
                                                     "title": null,
-                                                    "content": "nemo molestiae reiciendis ipsum ipsa accusamus est sunt fugiat omnis",
+                                                    "content": "perferendis aut nemo provident est in quia velit temporibus sed",
                                                     "highlight": null
                                                 },
                                                 "relationships": {
                                                     "application": {
                                                         "data": {
-                                                            "id": "231af260-a2f5-4bf4-9693-6a966612a846",
+                                                            "id": "d306d197-c8cf-4536-8a94-a32746124d67",
                                                             "type": "application"
                                                         }
                                                     },
                                                     "application_user": {
                                                         "data": {
-                                                            "id": "e69bf8e9-d560-4df8-9f46-9cac8d58c61b",
+                                                            "id": "09cf1f9b-81f9-46a2-a092-4c9a9017194d",
                                                             "type": "application_user"
                                                         }
                                                     },
                                                     "format": {
                                                         "data": {
-                                                            "id": "vel quo sint molestiae ut autem eum quis qui dolore",
+                                                            "id": "sunt quod voluptatem ad vel velit eius velit quos eveniet",
                                                             "type": "format"
                                                         }
                                                     },
                                                     "language": {
                                                         "data": {
-                                                            "id": "quibusdam ut in dolor quisquam aut placeat impedit deleniti illum",
+                                                            "id": "quo omnis dolore minima ipsam beatae modi doloremque autem eveniet",
                                                             "type": "language"
                                                         }
                                                     }
@@ -2319,7 +2323,7 @@
                                                     "status": "403",
                                                     "code": "forbidden_application_id",
                                                     "title": "Forbidden application id",
-                                                    "detail": "You are only allowed to provide your own application id (231af260-a2f5-4bf4-9693-6a966612a846)."
+                                                    "detail": "You are only allowed to provide your own application id (d306d197-c8cf-4536-8a94-a32746124d67)."
                                                 }
                                             ]
                                         }
@@ -2390,10 +2394,12 @@
                         "name": "id",
                         "in": "path",
                         "description": "The Resource object's Id",
-                        "required": true,
                         "schema": {
-                            "type": "string"
-                        }
+                            "type": "string",
+                            "format": "uuid"
+                        },
+                        "example": "d8069165-b0e0-4e22-93ad-f5c94da597e6",
+                        "required": true
                     },
                     {
                         "name": "Metadata-Api-Token",
@@ -2416,37 +2422,37 @@
                                     "response": {
                                         "value": {
                                             "data": {
-                                                "id": "78f342d4-f2cc-4d38-806d-b848639ba91e",
+                                                "id": "053a0b27-d240-49dc-81e9-2bbc5f24d286",
                                                 "type": "resource",
                                                 "attributes": {
-                                                    "uri": "https://example.com/assessments/78f342d4-f2cc-4d38-806d-b848639ba91e",
+                                                    "uri": "https://example.com/assessments/053a0b27-d240-49dc-81e9-2bbc5f24d286",
                                                     "resource_type": "assessment",
                                                     "title": null,
-                                                    "content": "nemo molestiae reiciendis ipsum ipsa accusamus est sunt fugiat omnis",
+                                                    "content": "perferendis aut nemo provident est in quia velit temporibus sed",
                                                     "highlight": null
                                                 },
                                                 "relationships": {
                                                     "application": {
                                                         "data": {
-                                                            "id": "231af260-a2f5-4bf4-9693-6a966612a846",
+                                                            "id": "d306d197-c8cf-4536-8a94-a32746124d67",
                                                             "type": "application"
                                                         }
                                                     },
                                                     "application_user": {
                                                         "data": {
-                                                            "id": "e69bf8e9-d560-4df8-9f46-9cac8d58c61b",
+                                                            "id": "09cf1f9b-81f9-46a2-a092-4c9a9017194d",
                                                             "type": "application_user"
                                                         }
                                                     },
                                                     "format": {
                                                         "data": {
-                                                            "id": "vel quo sint molestiae ut autem eum quis qui dolore",
+                                                            "id": "sunt quod voluptatem ad vel velit eius velit quos eveniet",
                                                             "type": "format"
                                                         }
                                                     },
                                                     "language": {
                                                         "data": {
-                                                            "id": "quibusdam ut in dolor quisquam aut placeat impedit deleniti illum",
+                                                            "id": "quo omnis dolore minima ipsam beatae modi doloremque autem eveniet",
                                                             "type": "language"
                                                         }
                                                     }
@@ -2497,7 +2503,7 @@
                                                     "status": "403",
                                                     "code": "invalid_api_token",
                                                     "title": "Invalid api token",
-                                                    "detail": "The API token provided in the Metadata-Api-Token header (e87117543ff665ed35d84bdb12243fa741bd32e12bbaadb3c24aa31e48d9b722) is invalid."
+                                                    "detail": "The API token provided in the Metadata-Api-Token header (eac3e51f52573fbc4b241666012f43263cc2be2fce697167c51e68c9ad92f776) is invalid."
                                                 }
                                             ]
                                         }
@@ -2529,10 +2535,12 @@
                         "name": "id",
                         "in": "path",
                         "description": "The Resource object's Id",
-                        "required": true,
                         "schema": {
-                            "type": "string"
-                        }
+                            "type": "string",
+                            "format": "uuid"
+                        },
+                        "example": "52ecccdd-c530-4e4b-b580-21ac8753ff82",
+                        "required": true
                     },
                     {
                         "name": "Metadata-Api-Token",
@@ -2555,37 +2563,37 @@
                                     "response": {
                                         "value": {
                                             "data": {
-                                                "id": "78f342d4-f2cc-4d38-806d-b848639ba91e",
+                                                "id": "053a0b27-d240-49dc-81e9-2bbc5f24d286",
                                                 "type": "resource",
                                                 "attributes": {
-                                                    "uri": "https://example.com/assessments/78f342d4-f2cc-4d38-806d-b848639ba91e",
+                                                    "uri": "https://example.com/assessments/053a0b27-d240-49dc-81e9-2bbc5f24d286",
                                                     "resource_type": "assessment",
                                                     "title": null,
-                                                    "content": "nemo molestiae reiciendis ipsum ipsa accusamus est sunt fugiat omnis",
+                                                    "content": "perferendis aut nemo provident est in quia velit temporibus sed",
                                                     "highlight": null
                                                 },
                                                 "relationships": {
                                                     "application": {
                                                         "data": {
-                                                            "id": "231af260-a2f5-4bf4-9693-6a966612a846",
+                                                            "id": "d306d197-c8cf-4536-8a94-a32746124d67",
                                                             "type": "application"
                                                         }
                                                     },
                                                     "application_user": {
                                                         "data": {
-                                                            "id": "e69bf8e9-d560-4df8-9f46-9cac8d58c61b",
+                                                            "id": "09cf1f9b-81f9-46a2-a092-4c9a9017194d",
                                                             "type": "application_user"
                                                         }
                                                     },
                                                     "format": {
                                                         "data": {
-                                                            "id": "vel quo sint molestiae ut autem eum quis qui dolore",
+                                                            "id": "sunt quod voluptatem ad vel velit eius velit quos eveniet",
                                                             "type": "format"
                                                         }
                                                     },
                                                     "language": {
                                                         "data": {
-                                                            "id": "quibusdam ut in dolor quisquam aut placeat impedit deleniti illum",
+                                                            "id": "quo omnis dolore minima ipsam beatae modi doloremque autem eveniet",
                                                             "type": "language"
                                                         }
                                                     }
@@ -2636,7 +2644,7 @@
                                                     "status": "403",
                                                     "code": "invalid_api_token",
                                                     "title": "Invalid api token",
-                                                    "detail": "The API token provided in the Metadata-Api-Token header (4d02eb2e675a4a327a0d24bcc6b7a1afe2d6f34ee6582e6d6444f1374d5e2685) is invalid."
+                                                    "detail": "The API token provided in the Metadata-Api-Token header (3b0ab05a80536a8b3a32be13013169a6c03aabb8fad1eec18448aa506a8235ac) is invalid."
                                                 }
                                             ]
                                         }
@@ -2668,10 +2676,12 @@
                         "name": "id",
                         "in": "path",
                         "description": "The Resource object's Id",
-                        "required": true,
                         "schema": {
-                            "type": "string"
-                        }
+                            "type": "string",
+                            "format": "uuid"
+                        },
+                        "example": "170b0ffd-8523-47eb-b7f8-88a86da34e89",
+                        "required": true
                     },
                     {
                         "name": "Metadata-Api-Token",
@@ -2694,37 +2704,37 @@
                                     "response": {
                                         "value": {
                                             "data": {
-                                                "id": "78f342d4-f2cc-4d38-806d-b848639ba91e",
+                                                "id": "053a0b27-d240-49dc-81e9-2bbc5f24d286",
                                                 "type": "resource",
                                                 "attributes": {
-                                                    "uri": "https://example.com/assessments/78f342d4-f2cc-4d38-806d-b848639ba91e",
+                                                    "uri": "https://example.com/assessments/053a0b27-d240-49dc-81e9-2bbc5f24d286",
                                                     "resource_type": "assessment",
                                                     "title": null,
-                                                    "content": "nemo molestiae reiciendis ipsum ipsa accusamus est sunt fugiat omnis",
+                                                    "content": "perferendis aut nemo provident est in quia velit temporibus sed",
                                                     "highlight": null
                                                 },
                                                 "relationships": {
                                                     "application": {
                                                         "data": {
-                                                            "id": "231af260-a2f5-4bf4-9693-6a966612a846",
+                                                            "id": "d306d197-c8cf-4536-8a94-a32746124d67",
                                                             "type": "application"
                                                         }
                                                     },
                                                     "application_user": {
                                                         "data": {
-                                                            "id": "e69bf8e9-d560-4df8-9f46-9cac8d58c61b",
+                                                            "id": "09cf1f9b-81f9-46a2-a092-4c9a9017194d",
                                                             "type": "application_user"
                                                         }
                                                     },
                                                     "format": {
                                                         "data": {
-                                                            "id": "vel quo sint molestiae ut autem eum quis qui dolore",
+                                                            "id": "sunt quod voluptatem ad vel velit eius velit quos eveniet",
                                                             "type": "format"
                                                         }
                                                     },
                                                     "language": {
                                                         "data": {
-                                                            "id": "quibusdam ut in dolor quisquam aut placeat impedit deleniti illum",
+                                                            "id": "quo omnis dolore minima ipsam beatae modi doloremque autem eveniet",
                                                             "type": "language"
                                                         }
                                                     }
@@ -2775,7 +2785,7 @@
                                                     "status": "403",
                                                     "code": "forbidden_application_id",
                                                     "title": "Forbidden application id",
-                                                    "detail": "You are only allowed to provide your own application id (231af260-a2f5-4bf4-9693-6a966612a846)."
+                                                    "detail": "You are only allowed to provide your own application id (d306d197-c8cf-4536-8a94-a32746124d67)."
                                                 }
                                             ]
                                         }
@@ -2840,10 +2850,12 @@
                         "name": "id",
                         "in": "path",
                         "description": "The Resource object's Id",
-                        "required": true,
                         "schema": {
-                            "type": "string"
-                        }
+                            "type": "string",
+                            "format": "uuid"
+                        },
+                        "example": "3a9ee0a7-7ad6-496b-9128-290a382eba0c",
+                        "required": true
                     },
                     {
                         "name": "Metadata-Api-Token",
@@ -2866,19 +2878,19 @@
                                     "response": {
                                         "value": {
                                             "data": {
-                                                "id": "78f342d4-f2cc-4d38-806d-b848639ba91e",
+                                                "id": "053a0b27-d240-49dc-81e9-2bbc5f24d286",
                                                 "type": "resource",
                                                 "attributes": {
-                                                    "uri": "https://example.com/assessments/557e42b7-edb7-42cd-a7dd-076e1dba9e7f",
+                                                    "uri": "https://example.com/assessments/45a37741-3272-405a-b273-5123af02049a",
                                                     "resource_type": "assessment",
                                                     "title": null,
-                                                    "content": "voluptatum ex voluptate quisquam quis sunt nisi vitae facere soluta",
+                                                    "content": "illum facere voluptatem fuga ipsa excepturi reiciendis assumenda necessitatibus at",
                                                     "highlight": null
                                                 },
                                                 "relationships": {
                                                     "application": {
                                                         "data": {
-                                                            "id": "231af260-a2f5-4bf4-9693-6a966612a846",
+                                                            "id": "d306d197-c8cf-4536-8a94-a32746124d67",
                                                             "type": "application"
                                                         }
                                                     },
@@ -2887,13 +2899,13 @@
                                                     },
                                                     "format": {
                                                         "data": {
-                                                            "id": "animi laudantium ullam ducimus et qui qui velit minima reiciendis",
+                                                            "id": "consequatur provident ut illo voluptates cum quos quae numquam dolor",
                                                             "type": "format"
                                                         }
                                                     },
                                                     "language": {
                                                         "data": {
-                                                            "id": "eius tempore accusantium quam nulla quaerat sunt veniam reiciendis consequuntur",
+                                                            "id": "distinctio praesentium ipsum atque ipsa illum ipsam enim est nisi",
                                                             "type": "language"
                                                         }
                                                     }
@@ -2944,7 +2956,7 @@
                                                     "status": "403",
                                                     "code": "forbidden_application_id",
                                                     "title": "Forbidden application id",
-                                                    "detail": "You are only allowed to provide your own application id (231af260-a2f5-4bf4-9693-6a966612a846)."
+                                                    "detail": "You are only allowed to provide your own application id (d306d197-c8cf-4536-8a94-a32746124d67)."
                                                 }
                                             ]
                                         }
@@ -3027,10 +3039,12 @@
                         "name": "id",
                         "in": "path",
                         "description": "The Resource object's Id",
-                        "required": true,
                         "schema": {
-                            "type": "string"
-                        }
+                            "type": "string",
+                            "format": "uuid"
+                        },
+                        "example": "f73d70a8-c9d6-40a9-af33-152929ab4b0c",
+                        "required": true
                     },
                     {
                         "name": "Metadata-Api-Token",
@@ -3053,19 +3067,19 @@
                                     "response": {
                                         "value": {
                                             "data": {
-                                                "id": "78f342d4-f2cc-4d38-806d-b848639ba91e",
+                                                "id": "053a0b27-d240-49dc-81e9-2bbc5f24d286",
                                                 "type": "resource",
                                                 "attributes": {
-                                                    "uri": "https://example.com/assessments/557e42b7-edb7-42cd-a7dd-076e1dba9e7f",
+                                                    "uri": "https://example.com/assessments/45a37741-3272-405a-b273-5123af02049a",
                                                     "resource_type": "assessment",
                                                     "title": null,
-                                                    "content": "voluptatum ex voluptate quisquam quis sunt nisi vitae facere soluta",
+                                                    "content": "illum facere voluptatem fuga ipsa excepturi reiciendis assumenda necessitatibus at",
                                                     "highlight": null
                                                 },
                                                 "relationships": {
                                                     "application": {
                                                         "data": {
-                                                            "id": "231af260-a2f5-4bf4-9693-6a966612a846",
+                                                            "id": "d306d197-c8cf-4536-8a94-a32746124d67",
                                                             "type": "application"
                                                         }
                                                     },
@@ -3074,13 +3088,13 @@
                                                     },
                                                     "format": {
                                                         "data": {
-                                                            "id": "animi laudantium ullam ducimus et qui qui velit minima reiciendis",
+                                                            "id": "consequatur provident ut illo voluptates cum quos quae numquam dolor",
                                                             "type": "format"
                                                         }
                                                     },
                                                     "language": {
                                                         "data": {
-                                                            "id": "eius tempore accusantium quam nulla quaerat sunt veniam reiciendis consequuntur",
+                                                            "id": "distinctio praesentium ipsum atque ipsa illum ipsam enim est nisi",
                                                             "type": "language"
                                                         }
                                                     }
@@ -3131,7 +3145,7 @@
                                                     "status": "403",
                                                     "code": "forbidden_application_id",
                                                     "title": "Forbidden application id",
-                                                    "detail": "You are only allowed to provide your own application id (231af260-a2f5-4bf4-9693-6a966612a846)."
+                                                    "detail": "You are only allowed to provide your own application id (d306d197-c8cf-4536-8a94-a32746124d67)."
                                                 }
                                             ]
                                         }
@@ -3216,10 +3230,12 @@
                         "name": "resource_id",
                         "in": "path",
                         "description": "The associated Resource's Id",
-                        "required": true,
                         "schema": {
-                            "type": "string"
-                        }
+                            "type": "string",
+                            "format": "uuid"
+                        },
+                        "example": "3f683c1f-c5f8-4ba5-894e-e64e9aaf1eea",
+                        "required": true
                     },
                     {
                         "name": "Metadata-Api-Token",
@@ -3243,7 +3259,7 @@
                                         "value": {
                                             "data": [
                                                 {
-                                                    "id": "56df6467-6910-4707-b27a-0fb91982e924",
+                                                    "id": "94138fbd-6208-42bf-b5fb-7ac2c25da159",
                                                     "type": "stats",
                                                     "attributes": {
                                                         "value": {
@@ -3253,25 +3269,25 @@
                                                     "relationships": {
                                                         "application": {
                                                             "data": {
-                                                                "id": "351abdb7-4a6f-49cd-9e1f-ca828aa22282",
+                                                                "id": "9b2e996f-6b44-446c-9cb7-15fddcd4d767",
                                                                 "type": "application"
                                                             }
                                                         },
                                                         "application_user": {
                                                             "data": {
-                                                                "id": "4c2390be-38c9-48b4-83ce-40b5e1c60ec4",
+                                                                "id": "582c053c-ce33-4563-b2c7-94e72036f15c",
                                                                 "type": "application_user"
                                                             }
                                                         },
                                                         "resource": {
                                                             "data": {
-                                                                "id": "8b425371-4e96-4f0a-ad0d-ad4815dee33f",
+                                                                "id": "46228411-1d45-4485-9bd3-6f872f01df92",
                                                                 "type": "resource"
                                                             }
                                                         },
                                                         "format": {
                                                             "data": {
-                                                                "id": "vitae odit est accusamus corrupti provident eius minus fugit omnis",
+                                                                "id": "eaque voluptas ducimus error ipsam et occaecati odio blanditiis sit",
                                                                 "type": "format"
                                                             }
                                                         }
@@ -3323,7 +3339,7 @@
                                                     "status": "403",
                                                     "code": "invalid_api_token",
                                                     "title": "Invalid api token",
-                                                    "detail": "The API token provided in the Metadata-Api-Token header (425af5a13e6e4a23d2bc16b76c0731aeb00982ab0a3ad7ccd9ca0c1a196b1a4c) is invalid."
+                                                    "detail": "The API token provided in the Metadata-Api-Token header (d8fefb850d4227608d53aa1afe51a5d5a80e6a2c28628f227e15cbf591e3f3c1) is invalid."
                                                 }
                                             ]
                                         }
@@ -3355,10 +3371,12 @@
                         "name": "resource_id",
                         "in": "path",
                         "description": "The associated Resource's Id",
-                        "required": true,
                         "schema": {
-                            "type": "string"
-                        }
+                            "type": "string",
+                            "format": "uuid"
+                        },
+                        "example": "bc35cd2b-bc4c-417c-b26f-7bed0a0c89dc",
+                        "required": true
                     },
                     {
                         "name": "Metadata-Api-Token",
@@ -3381,7 +3399,7 @@
                                     "response": {
                                         "value": {
                                             "data": {
-                                                "id": "76654ebd-205d-48c3-8996-a3eaf7ef497b",
+                                                "id": "cb16d490-7186-4545-9af1-879d4f108ef6",
                                                 "type": "stats",
                                                 "attributes": {
                                                     "value": {
@@ -3391,25 +3409,25 @@
                                                 "relationships": {
                                                     "application": {
                                                         "data": {
-                                                            "id": "351abdb7-4a6f-49cd-9e1f-ca828aa22282",
+                                                            "id": "9b2e996f-6b44-446c-9cb7-15fddcd4d767",
                                                             "type": "application"
                                                         }
                                                     },
                                                     "application_user": {
                                                         "data": {
-                                                            "id": "4c2390be-38c9-48b4-83ce-40b5e1c60ec4",
+                                                            "id": "582c053c-ce33-4563-b2c7-94e72036f15c",
                                                             "type": "application_user"
                                                         }
                                                     },
                                                     "resource": {
                                                         "data": {
-                                                            "id": "8b425371-4e96-4f0a-ad0d-ad4815dee33f",
+                                                            "id": "46228411-1d45-4485-9bd3-6f872f01df92",
                                                             "type": "resource"
                                                         }
                                                     },
                                                     "format": {
                                                         "data": {
-                                                            "id": "vitae odit est accusamus corrupti provident eius minus fugit omnis",
+                                                            "id": "eaque voluptas ducimus error ipsam et occaecati odio blanditiis sit",
                                                             "type": "format"
                                                         }
                                                     }
@@ -3460,7 +3478,7 @@
                                                     "status": "403",
                                                     "code": "forbidden_application_id",
                                                     "title": "Forbidden application id",
-                                                    "detail": "You are only allowed to provide your own application id (351abdb7-4a6f-49cd-9e1f-ca828aa22282)."
+                                                    "detail": "You are only allowed to provide your own application id (9b2e996f-6b44-446c-9cb7-15fddcd4d767)."
                                                 }
                                             ]
                                         }
@@ -3521,19 +3539,23 @@
                         "name": "resource_id",
                         "in": "path",
                         "description": "The associated Resource's Id",
-                        "required": true,
                         "schema": {
-                            "type": "string"
-                        }
+                            "type": "string",
+                            "format": "uuid"
+                        },
+                        "example": "4e1f71f9-fbce-46a8-90c3-417803dd3d59",
+                        "required": true
                     },
                     {
                         "name": "id",
                         "in": "path",
                         "description": "The Stats object's Id",
-                        "required": true,
                         "schema": {
-                            "type": "string"
-                        }
+                            "type": "string",
+                            "format": "uuid"
+                        },
+                        "example": "420e8f59-d2c5-49e9-a1b1-d3a564814e0c",
+                        "required": true
                     },
                     {
                         "name": "Metadata-Api-Token",
@@ -3556,7 +3578,7 @@
                                     "response": {
                                         "value": {
                                             "data": {
-                                                "id": "56df6467-6910-4707-b27a-0fb91982e924",
+                                                "id": "94138fbd-6208-42bf-b5fb-7ac2c25da159",
                                                 "type": "stats",
                                                 "attributes": {
                                                     "value": {
@@ -3566,25 +3588,25 @@
                                                 "relationships": {
                                                     "application": {
                                                         "data": {
-                                                            "id": "351abdb7-4a6f-49cd-9e1f-ca828aa22282",
+                                                            "id": "9b2e996f-6b44-446c-9cb7-15fddcd4d767",
                                                             "type": "application"
                                                         }
                                                     },
                                                     "application_user": {
                                                         "data": {
-                                                            "id": "4c2390be-38c9-48b4-83ce-40b5e1c60ec4",
+                                                            "id": "582c053c-ce33-4563-b2c7-94e72036f15c",
                                                             "type": "application_user"
                                                         }
                                                     },
                                                     "resource": {
                                                         "data": {
-                                                            "id": "8b425371-4e96-4f0a-ad0d-ad4815dee33f",
+                                                            "id": "46228411-1d45-4485-9bd3-6f872f01df92",
                                                             "type": "resource"
                                                         }
                                                     },
                                                     "format": {
                                                         "data": {
-                                                            "id": "vitae odit est accusamus corrupti provident eius minus fugit omnis",
+                                                            "id": "eaque voluptas ducimus error ipsam et occaecati odio blanditiis sit",
                                                             "type": "format"
                                                         }
                                                     }
@@ -3635,7 +3657,7 @@
                                                     "status": "403",
                                                     "code": "invalid_api_token",
                                                     "title": "Invalid api token",
-                                                    "detail": "The API token provided in the Metadata-Api-Token header (95e2b5981ec5ef5c27e7e1a8ad1a640d8430a551932fd5c9307f89aebcf8c414) is invalid."
+                                                    "detail": "The API token provided in the Metadata-Api-Token header (c00e24a4164d265acd27deeacdb0ff93a624c507824b27ec79c3453c6f7ed1a4) is invalid."
                                                 }
                                             ]
                                         }
@@ -3667,19 +3689,23 @@
                         "name": "resource_id",
                         "in": "path",
                         "description": "The associated Resource's Id",
-                        "required": true,
                         "schema": {
-                            "type": "string"
-                        }
+                            "type": "string",
+                            "format": "uuid"
+                        },
+                        "example": "8a8c1b02-1211-4f2a-b45a-730e9b8d951a",
+                        "required": true
                     },
                     {
                         "name": "id",
                         "in": "path",
                         "description": "The Stats object's Id",
-                        "required": true,
                         "schema": {
-                            "type": "string"
-                        }
+                            "type": "string",
+                            "format": "uuid"
+                        },
+                        "example": "a80334e6-a68d-47bd-aca5-27106f16510d",
+                        "required": true
                     },
                     {
                         "name": "Metadata-Api-Token",
@@ -3702,7 +3728,7 @@
                                     "response": {
                                         "value": {
                                             "data": {
-                                                "id": "56df6467-6910-4707-b27a-0fb91982e924",
+                                                "id": "94138fbd-6208-42bf-b5fb-7ac2c25da159",
                                                 "type": "stats",
                                                 "attributes": {
                                                     "value": {
@@ -3712,25 +3738,25 @@
                                                 "relationships": {
                                                     "application": {
                                                         "data": {
-                                                            "id": "351abdb7-4a6f-49cd-9e1f-ca828aa22282",
+                                                            "id": "9b2e996f-6b44-446c-9cb7-15fddcd4d767",
                                                             "type": "application"
                                                         }
                                                     },
                                                     "application_user": {
                                                         "data": {
-                                                            "id": "4c2390be-38c9-48b4-83ce-40b5e1c60ec4",
+                                                            "id": "582c053c-ce33-4563-b2c7-94e72036f15c",
                                                             "type": "application_user"
                                                         }
                                                     },
                                                     "resource": {
                                                         "data": {
-                                                            "id": "8b425371-4e96-4f0a-ad0d-ad4815dee33f",
+                                                            "id": "46228411-1d45-4485-9bd3-6f872f01df92",
                                                             "type": "resource"
                                                         }
                                                     },
                                                     "format": {
                                                         "data": {
-                                                            "id": "vitae odit est accusamus corrupti provident eius minus fugit omnis",
+                                                            "id": "eaque voluptas ducimus error ipsam et occaecati odio blanditiis sit",
                                                             "type": "format"
                                                         }
                                                     }
@@ -3781,7 +3807,7 @@
                                                     "status": "403",
                                                     "code": "invalid_api_token",
                                                     "title": "Invalid api token",
-                                                    "detail": "The API token provided in the Metadata-Api-Token header (123818ccdd5c62f5f9d7d5d40c26154d7da5b88cf74c0182f04539c51798fd00) is invalid."
+                                                    "detail": "The API token provided in the Metadata-Api-Token header (24a196f39489fc0bdaf9c031165405c738be09208dbaa3abe76162d13213a470) is invalid."
                                                 }
                                             ]
                                         }
@@ -3813,19 +3839,23 @@
                         "name": "resource_id",
                         "in": "path",
                         "description": "The associated Resource's Id",
-                        "required": true,
                         "schema": {
-                            "type": "string"
-                        }
+                            "type": "string",
+                            "format": "uuid"
+                        },
+                        "example": "33dbfb01-cbc3-482e-9bf7-3130dfd701b2",
+                        "required": true
                     },
                     {
                         "name": "id",
                         "in": "path",
                         "description": "The Stats object's Id",
-                        "required": true,
                         "schema": {
-                            "type": "string"
-                        }
+                            "type": "string",
+                            "format": "uuid"
+                        },
+                        "example": "177af3c8-f7e6-44b3-90b5-874163c1ab55",
+                        "required": true
                     },
                     {
                         "name": "Metadata-Api-Token",
@@ -3848,7 +3878,7 @@
                                     "response": {
                                         "value": {
                                             "data": {
-                                                "id": "56df6467-6910-4707-b27a-0fb91982e924",
+                                                "id": "94138fbd-6208-42bf-b5fb-7ac2c25da159",
                                                 "type": "stats",
                                                 "attributes": {
                                                     "value": {
@@ -3858,25 +3888,25 @@
                                                 "relationships": {
                                                     "application": {
                                                         "data": {
-                                                            "id": "351abdb7-4a6f-49cd-9e1f-ca828aa22282",
+                                                            "id": "9b2e996f-6b44-446c-9cb7-15fddcd4d767",
                                                             "type": "application"
                                                         }
                                                     },
                                                     "application_user": {
                                                         "data": {
-                                                            "id": "4c2390be-38c9-48b4-83ce-40b5e1c60ec4",
+                                                            "id": "582c053c-ce33-4563-b2c7-94e72036f15c",
                                                             "type": "application_user"
                                                         }
                                                     },
                                                     "resource": {
                                                         "data": {
-                                                            "id": "8b425371-4e96-4f0a-ad0d-ad4815dee33f",
+                                                            "id": "46228411-1d45-4485-9bd3-6f872f01df92",
                                                             "type": "resource"
                                                         }
                                                     },
                                                     "format": {
                                                         "data": {
-                                                            "id": "vitae odit est accusamus corrupti provident eius minus fugit omnis",
+                                                            "id": "eaque voluptas ducimus error ipsam et occaecati odio blanditiis sit",
                                                             "type": "format"
                                                         }
                                                     }
@@ -3927,7 +3957,7 @@
                                                     "status": "403",
                                                     "code": "forbidden_application_id",
                                                     "title": "Forbidden application id",
-                                                    "detail": "You are only allowed to provide your own application id (351abdb7-4a6f-49cd-9e1f-ca828aa22282)."
+                                                    "detail": "You are only allowed to provide your own application id (9b2e996f-6b44-446c-9cb7-15fddcd4d767)."
                                                 }
                                             ]
                                         }
@@ -3986,19 +4016,23 @@
                         "name": "resource_id",
                         "in": "path",
                         "description": "The associated Resource's Id",
-                        "required": true,
                         "schema": {
-                            "type": "string"
-                        }
+                            "type": "string",
+                            "format": "uuid"
+                        },
+                        "example": "645a1926-a0db-439d-840b-3b56ddc2399e",
+                        "required": true
                     },
                     {
                         "name": "id",
                         "in": "path",
                         "description": "The Stats object's Id",
-                        "required": true,
                         "schema": {
-                            "type": "string"
-                        }
+                            "type": "string",
+                            "format": "uuid"
+                        },
+                        "example": "80f2b4e7-3ebe-43cf-86aa-b3dcde51a8a9",
+                        "required": true
                     },
                     {
                         "name": "Metadata-Api-Token",
@@ -4021,7 +4055,7 @@
                                     "response": {
                                         "value": {
                                             "data": {
-                                                "id": "56df6467-6910-4707-b27a-0fb91982e924",
+                                                "id": "94138fbd-6208-42bf-b5fb-7ac2c25da159",
                                                 "type": "stats",
                                                 "attributes": {
                                                     "value": {
@@ -4031,7 +4065,7 @@
                                                 "relationships": {
                                                     "application": {
                                                         "data": {
-                                                            "id": "351abdb7-4a6f-49cd-9e1f-ca828aa22282",
+                                                            "id": "9b2e996f-6b44-446c-9cb7-15fddcd4d767",
                                                             "type": "application"
                                                         }
                                                     },
@@ -4040,13 +4074,13 @@
                                                     },
                                                     "resource": {
                                                         "data": {
-                                                            "id": "8b425371-4e96-4f0a-ad0d-ad4815dee33f",
+                                                            "id": "46228411-1d45-4485-9bd3-6f872f01df92",
                                                             "type": "resource"
                                                         }
                                                     },
                                                     "format": {
                                                         "data": {
-                                                            "id": "magnam impedit voluptates consequuntur ut sit animi voluptate dolores totam",
+                                                            "id": "est quia nisi at sapiente aspernatur beatae sunt dolore ut",
                                                             "type": "format"
                                                         }
                                                     }
@@ -4097,7 +4131,7 @@
                                                     "status": "403",
                                                     "code": "forbidden_application_id",
                                                     "title": "Forbidden application id",
-                                                    "detail": "You are only allowed to provide your own application id (351abdb7-4a6f-49cd-9e1f-ca828aa22282)."
+                                                    "detail": "You are only allowed to provide your own application id (9b2e996f-6b44-446c-9cb7-15fddcd4d767)."
                                                 }
                                             ]
                                         }
@@ -4180,19 +4214,23 @@
                         "name": "resource_id",
                         "in": "path",
                         "description": "The associated Resource's Id",
-                        "required": true,
                         "schema": {
-                            "type": "string"
-                        }
+                            "type": "string",
+                            "format": "uuid"
+                        },
+                        "example": "ddd10825-0950-479a-afaa-6b7dd73bbe0a",
+                        "required": true
                     },
                     {
                         "name": "id",
                         "in": "path",
                         "description": "The Stats object's Id",
-                        "required": true,
                         "schema": {
-                            "type": "string"
-                        }
+                            "type": "string",
+                            "format": "uuid"
+                        },
+                        "example": "5d817681-5eb6-455f-be5e-52cabf20acb3",
+                        "required": true
                     },
                     {
                         "name": "Metadata-Api-Token",
@@ -4215,7 +4253,7 @@
                                     "response": {
                                         "value": {
                                             "data": {
-                                                "id": "56df6467-6910-4707-b27a-0fb91982e924",
+                                                "id": "94138fbd-6208-42bf-b5fb-7ac2c25da159",
                                                 "type": "stats",
                                                 "attributes": {
                                                     "value": {
@@ -4225,7 +4263,7 @@
                                                 "relationships": {
                                                     "application": {
                                                         "data": {
-                                                            "id": "351abdb7-4a6f-49cd-9e1f-ca828aa22282",
+                                                            "id": "9b2e996f-6b44-446c-9cb7-15fddcd4d767",
                                                             "type": "application"
                                                         }
                                                     },
@@ -4234,13 +4272,13 @@
                                                     },
                                                     "resource": {
                                                         "data": {
-                                                            "id": "8b425371-4e96-4f0a-ad0d-ad4815dee33f",
+                                                            "id": "46228411-1d45-4485-9bd3-6f872f01df92",
                                                             "type": "resource"
                                                         }
                                                     },
                                                     "format": {
                                                         "data": {
-                                                            "id": "magnam impedit voluptates consequuntur ut sit animi voluptate dolores totam",
+                                                            "id": "est quia nisi at sapiente aspernatur beatae sunt dolore ut",
                                                             "type": "format"
                                                         }
                                                     }
@@ -4291,7 +4329,7 @@
                                                     "status": "403",
                                                     "code": "forbidden_application_id",
                                                     "title": "Forbidden application id",
-                                                    "detail": "You are only allowed to provide your own application id (351abdb7-4a6f-49cd-9e1f-ca828aa22282)."
+                                                    "detail": "You are only allowed to provide your own application id (9b2e996f-6b44-446c-9cb7-15fddcd4d767)."
                                                 }
                                             ]
                                         }

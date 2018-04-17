@@ -23,7 +23,9 @@ RSpec.describe Api::V1::ResourcesController, type: :request do
     schemes 'https'
     produces CONTENT_TYPE
     parameter name: :id, in: :path, type: :string,
-              description: "The Resource object's Id" if on == :member
+              description: "The Resource object's Id",
+              schema: { type: :string, format: :uuid },
+              example: SecureRandom.uuid if on == :member
   end
   data_setup = ->(on) do
     instance_exec on, &no_data_setup
@@ -35,9 +37,13 @@ RSpec.describe Api::V1::ResourcesController, type: :request do
     instance_exec :collection, &no_data_setup
     operationId 'getResources'
     parameter name: :'filter[query]',    in: :query, type: :string, required: false,
-              description: 'Query used for full text search on the Resources'
+              description: 'Query used for full text search on the Resources',
+              schema: { type: :string },
+              example: 'physics'
     parameter name: :'filter[language]', in: :query, type: :string, required: false,
-              description: 'Language used for full text search on the Resources'
+              description: 'Language used for full text search on the Resources',
+              schema: { type: :string },
+              example: 'english'
   end
   create_collection_setup = -> do
     instance_exec :collection, &data_setup
@@ -51,6 +57,12 @@ RSpec.describe Api::V1::ResourcesController, type: :request do
   let(:id) { @resource.uuid }
 
   after do |example|
+    (example.metadata.dig(:operation, :parameters) || []).select do |parameter|
+      parameter[:id] == :body
+    end.each do |parameter|
+      parameter['example'] = request.body.read
+      request.body.rewind
+    end
     example.metadata[:response][:examples] = {
       CONTENT_TYPE => JSON.parse(response.body, symbolize_names: true)
     }

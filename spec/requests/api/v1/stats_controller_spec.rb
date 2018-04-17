@@ -19,7 +19,9 @@ RSpec.describe Api::V1::StatsController, type: :request do
                    valid_type: valid_type,
                    path_params_proc: -> do
                      parameter name: :resource_id, in: :path, type: :string,
-                               description: "The associated Resource's Id"
+                               description: "The associated Resource's Id",
+                               schema: { type: :string, format: :uuid },
+                               example: SecureRandom.uuid
 
                      let(:resource_id) { @resource.uuid }
                    end,
@@ -32,9 +34,13 @@ RSpec.describe Api::V1::StatsController, type: :request do
     schemes 'https'
     produces CONTENT_TYPE
     parameter name: :resource_id, in: :path, type: :string,
-              description: "The associated Resource's Id"
+              description: "The associated Resource's Id",
+              schema: { type: :string, format: :uuid },
+              example: SecureRandom.uuid
     parameter name: :id, in: :path, type: :string,
-              description: "The Stats object's Id" if on == :member
+              description: "The Stats object's Id",
+              schema: { type: :string, format: :uuid },
+              example: SecureRandom.uuid if on == :member
   end
   data_setup = ->(on) do
     instance_exec on, &no_data_setup
@@ -51,6 +57,12 @@ RSpec.describe Api::V1::StatsController, type: :request do
   let(:id)          { @stats.uuid }
 
   after do |example|
+    (example.metadata.dig(:operation, :parameters) || []).select do |parameter|
+      parameter[:id] == :body
+    end.each do |parameter|
+      parameter['example'] = request.body.read
+      request.body.rewind
+    end
     example.metadata[:response][:examples] = {
       CONTENT_TYPE => JSON.parse(response.body, symbolize_names: true)
     }

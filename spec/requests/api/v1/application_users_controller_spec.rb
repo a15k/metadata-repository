@@ -24,7 +24,9 @@ RSpec.describe Api::V1::ApplicationUsersController, type: :request do
     schemes 'https'
     produces CONTENT_TYPE
     parameter name: :id, in: :path, type: :string,
-              description: "The ApplicationUser object's Id" if on == :member
+              description: "The ApplicationUser object's Id",
+              schema: { type: :string, format: :uuid },
+              example: SecureRandom.uuid if on == :member
   end
   data_setup = ->(on) do
     instance_exec on, &no_data_setup
@@ -32,14 +34,6 @@ RSpec.describe Api::V1::ApplicationUsersController, type: :request do
     parameter name: :application_user, in: :body, schema: application_user_schema_reference
   end
 
-  index_setup = -> do
-    instance_exec :collection, &no_data_setup
-    operationId 'getApplicationUsers'
-    parameter name: :'filter[query]',    in: :query, type: :string, required: false,
-              description: 'Query used for full text search on the ApplicationUsers'
-    parameter name: :'filter[language]', in: :query, type: :string, required: false,
-              description: 'Language used for full text search on the ApplicationUsers'
-  end
   create_collection_setup = -> do
     instance_exec :collection, &data_setup
     operationId 'createApplicationUser'
@@ -52,6 +46,12 @@ RSpec.describe Api::V1::ApplicationUsersController, type: :request do
   let(:id) { @application_user.uuid }
 
   after do |example|
+    (example.metadata.dig(:operation, :parameters) || []).select do |parameter|
+      parameter[:id] == :body
+    end.each do |parameter|
+      parameter['example'] = request.body.read
+      request.body.rewind
+    end
     example.metadata[:response][:examples] = {
       CONTENT_TYPE => JSON.parse(response.body, symbolize_names: true)
     }
@@ -63,7 +63,8 @@ RSpec.describe Api::V1::ApplicationUsersController, type: :request do
 
     path '/application_users' do
       get 'List ApplicationUsers created by the current application' do
-        instance_exec &index_setup
+        instance_exec :collection, &no_data_setup
+        operationId 'getApplicationUsers'
 
         response 200, 'success' do
           schema application_user_schema_reference
