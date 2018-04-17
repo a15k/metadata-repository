@@ -6,7 +6,8 @@ module Api
 
       set_id :uuid
 
-      attributes :name
+      attributes          :name
+      required_attributes :name
     end
   end
 end

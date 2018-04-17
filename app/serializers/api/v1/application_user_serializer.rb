@@ -7,6 +7,7 @@ module Api
       set_id :uuid
 
       belongs_to :application, id_method_name: :application_uuid
+      required_relationships :application
     end
   end
 end
