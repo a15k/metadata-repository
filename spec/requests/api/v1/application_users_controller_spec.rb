@@ -160,7 +160,7 @@ RSpec.describe Api::V1::ApplicationUsersController, type: :request do
           instance_exec &create_member_setup
 
           response 409, 'ApplicationUser uuid already exists' do
-            schema application_user_schema_reference
+            schema FAILURE_SCHEMA
 
             run_test! do |response|
               expect(response.errors.first[:status]).to eq '409'

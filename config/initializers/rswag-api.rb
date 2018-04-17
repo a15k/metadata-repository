@@ -34,7 +34,9 @@ Rswag::Api.configure do |c|
           content.each do |key, value|
             next unless value.has_key? 'examples'
 
-            response['examples'] = value.delete 'examples'
+            response['examples'] = value.delete('examples').transform_values! do |example|
+              example['value']
+            end
 
             content.delete(key) if value.empty?
           end

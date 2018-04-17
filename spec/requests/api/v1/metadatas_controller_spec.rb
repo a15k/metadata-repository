@@ -175,7 +175,7 @@ RSpec.describe Api::V1::MetadatasController, type: :request do
           instance_exec &create_member_setup
 
           response 409, 'Metadata uuid already exists' do
-            schema metadata_schema_reference
+            schema FAILURE_SCHEMA
 
             run_test! do |response|
               expect(response.errors.first[:status]).to eq '409'

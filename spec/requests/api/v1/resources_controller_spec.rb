@@ -230,7 +230,7 @@ RSpec.describe Api::V1::ResourcesController, type: :request do
           instance_exec &create_collection_setup
 
           response 409, 'Resource uri already exists' do
-            schema resource_schema_reference
+            schema FAILURE_SCHEMA
 
             run_test! do |response|
               expect(response.errors.first[:status]).to eq '409'
@@ -307,7 +307,7 @@ RSpec.describe Api::V1::ResourcesController, type: :request do
             instance_exec &create_member_setup
 
             response 409, 'Resource uri already exists' do
-              schema resource_schema_reference
+              schema FAILURE_SCHEMA
 
               run_test! do |response|
                 expect(response.errors.first[:status]).to eq '409'
@@ -327,7 +327,7 @@ RSpec.describe Api::V1::ResourcesController, type: :request do
           instance_exec &create_member_setup
 
           response 409, 'Resource uuid already exists' do
-            schema resource_schema_reference
+            schema FAILURE_SCHEMA
 
             run_test! do |response|
               expect(response.errors.first[:status]).to eq '409'

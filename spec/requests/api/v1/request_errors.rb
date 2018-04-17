@@ -1,5 +1,7 @@
 require 'swagger_helper'
 
+FAILURE_SCHEMA = { '$ref': '#/definitions/failure' }
+
 RSpec.shared_examples 'api v1 request errors' do |application_proc:,
                                                   base_path_template:,
                                                   schema_reference:,
@@ -114,7 +116,7 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
           let(:on)   { on }
 
           response 400, 'missing api token' do
-            schema schema_reference
+            schema FAILURE_SCHEMA
 
             run_test! do |response|
               expect(response.errors.first[:status]).to eq '400'
@@ -144,7 +146,7 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
           let(:on)   { on }
 
           response 403, 'invalid api token' do
-            schema schema_reference
+            schema FAILURE_SCHEMA
 
             run_test! do |response|
               expect(response.errors.first[:status]).to eq '403'
@@ -174,7 +176,7 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
             let(:on)   { on }
 
             response 400, 'missing data' do
-              schema schema_reference
+              schema FAILURE_SCHEMA
 
               run_test! do |response|
                 expect(response.errors.first[:status]).to eq '400'
@@ -203,7 +205,7 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
               let(:on)   { on }
 
               response 400, 'missing type' do
-                schema schema_reference
+                schema FAILURE_SCHEMA
 
                 run_test! do |response|
                   expect(response.errors.first[:status]).to eq '400'
@@ -232,7 +234,7 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
               let(:on)   { on }
 
               response 409, 'invalid type' do
-                schema schema_reference
+                schema FAILURE_SCHEMA
 
                 run_test! do |response|
                   expect(response.errors.first[:status]).to eq '409'
@@ -265,7 +267,7 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
                 let(:on)   { on }
 
                 response 400, 'missing id' do
-                  schema schema_reference
+                  schema FAILURE_SCHEMA
 
                   run_test! do |response|
                     expect(response.errors.first[:status]).to eq '400'
@@ -295,7 +297,7 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
                 let(:on)   { on }
 
                 response 409, 'invalid id' do
-                  schema schema_reference
+                  schema FAILURE_SCHEMA
 
                   run_test! do |response|
                     expect(response.errors.first[:status]).to eq '409'
@@ -325,7 +327,7 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
                 let(:on)   { on }
 
                 response 404, 'not found' do
-                  schema schema_reference
+                  schema FAILURE_SCHEMA
 
                   run_test! do |response|
                     expect(response.errors.first[:status]).to eq '404'
@@ -354,7 +356,7 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
 
                 if fully_scoped
                   response 404, 'not visible' do
-                    schema schema_reference
+                    schema FAILURE_SCHEMA
 
                     run_test! do |response|
                       expect(response.errors.first[:status]).to eq '404'
@@ -365,7 +367,7 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
                   end
                 else
                   response 403, 'forbidden' do
-                    schema schema_reference
+                    schema FAILURE_SCHEMA
 
                     run_test! do |response|
                       expect(response.errors.first[:status]).to eq '403'
@@ -408,7 +410,7 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
                     let(:on)   { on }
 
                     response 400, 'missing relationship data' do
-                      schema schema_reference
+                      schema FAILURE_SCHEMA
 
                       run_test! do |response|
                         expect(response.errors.first[:status]).to eq '400'
@@ -445,7 +447,7 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
                       let(:on)   { on }
 
                       response 400, 'missing relationship type' do
-                        schema schema_reference
+                        schema FAILURE_SCHEMA
 
                         run_test! do |response|
                           expect(response.errors.first[:status]).to eq '400'
@@ -481,7 +483,7 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
                       let(:on)   { on }
 
                       response 409, 'invalid relationship type' do
-                        schema schema_reference
+                        schema FAILURE_SCHEMA
 
                         run_test! do |response|
                           expect(response.errors.first[:status]).to eq '409'
@@ -519,7 +521,7 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
                         let(:on)   { on }
 
                         response 400, 'missing relationship id' do
-                          schema schema_reference
+                          schema FAILURE_SCHEMA
 
                           run_test! do |response|
                             expect(response.errors.first[:status]).to eq '400'
@@ -561,7 +563,7 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
                   let(:on)   { on }
 
                   response 403, 'forbidden application id' do
-                    schema schema_reference
+                    schema FAILURE_SCHEMA
 
                     run_test! do |response|
                       expect(response.errors.first[:status]).to eq '403'

@@ -175,7 +175,7 @@ RSpec.describe Api::V1::StatsController, type: :request do
           instance_exec &create_member_setup
 
           response 409, 'Stats uuid already exists' do
-            schema stats_schema_reference
+            schema FAILURE_SCHEMA
 
             run_test! do |response|
               expect(response.errors.first[:status]).to eq '409'

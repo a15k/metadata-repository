@@ -32,7 +32,8 @@ RSpec.configure do |config|
         application_user: { '$ref': 'public/schemas/api/v1/application_user.schema.json' },
         resource:         { '$ref': 'public/schemas/api/v1/resource.schema.json'         },
         metadata:         { '$ref': 'public/schemas/api/v1/metadata.schema.json'         },
-        stats:            { '$ref': 'public/schemas/api/v1/stats.schema.json'            }
+        stats:            { '$ref': 'public/schemas/api/v1/stats.schema.json'            },
+        failure:          { '$ref': 'public/schemas/failure.schema.json'                 }
       }
     }
   }
