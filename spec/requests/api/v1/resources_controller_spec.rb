@@ -169,6 +169,9 @@ RSpec.describe Api::V1::ResourcesController, type: :request do
                   ).deep_symbolize_keys
                 end
                 before do
+                  expect(Resource).to(
+                    receive(:order).with([ { created_at: :desc }, { uuid: :asc } ])
+                  ).and_call_original
                   expect(Resource).to receive(:search).with('lorem', 'simple').and_call_original
                 end
 
@@ -194,6 +197,7 @@ RSpec.describe Api::V1::ResourcesController, type: :request do
                   ).deep_symbolize_keys
                 end
                 before do
+                  expect(Resource).to receive(:order).with([ created_at: :asc ]).and_call_original
                   expect(Resource).to receive(:search).with('lorem', 'simple').and_call_original
                 end
 
@@ -226,6 +230,9 @@ RSpec.describe Api::V1::ResourcesController, type: :request do
                   ).deep_symbolize_keys
                 end
                 before do
+                  expect(Resource).to(
+                    receive(:order).with([ { created_at: :desc }, { uuid: :asc } ])
+                  ).and_call_original
                   expect(Resource).to receive(:search).with('jumps', 'english').and_call_original
                 end
 
@@ -251,6 +258,7 @@ RSpec.describe Api::V1::ResourcesController, type: :request do
                   ).deep_symbolize_keys
                 end
                 before do
+                  expect(Resource).to receive(:order).with([ created_at: :asc ]).and_call_original
                   expect(Resource).to receive(:search).with('jumps', 'english').and_call_original
                 end
 
