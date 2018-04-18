@@ -1,4 +1,6 @@
 class Resource < ApplicationRecord
+  SORTABLE_COLUMNS = [ :uuid, :uri, :resource_type, :title, :created_at, :updated_at ]
+
   TSVECTOR_UPDATE_SQL = <<-TSVECTOR_UPDATE_SQL.strip_heredoc
     NEW."tsvector" = (
       WITH "ts_config" AS (

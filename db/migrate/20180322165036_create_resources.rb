@@ -9,8 +9,8 @@ class CreateResources < ActiveRecord::Migration[5.1]
       t.references :language,         foreign_key: { on_update: :cascade, on_delete: :nullify }
       t.uuid       :uuid,             null: false
       t.string     :uri,              null: false
-      t.citext     :resource_type,    null: false
-      t.text       :title
+      t.citext     :resource_type,    null: false, index: true
+      t.text       :title,                         index: true
       t.text       :content,          null: false
       t.tsvector   :tsvector,         null: false, index: { using: :gin }
 
@@ -19,5 +19,7 @@ class CreateResources < ActiveRecord::Migration[5.1]
 
     add_index :resources, [ :uuid, :application_id ], unique: true
     add_index :resources, [ :uri,  :application_id ], unique: true
+    add_index :resources, :created_at
+    add_index :resources, :updated_at
   end
 end

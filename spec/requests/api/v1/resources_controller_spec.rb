@@ -44,6 +44,11 @@ RSpec.describe Api::V1::ResourcesController, type: :request do
               description: 'Language used for full text search on the Resources',
               schema: { type: :string },
               example: 'english'
+    parameter name: :sort, in: :query, type: :string, required: false,
+              description: 'Comma-separated sort order for Resources;' +
+                           ' Prefix with - for descending order',
+              schema: { type: :string },
+              example: '-created_at,id'
   end
   create_collection_setup = -> do
     instance_exec :collection, &data_setup
@@ -145,24 +150,55 @@ RSpec.describe Api::V1::ResourcesController, type: :request do
         context 'with no language param' do
           let(:'filter[query]') { 'lorem' }
 
-          get 'List Resources created by all applications' do
-            instance_exec &index_setup
+          context 'with a sort param' do
+            let(:sort) { '-created_at,id' }
 
-            response 200, 'success' do
-              schema resource_schema_reference
+            get 'List Resources created by all applications' do
+              instance_exec &index_setup
 
-              let!(:expected_response) do
-                JSON.parse(
-                  Api::V1::ResourceSerializer.new(
-                    Resource.search('lorem', 'simple').with_pg_search_highlight
-                  ).serialized_json
-                ).deep_symbolize_keys
+              response 200, 'success' do
+                schema resource_schema_reference
+
+                let!(:expected_response) do
+                  JSON.parse(
+                    Api::V1::ResourceSerializer.new(
+                      Resource.order(created_at: :desc, id: :asc)
+                              .search('lorem', 'simple')
+                              .with_pg_search_highlight
+                    ).serialized_json
+                  ).deep_symbolize_keys
+                end
+                before do
+                  expect(Resource).to receive(:search).with('lorem', 'simple').and_call_original
+                end
+
+                run_test! { |response| expect(response.body_hash).to eq expected_response }
               end
-              before do
-                expect(Resource).to receive(:search).with('lorem', 'simple').and_call_original
-              end
+            end
+          end
 
-              run_test! { |response| expect(response.body_hash).to eq expected_response }
+          context 'with no sort param' do
+            get 'List Resources created by all applications' do
+              instance_exec &index_setup
+
+              response 200, 'success' do
+                schema resource_schema_reference
+
+                let!(:expected_response) do
+                  JSON.parse(
+                    Api::V1::ResourceSerializer.new(
+                      Resource.order(:created_at)
+                              .search('lorem', 'simple')
+                              .with_pg_search_highlight
+                    ).serialized_json
+                  ).deep_symbolize_keys
+                end
+                before do
+                  expect(Resource).to receive(:search).with('lorem', 'simple').and_call_original
+                end
+
+                run_test! { |response| expect(response.body_hash).to eq expected_response }
+              end
             end
           end
         end
@@ -171,24 +207,55 @@ RSpec.describe Api::V1::ResourcesController, type: :request do
           let(:'filter[query]')    { 'jumps' }
           let(:'filter[language]') { 'english' }
 
-          get 'List Resources created by all applications' do
-            instance_exec &index_setup
+          context 'with a sort param' do
+            let(:sort) { '-created_at,id' }
 
-            response 200, 'success' do
-              schema resource_schema_reference
+            get 'List Resources created by all applications' do
+              instance_exec &index_setup
 
-              let!(:expected_response) do
-                JSON.parse(
-                  Api::V1::ResourceSerializer.new(
-                    Resource.search('jumps', 'english').with_pg_search_highlight
-                  ).serialized_json
-                ).deep_symbolize_keys
+              response 200, 'success' do
+                schema resource_schema_reference
+
+                let!(:expected_response) do
+                  JSON.parse(
+                    Api::V1::ResourceSerializer.new(
+                      Resource.order(created_at: :desc, id: :asc)
+                              .search('jumps', 'english')
+                              .with_pg_search_highlight
+                    ).serialized_json
+                  ).deep_symbolize_keys
+                end
+                before do
+                  expect(Resource).to receive(:search).with('jumps', 'english').and_call_original
+                end
+
+                run_test! { |response| expect(response.body_hash).to eq expected_response }
               end
-              before do
-                expect(Resource).to receive(:search).with('jumps', 'english').and_call_original
-              end
+            end
+          end
 
-              run_test! { |response| expect(response.body_hash).to eq expected_response }
+          context 'with no sort param' do
+            get 'List Resources created by all applications' do
+              instance_exec &index_setup
+
+              response 200, 'success' do
+                schema resource_schema_reference
+
+                let!(:expected_response) do
+                  JSON.parse(
+                    Api::V1::ResourceSerializer.new(
+                      Resource.order(:created_at)
+                              .search('jumps', 'english')
+                              .with_pg_search_highlight
+                    ).serialized_json
+                  ).deep_symbolize_keys
+                end
+                before do
+                  expect(Resource).to receive(:search).with('jumps', 'english').and_call_original
+                end
+
+                run_test! { |response| expect(response.body_hash).to eq expected_response }
+              end
             end
           end
         end

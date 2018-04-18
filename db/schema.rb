@@ -83,9 +83,13 @@ ActiveRecord::Schema.define(version: 20180323181805) do
     t.datetime "updated_at", null: false
     t.index ["application_id"], name: "index_resources_on_application_id"
     t.index ["application_user_id"], name: "index_resources_on_application_user_id"
+    t.index ["created_at"], name: "index_resources_on_created_at"
     t.index ["format_id"], name: "index_resources_on_format_id"
     t.index ["language_id"], name: "index_resources_on_language_id"
+    t.index ["resource_type"], name: "index_resources_on_resource_type"
+    t.index ["title"], name: "index_resources_on_title"
     t.index ["tsvector"], name: "index_resources_on_tsvector", using: :gin
+    t.index ["updated_at"], name: "index_resources_on_updated_at"
     t.index ["uri", "application_id"], name: "index_resources_on_uri_and_application_id", unique: true
     t.index ["uuid", "application_id"], name: "index_resources_on_uuid_and_application_id", unique: true
   end

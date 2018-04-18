@@ -4,7 +4,18 @@ module Api
       before_action :can_modify!, only: [ :update, :destroy ]
 
       def index
-        resources = Resource.all
+        orders = params.fetch(:sort, '').gsub(/u?u?id/, 'uuid').split(',').map do |sort|
+          column, direction = if sort.starts_with?('-')
+            [ sort[1..-1].to_sym, :desc ]
+          else
+            [ sort.to_sym, :asc ]
+          end
+          next unless Resource::SORTABLE_COLUMNS.include? column
+
+          { column => direction }
+        end.compact
+        orders = [ { created_at: :asc } ] if orders.empty?
+        resources = Resource.order orders
 
         query = resource_filter_params[:query]
         unless query.nil?
