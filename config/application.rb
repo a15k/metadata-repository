@@ -25,5 +25,14 @@ module MetadataRepository
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
+
+    # Set the default cache store to Redis
+    # This setting cannot live in an initializer
+    # See https://github.com/rails/rails/issues/10908
+    redis_secrets = Rails.application.secrets.redis
+    config.cache_store = :redis_cache_store, {
+      url: redis_secrets[:url],
+      namespace: redis_secrets[:namespaces][:cache]
+    }
   end
 end

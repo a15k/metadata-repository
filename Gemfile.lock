@@ -77,6 +77,7 @@ GEM
       ruby2ruby (~> 2.4)
       ruby_parser (~> 3.10)
     hashdiff (0.3.7)
+    hiredis (0.6.1)
     i18n (1.0.1)
       concurrent-ruby (~> 1.0)
     json-schema (2.8.0)
@@ -145,6 +146,7 @@ GEM
     rb-fsevent (0.10.3)
     rb-inotify (0.9.10)
       ffi (>= 0.5.0, < 2)
+    redis (4.0.1)
     responders (2.4.0)
       actionpack (>= 4.2.0, < 5.3)
       railties (>= 4.2.0, < 5.3)
@@ -235,6 +237,7 @@ DEPENDENCIES
   faraday_middleware
   fast_jsonapi
   hairtrigger
+  hiredis
   listen (>= 3.0.5, < 3.2)
   oj
   oj_mimic_json
@@ -243,6 +246,7 @@ DEPENDENCIES
   puma (~> 3.7)
   rack-cors
   rails (~> 5.2.0)
+  redis (~> 4.0)
   responders
   rspec-rails
   rswag
