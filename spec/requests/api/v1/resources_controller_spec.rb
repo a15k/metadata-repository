@@ -37,16 +37,19 @@ RSpec.describe Api::V1::ResourcesController, type: :request do
     instance_exec :collection, &no_data_setup
     operationId 'getResources'
     parameter name: :'filter[query]',    in: :query, type: :string, required: false,
-              description: 'Query used for full text search on the Resources',
+              description: 'Query used for full text search on the Resources.' +
+                           ' If not specified, no results are returned.',
               schema: { type: :string },
               example: 'physics'
     parameter name: :'filter[language]', in: :query, type: :string, required: false,
-              description: 'Language used for full text search on the Resources',
+              description: 'Language used for full text search on the Resources.' +
+                           ' If not specified, only exact word matches will be returned.',
               schema: { type: :string },
               example: 'english'
     parameter name: :sort, in: :query, type: :string, required: false,
-              description: 'Comma-separated sort order for Resources;' +
-                           ' Prefix with - for descending order',
+              description: 'Comma-separated field names to sort Resources by.' +
+                           ' Prefix with - for descending order.' +
+                           ' If not specified, results are sorted by relevance instead.',
               schema: { type: :string },
               example: '-created_at,id'
   end
@@ -82,15 +85,11 @@ RSpec.describe Api::V1::ResourcesController, type: :request do
         get 'List Resources created by all applications' do
           instance_exec &index_setup
 
-          response 200, 'success' do
+          response 200, 'success (empty result)' do
             schema resource_schema_reference
 
             let!(:expected_response) do
-              JSON.parse(
-                Api::V1::ResourceSerializer.new(Resource.all).serialized_json
-              ).deep_symbolize_keys.tap do |expected|
-                expected[:data] = a_collection_containing_exactly *expected[:data]
-              end
+              JSON.parse(Api::V1::ResourceSerializer.new([]).serialized_json).deep_symbolize_keys
             end
 
             run_test! { |response| expect(response.body_hash).to match expected_response }
@@ -162,17 +161,14 @@ RSpec.describe Api::V1::ResourcesController, type: :request do
                 let!(:expected_response) do
                   JSON.parse(
                     Api::V1::ResourceSerializer.new(
-                      Resource.order(created_at: :desc, id: :asc)
-                              .search('lorem', 'simple')
-                              .with_pg_search_highlight
+                      Resource.search(query: 'lorem', order_by: sort).with_pg_search_highlight
                     ).serialized_json
                   ).deep_symbolize_keys
                 end
                 before do
-                  expect(Resource).to(
-                    receive(:order).with([ { created_at: :desc }, { uuid: :asc } ])
+                  expect(Resource).to receive(:search).with(
+                    query: 'lorem', language: nil, order_by: sort
                   ).and_call_original
-                  expect(Resource).to receive(:search).with('lorem', 'simple').and_call_original
                 end
 
                 run_test! { |response| expect(response.body_hash).to eq expected_response }
@@ -190,15 +186,14 @@ RSpec.describe Api::V1::ResourcesController, type: :request do
                 let!(:expected_response) do
                   JSON.parse(
                     Api::V1::ResourceSerializer.new(
-                      Resource.order(:created_at)
-                              .search('lorem', 'simple')
-                              .with_pg_search_highlight
+                      Resource.search(query: 'lorem').with_pg_search_highlight
                     ).serialized_json
                   ).deep_symbolize_keys
                 end
                 before do
-                  expect(Resource).to receive(:order).with([ created_at: :asc ]).and_call_original
-                  expect(Resource).to receive(:search).with('lorem', 'simple').and_call_original
+                  expect(Resource).to receive(:search).with(
+                    query: 'lorem', language: nil, order_by: nil
+                  ).and_call_original
                 end
 
                 run_test! { |response| expect(response.body_hash).to eq expected_response }
@@ -223,17 +218,18 @@ RSpec.describe Api::V1::ResourcesController, type: :request do
                 let!(:expected_response) do
                   JSON.parse(
                     Api::V1::ResourceSerializer.new(
-                      Resource.order(created_at: :desc, id: :asc)
-                              .search('jumps', 'english')
-                              .with_pg_search_highlight
+                      Resource.search(
+                        query: 'jumps', language: 'english', order_by: '-created_at,id'
+                      ).with_pg_search_highlight
                     ).serialized_json
                   ).deep_symbolize_keys
                 end
                 before do
                   expect(Resource).to(
-                    receive(:order).with([ { created_at: :desc }, { uuid: :asc } ])
-                  ).and_call_original
-                  expect(Resource).to receive(:search).with('jumps', 'english').and_call_original
+                    receive(:search).with(
+                      query: 'jumps', language: 'english', order_by: '-created_at,id'
+                    ).and_call_original
+                  )
                 end
 
                 run_test! { |response| expect(response.body_hash).to eq expected_response }
@@ -251,15 +247,14 @@ RSpec.describe Api::V1::ResourcesController, type: :request do
                 let!(:expected_response) do
                   JSON.parse(
                     Api::V1::ResourceSerializer.new(
-                      Resource.order(:created_at)
-                              .search('jumps', 'english')
-                              .with_pg_search_highlight
+                      Resource.search(query: 'jumps', language: 'english').with_pg_search_highlight
                     ).serialized_json
                   ).deep_symbolize_keys
                 end
                 before do
-                  expect(Resource).to receive(:order).with([ created_at: :asc ]).and_call_original
-                  expect(Resource).to receive(:search).with('jumps', 'english').and_call_original
+                  expect(Resource).to receive(:search).with(
+                    query: 'jumps', language: 'english', order_by: nil
+                  ).and_call_original
                 end
 
                 run_test! { |response| expect(response.body_hash).to eq expected_response }

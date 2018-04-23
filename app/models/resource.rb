@@ -46,7 +46,25 @@ class Resource < ApplicationRecord
 
   HIGHLIGHT_SEPARATOR = '&hellip;'
 
-  pg_search_scope :search, ->(query, language = nil) do
+  pg_search_scope :search, ->(query: nil, language: nil, order_by: nil) do
+    query ||= ''
+    language ||= 'simple'
+    order_by ||= ''
+
+    order_bys = order_by.gsub(/u?u?id/, 'uuid').split(',').map do |ob|
+      column, direction = if ob.starts_with?('-')
+        [ ob[1..-1], 'DESC' ]
+      else
+        [ ob, 'ASC' ]
+      end
+      next unless SORTABLE_COLUMNS.include? column
+
+      [ column, direction ]
+    end.compact
+    ranked_by = order_bys.empty? ? ':tsearch' : order_bys.map do |ob|
+      "\"resources\".\"#{ob.first}\" #{ob.second}"
+    end.join(', ')
+
     {
       query: query,
       against: { title: 'A', content: 'D' },
@@ -62,7 +80,8 @@ class Resource < ApplicationRecord
             FragmentDelimiter: " #{HIGHLIGHT_SEPARATOR} "
           }
         }
-      }
+      },
+      ranked_by: ranked_by
     }
   end
 

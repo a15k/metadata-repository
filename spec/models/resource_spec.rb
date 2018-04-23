@@ -53,30 +53,32 @@ RSpec.describe Resource, type: :model, vcr: VCR_OPTS do
     after(:all)  { DatabaseCleaner.clean }
 
     it 'returns Resources matching the given query, ordered by search rank' do
-      expect(Resource.search('lorem')).to eq [ @both_resource, @title_resource, @content_resource ]
+      expect(Resource.search(query: 'lorem')).to(
+        eq [ @both_resource, @title_resource, @content_resource ]
+      )
     end
 
     it 'can search using dictionaries for specific languages' do
       # "jumps" is normalized to "jump" by the english dictionary
-      expect(Resource.search('jumps')).to eq []
-      expect(Resource.search('jumps', 'english')).to eq [ @fox_and_dog_resource ]
+      expect(Resource.search(query: 'jumps')).to eq []
+      expect(Resource.search(query: 'jumps', language: 'english')).to eq [ @fox_and_dog_resource ]
 
-      expect(Resource.search('jump')).to eq [ @fox_and_dog_resource ]
-      expect(Resource.search('jump', 'english')).to eq [ @fox_and_dog_resource ]
+      expect(Resource.search(query: 'jump')).to eq [ @fox_and_dog_resource ]
+      expect(Resource.search(query: 'jump', language: 'english')).to eq [ @fox_and_dog_resource ]
     end
 
     it "defaults to 'simple' if the given language is invalid" do
-      expect(Resource.search('lorem', 'abc')).to eq Resource.search('lorem')
-      expect(Resource.search('jumps', '123')).to eq Resource.search('jumps')
+      expect(Resource.search(query: 'lorem', language: 'abc')).to eq Resource.search(query: 'lorem')
+      expect(Resource.search(query: 'jumps', language: '123')).to eq Resource.search(query: 'jumps')
     end
 
     it 'can highlight the searched terms within the original text' do
-      expect(Resource.search('lorem').with_pg_search_highlight.map(&:highlight)).to eq [
+      expect(Resource.search(query: 'lorem').with_pg_search_highlight.map(&:highlight)).to eq [
         '<b>Lorem</b> Ipsum <b>Lorem</b> Ipsum', '<b>Lorem</b> Ipsum None', '<b>Lorem</b> Ipsum'
       ]
 
       expect(
-        Resource.search('jump', 'english').with_pg_search_highlight.first.highlight
+        Resource.search(query: 'jump', language: 'english').with_pg_search_highlight.first.highlight
       ).to eq '&hellip; quick brown fox <b>jumps</b> over the lazy &hellip;'
     end
   end

@@ -1,30 +1,15 @@
 module Api
   module V1
     class ResourcesController < JsonApiController
+
       before_action :can_modify!, only: [ :update, :destroy ]
 
       def index
-        orders = params.fetch(:sort, '').gsub(/u?u?id/, 'uuid').split(',').map do |sort|
-          column, direction = if sort.starts_with?('-')
-            [ sort[1..-1].to_sym, :desc ]
-          else
-            [ sort.to_sym, :asc ]
-          end
-          next unless Resource::SORTABLE_COLUMNS.include? column
-
-          { column => direction }
-        end.compact
-        orders = [ { created_at: :asc } ] if orders.empty?
-        resources = Resource.order orders
-
-        query = resource_filter_params[:query]
-        unless query.nil?
-          language = resource_filter_params.fetch :language, 'simple'
-
-          resources = resources.search(query, language).with_pg_search_highlight
-        end
-
-        render_resource resources: resources
+        render_resource resources: Resource.search(
+          query: resource_filter_params[:query],
+          language: resource_filter_params[:language],
+          order_by: params[:sort]
+        ).with_pg_search_highlight
       end
 
       def show
