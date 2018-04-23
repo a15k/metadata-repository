@@ -1,7 +1,7 @@
 dist: trusty
 sudo: false
 language: ruby
-rvm: 2.3.6
+rvm: 2.5.1
 cache: bundler
 addons:
   postgresql: 9.6
