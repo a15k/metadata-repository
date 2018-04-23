@@ -57,11 +57,12 @@ class Resource < ApplicationRecord
       else
         [ ob, 'ASC' ]
       end
-      next unless SORTABLE_COLUMNS.include? column
+      next unless SORTABLE_COLUMNS.include? column.to_sym
 
       [ column, direction ]
     end.compact
-    ranked_by = order_bys.empty? ? ':tsearch' : order_bys.map do |ob|
+    ranked_by = order_bys.empty? ? ':tsearch' : 'NULL'
+    order_within_rank = order_bys.empty? ? '"resources"."id" ASC' : order_bys.map do |ob|
       "\"resources\".\"#{ob.first}\" #{ob.second}"
     end.join(', ')
 
@@ -81,7 +82,8 @@ class Resource < ApplicationRecord
           }
         }
       },
-      ranked_by: ranked_by
+      ranked_by: ranked_by,
+      order_within_rank: order_within_rank
     }
   end
 
