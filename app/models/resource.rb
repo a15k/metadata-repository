@@ -1,4 +1,13 @@
 class Resource < ApplicationRecord
+  SEARCH_EXPIRES_IN = 1.day
+
+  redis_secrets = Rails.application.secrets.redis
+  SEARCH_CACHE = ActiveSupport::Cache::RedisCacheStore.new(
+    url: redis_secrets[:url],
+    namespace: redis_secrets[:namespaces][:search],
+    expires_in: SEARCH_EXPIRES_IN
+  )
+
   SORTABLE_COLUMNS = [ :uuid, :uri, :resource_type, :title, :created_at, :updated_at ]
 
   TSVECTOR_UPDATE_SQL = <<-TSVECTOR_UPDATE_SQL.strip_heredoc
@@ -46,28 +55,14 @@ class Resource < ApplicationRecord
 
   HIGHLIGHT_SEPARATOR = '&hellip;'
 
-  pg_search_scope :search, ->(query: nil, language: nil, order_by: nil) do
-    query ||= ''
-    language ||= 'simple'
-    order_by ||= ''
-
-    order_bys = order_by.gsub(/u?u?id/, 'uuid').split(',').map do |ob|
-      column, direction = if ob.starts_with?('-')
-        [ ob[1..-1], 'DESC' ]
-      else
-        [ ob, 'ASC' ]
-      end
-      next unless SORTABLE_COLUMNS.include? column.to_sym
-
-      [ column, direction ]
-    end.compact
+  pg_search_scope :pg_search, ->(query:, language:, order_bys:) do
     ranked_by = order_bys.empty? ? ':tsearch' : 'NULL'
     order_within_rank = order_bys.empty? ? '"resources"."id" ASC' : order_bys.map do |ob|
-      "\"resources\".\"#{ob.first}\" #{ob.second}"
+      "\"resources\".#{ob}"
     end.join(', ')
 
     {
-      query: query,
+      query: query || '',
       against: { title: 'A', content: 'D' },
       using: {
         tsearch: {
@@ -85,6 +80,58 @@ class Resource < ApplicationRecord
       ranked_by: ranked_by,
       order_within_rank: order_within_rank
     }
+  end
+
+  scope :search, ->(query: nil, language: nil, order_by: nil, page: nil, per_page: nil) do
+    page ||= 1
+    per_page ||= 10
+
+    normalized_order_bys = (order_by || '').gsub(/u?u?id/, 'uuid').split(',').map do |ob|
+      column, direction = if ob.starts_with?('-')
+        [ ob[1..-1], 'DESC' ]
+      else
+        [ ob, 'ASC' ]
+      end
+      next unless SORTABLE_COLUMNS.include? column.to_sym
+
+      "\"#{column}\" #{direction}"
+    end.compact
+
+    skope = pg_search(query: query, language: language, order_bys: normalized_order_bys)
+              .with_pg_search_highlight
+
+    query = skope.tsearch.send :tsquery
+
+    # Cache the query so we save on this database round trip
+    tsquery = SEARCH_CACHE.fetch("queries/#{query}") { connection.execute("SELECT #{query}").first }
+
+    # Cache the search time so searches stay valid for some time
+    normalized_order_by_string = normalized_order_bys.join(', ')
+    time = SEARCH_CACHE.fetch("times/#{tsquery}/#{normalized_order_by_string}") { Time.current }
+    now = Time.current
+
+    # Check if the cached search is too old and should be expired
+    if now - time > SEARCH_EXPIRES_IN
+      time = now
+      SEARCH_CACHE.write "times/#{tsquery}/#{normalized_order_by_string}", time
+    end
+
+    # Cache the record ids
+    # This incurs IO costs for all disk pages in the query result
+    # If ordering by relevance (ts_rank), the ordering operation would also incur the same cost,
+    # so there's no way to optimize this without using indices that are not yet in Postgres core
+    # If ordering by some column, we could optimize this to only load the relevant records each time
+    ids = SEARCH_CACHE.fetch("ids/#{tsquery}/#{normalized_order_by_string}/#{time}") do
+      skope.pluck :id
+    end
+
+    # Apply pagination
+    start_index = (page - 1) * per_page
+    end_index = page * per_page - 1
+    ids_in_page = ids[start_index..end_index]
+
+    # Generate scope that will load records in the page
+    ids_in_page == ids ? skope : skope.where(id: ids_in_page)
   end
 
   has_many :metadatas,          dependent: :destroy, inverse_of: :resource
