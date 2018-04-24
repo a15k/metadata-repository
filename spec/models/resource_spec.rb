@@ -52,13 +52,13 @@ RSpec.describe Resource, type: :model, vcr: VCR_OPTS do
     end
     after(:all)  { DatabaseCleaner.clean }
 
-    it 'returns Resources matching the given query, ordered by search rank' do
+    it 'returns Resources matching the given query, ordered by relevance' do
       expect(Resource.search(query: 'lorem')).to(
         eq [ @both_resource, @title_resource, @content_resource ]
       )
     end
 
-    it 'can search using dictionaries for specific languages' do
+    it 'can use dictionaries for specific languages' do
       # "jumps" is normalized to "jump" by the english dictionary
       expect(Resource.search(query: 'jumps')).to eq []
       expect(Resource.search(query: 'jumps', language: 'english')).to eq [ @fox_and_dog_resource ]
@@ -67,12 +67,22 @@ RSpec.describe Resource, type: :model, vcr: VCR_OPTS do
       expect(Resource.search(query: 'jump', language: 'english')).to eq [ @fox_and_dog_resource ]
     end
 
-    it "defaults to 'simple' if the given language is invalid" do
+    it "defaults to 'simple' dictionary if the given language is invalid" do
       expect(Resource.search(query: 'lorem', language: 'abc')).to eq Resource.search(query: 'lorem')
       expect(Resource.search(query: 'jumps', language: '123')).to eq Resource.search(query: 'jumps')
     end
 
-    it 'can highlight the searched terms within the original text' do
+    it 'can return results in a specific order' do
+      expect(Resource.search(query: 'lorem', order_by: 'created_at,id')).to(
+        eq [ @title_resource, @content_resource, @both_resource ]
+      )
+
+      expect(Resource.search(query: 'lorem', order_by: '-created_at,id')).to(
+        eq [ @both_resource, @content_resource, @title_resource ]
+      )
+    end
+
+    it 'can highlight the query terms within the original text' do
       expect(Resource.search(query: 'lorem').with_pg_search_highlight.map(&:highlight)).to eq [
         '<b>Lorem</b> Ipsum <b>Lorem</b> Ipsum', '<b>Lorem</b> Ipsum None', '<b>Lorem</b> Ipsum'
       ]
