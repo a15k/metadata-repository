@@ -85,6 +85,7 @@ class Resource < ApplicationRecord
   scope :search, ->(query: nil, language: nil, order_by: nil, page: nil, per_page: nil) do
     page ||= 1
     per_page ||= 10
+    return none if page < 1 || per_page < 1
 
     normalized_order_bys = (order_by || '').gsub(/u?u?id/, 'uuid').split(',').map do |ob|
       column, direction = if ob.starts_with?('-')

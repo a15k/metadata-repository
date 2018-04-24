@@ -51,6 +51,7 @@ RSpec.describe Resource, type: :model, vcr: VCR_OPTS do
       )
     end
     after(:all)  { DatabaseCleaner.clean }
+    before       { Resource::SEARCH_CACHE.clear }
 
     it 'returns Resources matching the given query, ordered by relevance' do
       expect(Resource.search(query: 'lorem')).to(
@@ -79,6 +80,40 @@ RSpec.describe Resource, type: :model, vcr: VCR_OPTS do
 
       expect(Resource.search(query: 'lorem', order_by: '-created_at,id')).to(
         eq [ @both_resource, @content_resource, @title_resource ]
+      )
+    end
+
+    it 'can paginate the results' do
+      expect(Resource.search(query: 'lorem', page: 0, per_page: 0)).to eq []
+      expect(Resource.search(query: 'lorem', page: 1, per_page: 0)).to eq []
+
+      expect(Resource.search(query: 'lorem', order_by: 'created_at,id', page: 0, per_page: 1)).to(
+        eq []
+      )
+      expect(Resource.search(query: 'lorem', order_by: 'created_at,id', page: 1, per_page: 1)).to(
+        eq [ @title_resource ]
+      )
+      expect(Resource.search(query: 'lorem', order_by: 'created_at,id', page: 2, per_page: 1)).to(
+        eq [ @content_resource ]
+      )
+      expect(Resource.search(query: 'lorem', order_by: 'created_at,id', page: 3, per_page: 1)).to(
+        eq [ @both_resource ]
+      )
+      expect(Resource.search(query: 'lorem', order_by: 'created_at,id', page: 4, per_page: 1)).to(
+        eq []
+      )
+
+      expect(Resource.search(query: 'lorem', order_by: '-created_at,id', page: 0, per_page: 2)).to(
+        eq []
+      )
+      expect(Resource.search(query: 'lorem', order_by: '-created_at,id', page: 1, per_page: 2)).to(
+        eq [ @both_resource, @content_resource ]
+      )
+      expect(Resource.search(query: 'lorem', order_by: '-created_at,id', page: 2, per_page: 2)).to(
+        eq [ @title_resource ]
+      )
+      expect(Resource.search(query: 'lorem', order_by: '-created_at,id', page: 3, per_page: 2)).to(
+        eq []
       )
     end
 
