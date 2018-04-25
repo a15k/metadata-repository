@@ -7,6 +7,7 @@ RSpec.describe Metadata, type: :model do
   it { is_expected.to belong_to(:application_user) }
   it { is_expected.to belong_to(:resource) }
   it { is_expected.to belong_to(:format) }
+  it { is_expected.to belong_to(:language) }
 
   it { is_expected.to validate_presence_of(:uuid) }
   it { is_expected.to validate_presence_of(:value) }

@@ -2,10 +2,10 @@
 # While you can edit this file, any changes you make to the definitions here
 # will be undone by the next auto-generated trigger migration.
 
-class CreateTriggersResourcesInsertOrResourcesUpdate < ActiveRecord::Migration[5.2]
+class CreateTriggersMetadataInsertOrMetadataUpdate < ActiveRecord::Migration[5.2]
   def up
-    create_trigger("resources_before_insert_row_tr", :generated => true, :compatibility => 1).
-        on("resources").
+    create_trigger("metadata_before_insert_row_tr", :generated => true, :compatibility => 1).
+        on("metadata").
         before(:insert) do
       <<-SQL_ACTIONS
 NEW."tsvector" = (
@@ -20,17 +20,16 @@ NEW."tsvector" = (
       )::regconfig, 'simple'
     ) AS "regconfig"
   )
-  SELECT SETWEIGHT(TO_TSVECTOR("ts_config"."regconfig", COALESCE(NEW."title", '')), 'A') ||
-         SETWEIGHT(TO_TSVECTOR("ts_config"."regconfig", NEW."content"), 'D')
+  SELECT SETWEIGHT(TO_TSVECTOR("ts_config"."regconfig", NEW."value"), 'D')
   FROM "ts_config"
 );
       SQL_ACTIONS
     end
 
-    create_trigger("resources_before_update_of_title_content_row_tr", :generated => true, :compatibility => 1).
-        on("resources").
+    create_trigger("metadata_before_update_of_value_row_tr", :generated => true, :compatibility => 1).
+        on("metadata").
         before(:update).
-        of(:title, :content) do
+        of(:value) do
       <<-SQL_ACTIONS
 NEW."tsvector" = (
   WITH "ts_config" AS (
@@ -44,8 +43,7 @@ NEW."tsvector" = (
       )::regconfig, 'simple'
     ) AS "regconfig"
   )
-  SELECT SETWEIGHT(TO_TSVECTOR("ts_config"."regconfig", COALESCE(NEW."title", '')), 'A') ||
-         SETWEIGHT(TO_TSVECTOR("ts_config"."regconfig", NEW."content"), 'D')
+  SELECT SETWEIGHT(TO_TSVECTOR("ts_config"."regconfig", NEW."value"), 'D')
   FROM "ts_config"
 );
       SQL_ACTIONS
@@ -53,8 +51,8 @@ NEW."tsvector" = (
   end
 
   def down
-    drop_trigger("resources_before_insert_row_tr", "resources", :generated => true)
+    drop_trigger("metadata_before_insert_row_tr", "metadata", :generated => true)
 
-    drop_trigger("resources_before_update_of_title_content_row_tr", "resources", :generated => true)
+    drop_trigger("metadata_before_update_of_value_row_tr", "metadata", :generated => true)
   end
 end

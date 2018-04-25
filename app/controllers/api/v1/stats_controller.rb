@@ -55,7 +55,8 @@ module Api
         @stats_relationship_params ||= json_api_relationships.permit(
           :application_user_id,
           :resource_id,
-          :format_id
+          :format_id,
+          :language_id
         )
       end
 
@@ -67,6 +68,9 @@ module Api
           hash[:format] = Format.find_or_create_by!(
             name: stats_relationship_params[:format_id]
           ) if stats_relationship_params.has_key? :format_id
+          hash[:language] = Language.find_or_create_by!(
+            name: stats_relationship_params[:language_id]
+          ) if stats_relationship_params.has_key? :language_id
         end
       end
 

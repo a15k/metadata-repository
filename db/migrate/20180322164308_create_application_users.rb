@@ -1,4 +1,4 @@
-class CreateApplicationUsers < ActiveRecord::Migration[5.1]
+class CreateApplicationUsers < ActiveRecord::Migration[5.2]
   def change
     create_table :application_users do |t|
       t.uuid       :uuid,        null: false

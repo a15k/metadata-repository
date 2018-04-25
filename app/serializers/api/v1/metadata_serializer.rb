@@ -14,6 +14,7 @@ module Api
       belongs_to :application_user, id_method_name: :application_user_uuid
       belongs_to :resource,         id_method_name: :resource_uuid
       belongs_to :format,           id_method_name: :format_name
+      belongs_to :language,         id_method_name: :language_name
       required_relationships :application, :resource, :format
     end
   end

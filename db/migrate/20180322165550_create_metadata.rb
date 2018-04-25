@@ -1,4 +1,4 @@
-class CreateMetadata < ActiveRecord::Migration[5.1]
+class CreateMetadata < ActiveRecord::Migration[5.2]
   def change
     create_table :metadata do |t|
       t.references :application,      null: false,
@@ -8,8 +8,10 @@ class CreateMetadata < ActiveRecord::Migration[5.1]
                                       foreign_key: { on_update: :cascade, on_delete: :cascade }
       t.references :format,           null: false,
                                       foreign_key: { on_update: :cascade, on_delete: :cascade }
+      t.references :language,         foreign_key: { on_update: :cascade, on_delete: :nullify }
       t.uuid       :uuid,             null: false
       t.jsonb      :value,            null: false, index: { using: :gin }
+      t.tsvector   :tsvector,         null: false, index: { using: :gin }
 
       t.timestamps
     end

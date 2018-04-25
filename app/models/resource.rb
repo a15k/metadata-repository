@@ -1,4 +1,17 @@
 class Resource < ApplicationRecord
+  has_many :metadatas,          dependent: :destroy, inverse_of: :resource
+  has_many :stats,              dependent: :destroy, inverse_of: :resource
+
+  belongs_to :application,                           inverse_of: :resources
+  belongs_to :application_user, optional: true,      inverse_of: :resources
+  belongs_to :format,                                inverse_of: :resources
+  belongs_to :language,         optional: true,      inverse_of: :resources
+
+  before_validation :set_content
+
+  validates :uuid, :uri,              presence: true, uniqueness: { scope: :application_id }
+  validates :resource_type, :content, presence: true
+
   TSVECTOR_UPDATE_SQL = <<-TSVECTOR_UPDATE_SQL.strip_heredoc
     NEW."tsvector" = (
       WITH "ts_config" AS (
@@ -79,19 +92,6 @@ class Resource < ApplicationRecord
     # Generate scope that will load records in the page
     ids_in_page == ids ? skope : skope.where(id: ids_in_page)
   end
-
-  has_many :metadatas,          dependent: :destroy, inverse_of: :resource
-  has_many :stats,              dependent: :destroy, inverse_of: :resource
-
-  belongs_to :application,                           inverse_of: :resources
-  belongs_to :application_user, optional: true,      inverse_of: :resources
-  belongs_to :format,                                inverse_of: :resources
-  belongs_to :language,         optional: true,      inverse_of: :resources
-
-  before_validation :set_content
-
-  validates :uuid, :uri,              presence: true, uniqueness: { scope: :application_id }
-  validates :resource_type, :content, presence: true
 
   def set_content
     self.content ||= FaradayWithRedirects.get uri

@@ -4,6 +4,7 @@ FactoryBot.define do
     application_user
     application      { application_user.application }
     format
+    language
     uuid             { SecureRandom.uuid }
     value            { { 'test': true } }
   end
