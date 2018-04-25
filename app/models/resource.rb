@@ -1,15 +1,4 @@
 class Resource < ApplicationRecord
-  SEARCH_EXPIRES_IN = 1.day
-
-  redis_secrets = Rails.application.secrets.redis
-  SEARCH_CACHE = ActiveSupport::Cache::RedisCacheStore.new(
-    url: redis_secrets[:url],
-    namespace: redis_secrets[:namespaces][:search],
-    expires_in: SEARCH_EXPIRES_IN
-  )
-
-  SORTABLE_COLUMNS = [ :uuid, :uri, :resource_type, :title, :created_at, :updated_at ]
-
   TSVECTOR_UPDATE_SQL = <<-TSVECTOR_UPDATE_SQL.strip_heredoc
     NEW."tsvector" = (
       WITH "ts_config" AS (
@@ -32,55 +21,11 @@ class Resource < ApplicationRecord
   trigger.before(:insert)                      { TSVECTOR_UPDATE_SQL }
   trigger.before(:update).of(:title, :content) { TSVECTOR_UPDATE_SQL }
 
-  include PgSearch
+  include Search
 
-  VALID_TS_CONFIGS = %w(
-    simple
-    danish
-    dutch
-    english
-    finnish
-    french
-    german
-    hungarian
-    italian
-    norwegian
-    portuguese
-    romanian
-    russian
-    spanish
-    swedish
-    turkish
-  )
+  define_pg_search_scope against: { title: 'A', content: 'D' }
 
-  HIGHLIGHT_SEPARATOR = '&hellip;'
-
-  pg_search_scope :pg_search, ->(query:, language:, order_bys:) do
-    ranked_by = order_bys.empty? ? ':tsearch' : 'NULL'
-    order_within_rank = order_bys.empty? ? '"resources"."id" ASC' : order_bys.map do |ob|
-      "\"resources\".#{ob}"
-    end.join(', ')
-
-    {
-      query: query || '',
-      against: { title: 'A', content: 'D' },
-      using: {
-        tsearch: {
-          dictionary: VALID_TS_CONFIGS.include?(language) ? language : 'simple',
-          tsvector_column: 'tsvector',
-          negation: true,
-          highlight: {
-            MaxWords: 20,
-            MinWords: 10,
-            MaxFragments: 2,
-            FragmentDelimiter: " #{HIGHLIGHT_SEPARATOR} "
-          }
-        }
-      },
-      ranked_by: ranked_by,
-      order_within_rank: order_within_rank
-    }
-  end
+  SORTABLE_COLUMNS = [ :uuid, :uri, :resource_type, :title, :created_at, :updated_at ]
 
   scope :search, ->(query: nil, language: nil, order_by: nil, page: nil, per_page: nil) do
     page ||= 1
