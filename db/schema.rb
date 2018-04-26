@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_04_25_201543) do
+ActiveRecord::Schema.define(version: 2018_04_26_233432) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -154,8 +154,12 @@ BEGIN
           )::regconfig, 'simple'
         ) AS "regconfig"
       )
-      SELECT SETWEIGHT(TO_TSVECTOR("ts_config"."regconfig", NEW."value"), 'B')
-      FROM "ts_config"
+      SELECT
+        SETWEIGHT(TO_TSVECTOR("ts_config"."regconfig", COALESCE("resources"."title", '')), 'A') ||
+        SETWEIGHT(TO_TSVECTOR("ts_config"."regconfig", NEW."value"), 'B') ||
+        SETWEIGHT(TO_TSVECTOR("ts_config"."regconfig", "resources"."content"), 'C')
+      FROM "resources" CROSS JOIN "ts_config"
+      WHERE "resources"."id" = NEW."resource_id"
     );
     RETURN NEW;
 END;
@@ -184,8 +188,12 @@ BEGIN
           )::regconfig, 'simple'
         ) AS "regconfig"
       )
-      SELECT SETWEIGHT(TO_TSVECTOR("ts_config"."regconfig", NEW."value"), 'B')
-      FROM "ts_config"
+      SELECT
+        SETWEIGHT(TO_TSVECTOR("ts_config"."regconfig", COALESCE("resources"."title", '')), 'A') ||
+        SETWEIGHT(TO_TSVECTOR("ts_config"."regconfig", NEW."value"), 'B') ||
+        SETWEIGHT(TO_TSVECTOR("ts_config"."regconfig", "resources"."content"), 'C')
+      FROM "resources" CROSS JOIN "ts_config"
+      WHERE "resources"."id" = NEW."resource_id"
     );
     RETURN NEW;
 END;
@@ -276,8 +284,12 @@ BEGIN
           )::regconfig, 'simple'
         ) AS "regconfig"
       )
-      SELECT SETWEIGHT(TO_TSVECTOR("ts_config"."regconfig", NEW."value"), 'D')
-      FROM "ts_config"
+      SELECT
+        SETWEIGHT(TO_TSVECTOR("ts_config"."regconfig", COALESCE("resources"."title", '')), 'A') ||
+        SETWEIGHT(TO_TSVECTOR("ts_config"."regconfig", "resources"."content"), 'C') ||
+        SETWEIGHT(TO_TSVECTOR("ts_config"."regconfig", NEW."value"), 'D')
+      FROM "resources" CROSS JOIN "ts_config"
+      WHERE "resources"."id" = NEW."resource_id"
     );
     RETURN NEW;
 END;
@@ -306,8 +318,12 @@ BEGIN
           )::regconfig, 'simple'
         ) AS "regconfig"
       )
-      SELECT SETWEIGHT(TO_TSVECTOR("ts_config"."regconfig", NEW."value"), 'D')
-      FROM "ts_config"
+      SELECT
+        SETWEIGHT(TO_TSVECTOR("ts_config"."regconfig", COALESCE("resources"."title", '')), 'A') ||
+        SETWEIGHT(TO_TSVECTOR("ts_config"."regconfig", "resources"."content"), 'C') ||
+        SETWEIGHT(TO_TSVECTOR("ts_config"."regconfig", NEW."value"), 'D')
+      FROM "resources" CROSS JOIN "ts_config"
+      WHERE "resources"."id" = NEW."resource_id"
     );
     RETURN NEW;
 END;

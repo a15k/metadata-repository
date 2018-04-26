@@ -21,8 +21,12 @@ class Stats < ApplicationRecord
           )::regconfig, 'simple'
         ) AS "regconfig"
       )
-      SELECT SETWEIGHT(TO_TSVECTOR("ts_config"."regconfig", NEW."value"), 'D')
-      FROM "ts_config"
+      SELECT
+        SETWEIGHT(TO_TSVECTOR("ts_config"."regconfig", COALESCE("resources"."title", '')), 'A') ||
+        SETWEIGHT(TO_TSVECTOR("ts_config"."regconfig", "resources"."content"), 'C') ||
+        SETWEIGHT(TO_TSVECTOR("ts_config"."regconfig", NEW."value"), 'D')
+      FROM "resources" CROSS JOIN "ts_config"
+      WHERE "resources"."id" = NEW."resource_id"
     )
   TSVECTOR_UPDATE_SQL
 
