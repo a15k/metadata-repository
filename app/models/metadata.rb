@@ -21,7 +21,7 @@ class Metadata < ApplicationRecord
           )::regconfig, 'simple'
         ) AS "regconfig"
       )
-      SELECT SETWEIGHT(TO_TSVECTOR("ts_config"."regconfig", NEW."value"), 'D')
+      SELECT SETWEIGHT(TO_TSVECTOR("ts_config"."regconfig", NEW."value"), 'B')
       FROM "ts_config"
     )
   TSVECTOR_UPDATE_SQL

@@ -154,7 +154,7 @@ BEGIN
           )::regconfig, 'simple'
         ) AS "regconfig"
       )
-      SELECT SETWEIGHT(TO_TSVECTOR("ts_config"."regconfig", NEW."value"), 'D')
+      SELECT SETWEIGHT(TO_TSVECTOR("ts_config"."regconfig", NEW."value"), 'B')
       FROM "ts_config"
     );
     RETURN NEW;
@@ -184,7 +184,7 @@ BEGIN
           )::regconfig, 'simple'
         ) AS "regconfig"
       )
-      SELECT SETWEIGHT(TO_TSVECTOR("ts_config"."regconfig", NEW."value"), 'D')
+      SELECT SETWEIGHT(TO_TSVECTOR("ts_config"."regconfig", NEW."value"), 'B')
       FROM "ts_config"
     );
     RETURN NEW;
@@ -215,7 +215,7 @@ BEGIN
         ) AS "regconfig"
       )
       SELECT SETWEIGHT(TO_TSVECTOR("ts_config"."regconfig", COALESCE(NEW."title", '')), 'A') ||
-             SETWEIGHT(TO_TSVECTOR("ts_config"."regconfig", NEW."content"), 'D')
+             SETWEIGHT(TO_TSVECTOR("ts_config"."regconfig", NEW."content"), 'C')
       FROM "ts_config"
     );
     RETURN NEW;
@@ -246,7 +246,7 @@ BEGIN
         ) AS "regconfig"
       )
       SELECT SETWEIGHT(TO_TSVECTOR("ts_config"."regconfig", COALESCE(NEW."title", '')), 'A') ||
-             SETWEIGHT(TO_TSVECTOR("ts_config"."regconfig", NEW."content"), 'D')
+             SETWEIGHT(TO_TSVECTOR("ts_config"."regconfig", NEW."content"), 'C')
       FROM "ts_config"
     );
     RETURN NEW;
