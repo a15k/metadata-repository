@@ -9,7 +9,7 @@ module Api
           query: resource_filter_params[:query],
           language: resource_filter_params[:language],
           order_by: params[:sort]
-        ).with_pg_search_highlight
+        )
       end
 
       def show

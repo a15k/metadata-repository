@@ -29,10 +29,6 @@ class Metadata < ApplicationRecord
   trigger.before(:insert)            { TSVECTOR_UPDATE_SQL }
   trigger.before(:update).of(:value) { TSVECTOR_UPDATE_SQL }
 
-  include Search
-
-  define_pg_search_scope against: { value: 'D' }
-
   def application_uuid
     application.uuid
   end

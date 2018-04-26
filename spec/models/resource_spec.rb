@@ -118,12 +118,12 @@ RSpec.describe Resource, type: :model, vcr: VCR_OPTS do
     end
 
     it 'can highlight the query terms within the original text' do
-      expect(Resource.search(query: 'lorem').with_pg_search_highlight.map(&:highlight)).to eq [
+      expect(Resource.search(query: 'lorem').map(&:headline)).to eq [
         '<b>Lorem</b> Ipsum <b>Lorem</b> Ipsum', '<b>Lorem</b> Ipsum None', '<b>Lorem</b> Ipsum'
       ]
 
       expect(
-        Resource.search(query: 'jump', language: 'english').with_pg_search_highlight.first.highlight
+        Resource.search(query: 'jump', language: 'english').first.headline
       ).to eq '&hellip; quick brown fox <b>jumps</b> over the lazy &hellip;'
     end
   end

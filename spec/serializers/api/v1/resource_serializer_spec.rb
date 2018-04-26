@@ -12,7 +12,7 @@ RSpec.describe Api::V1::ResourceSerializer, type: :serializer do
     expect(data_hash[:type]).to eq :resource
     expect(data_hash[:attributes]).to eq(
       resource.attributes.symbolize_keys.slice(:uri, :resource_type, :title, :content)
-                                        .merge(highlight: nil)
+                                        .merge(headline: nil)
     )
   end
 

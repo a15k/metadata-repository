@@ -161,7 +161,7 @@ RSpec.describe Api::V1::ResourcesController, type: :request do
                 let!(:expected_response) do
                   JSON.parse(
                     Api::V1::ResourceSerializer.new(
-                      Resource.search(query: 'lorem', order_by: sort).with_pg_search_highlight
+                      Resource.search(query: 'lorem', order_by: sort)
                     ).serialized_json
                   ).deep_symbolize_keys
                 end
@@ -186,7 +186,7 @@ RSpec.describe Api::V1::ResourcesController, type: :request do
                 let!(:expected_response) do
                   JSON.parse(
                     Api::V1::ResourceSerializer.new(
-                      Resource.search(query: 'lorem').with_pg_search_highlight
+                      Resource.search(query: 'lorem')
                     ).serialized_json
                   ).deep_symbolize_keys
                 end
@@ -220,7 +220,7 @@ RSpec.describe Api::V1::ResourcesController, type: :request do
                     Api::V1::ResourceSerializer.new(
                       Resource.search(
                         query: 'jumps', language: 'english', order_by: '-created_at,id'
-                      ).with_pg_search_highlight
+                      )
                     ).serialized_json
                   ).deep_symbolize_keys
                 end
@@ -247,7 +247,7 @@ RSpec.describe Api::V1::ResourcesController, type: :request do
                 let!(:expected_response) do
                   JSON.parse(
                     Api::V1::ResourceSerializer.new(
-                      Resource.search(query: 'jumps', language: 'english').with_pg_search_highlight
+                      Resource.search(query: 'jumps', language: 'english')
                     ).serialized_json
                   ).deep_symbolize_keys
                 end

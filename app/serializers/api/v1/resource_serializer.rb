@@ -6,7 +6,7 @@ module Api
 
       set_id :uuid
 
-      attributes          :uri, :resource_type, :title, :content, :highlight
+      attributes          :uri, :resource_type, :title, :content, :headline
       required_attributes :uri, :resource_type, :content
 
       belongs_to :application,      id_method_name: :application_uuid

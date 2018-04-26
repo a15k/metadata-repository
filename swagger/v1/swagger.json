@@ -2140,7 +2140,7 @@
                                                         "resource_type": "assessment",
                                                         "title": "The fox and the dog",
                                                         "content": "The quick brown fox jumps over the lazy dog.",
-                                                        "highlight": "&hellip; quick brown fox <b>jumps</b> over the lazy &hellip;"
+                                                        "headline": "&hellip; quick brown fox <b>jumps</b> over the lazy &hellip;"
                                                     },
                                                     "relationships": {
                                                         "application": {
@@ -2301,7 +2301,7 @@
                                                     "resource_type": "assessment",
                                                     "title": null,
                                                     "content": "voluptas incidunt sint mollitia eos est molestias doloremque et harum",
-                                                    "highlight": null
+                                                    "headline": null
                                                 },
                                                 "relationships": {
                                                     "application": {
@@ -2481,7 +2481,7 @@
                                                     "resource_type": "assessment",
                                                     "title": null,
                                                     "content": "voluptas incidunt sint mollitia eos est molestias doloremque et harum",
-                                                    "highlight": null
+                                                    "headline": null
                                                 },
                                                 "relationships": {
                                                     "application": {
@@ -2622,7 +2622,7 @@
                                                     "resource_type": "assessment",
                                                     "title": null,
                                                     "content": "voluptas incidunt sint mollitia eos est molestias doloremque et harum",
-                                                    "highlight": null
+                                                    "headline": null
                                                 },
                                                 "relationships": {
                                                     "application": {
@@ -2763,7 +2763,7 @@
                                                     "resource_type": "assessment",
                                                     "title": null,
                                                     "content": "voluptas incidunt sint mollitia eos est molestias doloremque et harum",
-                                                    "highlight": null
+                                                    "headline": null
                                                 },
                                                 "relationships": {
                                                     "application": {
@@ -2937,7 +2937,7 @@
                                                     "resource_type": "assessment",
                                                     "title": null,
                                                     "content": "et accusamus quo quam pariatur id sequi voluptates eligendi provident",
-                                                    "highlight": null
+                                                    "headline": null
                                                 },
                                                 "relationships": {
                                                     "application": {
@@ -3126,7 +3126,7 @@
                                                     "resource_type": "assessment",
                                                     "title": null,
                                                     "content": "et accusamus quo quam pariatur id sequi voluptates eligendi provident",
-                                                    "highlight": null
+                                                    "headline": null
                                                 },
                                                 "relationships": {
                                                     "application": {
