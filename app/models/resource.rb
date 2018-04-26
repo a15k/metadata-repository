@@ -80,9 +80,9 @@ class Resource < ApplicationRecord
 
     # Generate query text
     config = sanitize VALID_TS_CONFIGS.include?(language) ? language : 'simple'
-    query_array = (query || '').split(/\s/)
+    query_array = (query || '').split(/\s/).map { |qq| "'#{sanitize qq}'" }
     query_array = query_array.map { |qq| "#{qq}:*" } if prefix
-    query_text = sanitize query_array.join(' & ')
+    query_text = "'#{query_array.join(' & ')}'"
     query_query = "#{config}, #{query_text}"
 
     # Cache the query so we save on this database round trip

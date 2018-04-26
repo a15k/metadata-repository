@@ -126,6 +126,20 @@ RSpec.describe Resource, type: :model, vcr: VCR_OPTS do
         Resource.search(query: 'jump', language: 'english').first.headline
       ).to eq '&hellip; quick brown fox <b>jumps</b> over the lazy &hellip;'
     end
+
+    it 'can search by metadatas and stats' do
+      FactoryBot.create :metadata, resource: @fox_and_dog_resource,
+                                   value: { book: 'Intro to Learning' }
+      FactoryBot.create :metadata, resource: @both_resource,
+                                   value: { book: 'Intro to Learning' }
+
+      expect(Resource.search(query: 'learning jumps')).to eq [ @fox_and_dog_resource ]
+
+      FactoryBot.create :stats, resource: @title_resource, value: { students: 'Few' }
+      FactoryBot.create :stats, resource: @both_resource,  value: { students: 'Many' }
+
+      expect(Resource.search(query: 'many lorem')).to eq [ @both_resource ]
+    end
   end
 
   context '#set_content' do
