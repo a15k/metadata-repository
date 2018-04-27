@@ -17,31 +17,5 @@ Rswag::Api.configure do |c|
         description: 'The metadata repository server'
       }
     ]
-
-    next unless swagger.has_key?('components') && swagger['components'].has_key?('schemas')
-
-    swagger['components']['schemas'].each_value do |definition|
-      next definition unless definition.has_key? '$ref'
-
-      definition['$ref'].sub! 'public', request.base_url
-    end
-
-    # Fix for swagger-ui bug: expects examples in the wrong place according to OAS 3.0
-    swagger['paths'].each_value do |path|
-      path.each_value do |operation|
-        operation['responses'].each_value do |response|
-          content = response['content']
-          content.each do |key, value|
-            next unless value.has_key? 'examples'
-
-            response['examples'] = value.delete('examples').transform_values! do |example|
-              example['value']
-            end
-
-            content.delete(key) if value.empty?
-          end
-        end
-      end
-    end
   end
 end
