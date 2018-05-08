@@ -1,6 +1,7 @@
 # Assessment Network Metadata Repository
 
 [![Build Status](https://travis-ci.org/a15k/metadata-repository.svg?branch=master)](https://travis-ci.org/a15k/metadata-repository)
+[![codecov](https://codecov.io/gh/a15k/metadata-repository/branch/master/graph/badge.svg)](https://codecov.io/gh/a15k/metadata-repository)
 
 Repository for assessment network metadata
 
