@@ -82,4 +82,7 @@ group :test do
 
   # Record and replay HTTP requests
   gem 'vcr'
+
+  # Codecov integration
+  gem 'codecov', require: false
 end
