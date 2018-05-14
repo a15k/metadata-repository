@@ -165,7 +165,9 @@ class Resource < ApplicationRecord
   end
 
   def set_content
-    self.content ||= FaradayWithRedirects.get uri
+    if uri.present?
+      self.content ||= FaradayWithRedirects.get uri
+    end
   end
 
   def application_uuid
