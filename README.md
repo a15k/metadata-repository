@@ -1,2 +1,28 @@
-# metadata-repository
-The repository for assessment metadata
+# Assessment Network Metadata Repository
+
+[![Build Status](https://travis-ci.org/a15k/metadata-repository.svg?branch=master)](https://travis-ci.org/a15k/metadata-repository)
+[![codecov](https://codecov.io/gh/a15k/metadata-repository/branch/master/graph/badge.svg)](https://codecov.io/gh/a15k/metadata-repository)
+
+Repository for assessment network metadata
+
+## Setup
+
+### Install Dependencies
+
+In the metadata repository's dir:
+```sh
+bundle install
+yarn install
+```
+
+### Create Dev Database
+
+In psql:
+```sql
+CREATE USER a15k_meta WITH SUPERUSER PASSWORD 'a15k_meta_secret_password';
+```
+
+In the metadata repository's dir:
+```sh
+rake db:setup
+```

@@ -1,0 +1,22 @@
+branches:
+  only: master
+sudo: false
+dist: trusty
+addons:
+  apt:
+    packages:
+      - postgresql-10
+      - postgresql-client-10
+  postgresql: 10
+env:
+  global:
+    - PGPORT=5433
+    - A15K_META_DB_PORT=5433
+    - A15K_META_DB_USERNAME=travis
+    - A15K_META_DB_PASSWORD=travis
+    - A15K_META_TEST_DB=travis
+language: ruby
+rvm: 2.5.1
+cache: bundler
+before_install: gem install bundler
+before_script: psql -c "ALTER USER travis WITH PASSWORD 'travis';"
