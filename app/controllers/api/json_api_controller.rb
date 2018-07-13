@@ -213,8 +213,10 @@ module Api
     def json_api_relationships
       ActionController::Parameters.new(
         {}.tap do |relationships|
-          json_api_data.require(:relationships).each do |rel, val|
-            relationships["#{rel}_id".to_sym] = val.nil? ? nil : val.dig(:data, :id)
+          if json_api_data[:relationships]
+            json_api_data.require(:relationships).each do |rel, val|
+              relationships["#{rel}_id".to_sym] = val.nil? ? nil : val.dig(:data, :id)
+            end
           end
         end
       )
