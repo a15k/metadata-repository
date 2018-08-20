@@ -54,17 +54,6 @@ task :install_secrets, [] do
     }))
   end
 
-  # Create the application for the mothership unless it exists; evaluate
-  # later if this is the best place for this
-
-  mothership_application_secrets = secrets.delete('mothership_application')
-
-  Application.find_or_create_by(
-    name: "a15k Mothership",
-    uuid: mothership_application_secrets['uuid'],
-    token: mothership_application_secrets['token']
-  )
-
   # Put the rest of the secrets into the secrets.yml file
 
   File.open(File.expand_path("config/secrets.yml"), "w") do |file|

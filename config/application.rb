@@ -34,5 +34,16 @@ module MetadataRepository
       url: redis_secrets[:url],
       namespace: redis_secrets[:namespaces][:cache]
     }
+
+    config.after_initialize do
+      # Make sure the mothership application exists if we have its secrets
+      mothership_application_secrets = Rails.application.secrets['mothership_application']
+
+      ::Application.find_or_create_by(
+        name: "a15k Mothership",
+        uuid: mothership_application_secrets[:uuid],
+        token: mothership_application_secrets[:token]
+      ) if mothership_application_secrets.present?
+    end
   end
 end
