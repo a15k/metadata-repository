@@ -221,5 +221,9 @@ module Api
         end
       )
     end
+
+    def filter_params
+      params.fetch(:filter, {}).permit(:query, :language)
+    end
   end
 end

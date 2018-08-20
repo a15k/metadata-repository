@@ -4,6 +4,18 @@ RSpec.describe 'stats API V1 routes', type: :routing do
   let(:resource_uuid) { SecureRandom.uuid }
   let(:stats_uuid)    { SecureRandom.uuid }
 
+  context 'GET /api/search' do
+    it 'routes to api/v1/stats#search.json' do
+      expect(get: "/api/stats").to(
+        route_to(
+          controller: 'api/v1/stats',
+          action: 'search',
+          format: :json
+        )
+      )
+    end
+  end
+
   context 'GET /api/resources/:resource_uuid/stats' do
     it 'routes to api/v1/stats#index.json' do
       expect(get: "/api/resources/#{resource_uuid}/stats").to(

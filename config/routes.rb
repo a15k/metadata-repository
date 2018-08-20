@@ -24,6 +24,10 @@ Rails.application.routes.draw do
 
         post :/, action: :create, on: :member
       end
+
+      get :metadatas, controller: :metadatas, action: :search
+
+      get :stats,     controller: :stats,     action: :search
     end
   end
 end

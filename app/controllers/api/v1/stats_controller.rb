@@ -3,6 +3,14 @@ module Api
     class StatsController < JsonApiController
       before_action :can_modify!, only: [ :update, :destroy ]
 
+      def search
+        render_stats stats: Stats.search(
+          query: filter_params[:query],
+          language: filter_params[:language],
+          order_by: params[:sort]
+        ).preload(:resource)
+      end
+
       def index
         render_stats stats: resource.same_resource_uuid_stats
       end

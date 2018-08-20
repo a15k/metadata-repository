@@ -3,6 +3,14 @@ module Api
     class MetadatasController < JsonApiController
       before_action :can_modify!, only: [ :update, :destroy ]
 
+      def search
+        render_metadata metadatas: Metadata.search(
+          query: filter_params[:query],
+          language: filter_params[:language],
+          order_by: params[:sort]
+        ).preload(:resource)
+      end
+
       def index
         render_metadata metadatas: resource.same_resource_uuid_metadatas
       end

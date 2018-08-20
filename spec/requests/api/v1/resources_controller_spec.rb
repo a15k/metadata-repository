@@ -35,7 +35,7 @@ RSpec.describe Api::V1::ResourcesController, type: :request do
 
   index_setup = -> do
     instance_exec :collection, &no_data_setup
-    operationId 'getResources'
+    operationId 'searchResources'
     parameter name: :'filter[query]',    in: :query, type: :string, required: false,
               description: 'Query used for full text search on the Resources.' +
                            ' If not specified, no results are returned.',

@@ -6,8 +6,8 @@ module Api
 
       def index
         render_resource resources: Resource.search(
-          query: resource_filter_params[:query],
-          language: resource_filter_params[:language],
+          query: filter_params[:query],
+          language: filter_params[:language],
           order_by: params[:sort]
         )
       end
@@ -35,10 +35,6 @@ module Api
       end
 
       protected
-
-      def resource_filter_params
-        params.permit(filter: [ :query, :language ]).fetch(:filter, {})
-      end
 
       def resource
         @resource ||= Resource.find_by(application: current_application, uuid: path_id_param) ||

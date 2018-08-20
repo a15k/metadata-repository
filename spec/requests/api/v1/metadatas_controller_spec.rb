@@ -48,6 +48,26 @@ RSpec.describe Api::V1::MetadatasController, type: :request do
     parameter name: :metadata, in: :body, schema: metadata_schema_reference
   end
 
+  search_setup = -> do
+    instance_exec :collection, &no_data_setup
+    operationId 'searchMetadatas'
+    parameter name: :'filter[query]',    in: :query, type: :string, required: false,
+              description: 'Query used for full text search on the Metadatas.' +
+                           ' If not specified, no results are returned.',
+              schema: { type: :string },
+              example: 'physics'
+    parameter name: :'filter[language]', in: :query, type: :string, required: false,
+              description: 'Language used for full text search on the Metadatas.' +
+                           ' If not specified, only exact word matches will be returned.',
+              schema: { type: :string },
+              example: 'english'
+    parameter name: :sort, in: :query, type: :string, required: false,
+              description: 'Comma-separated field names to sort Metadatas by.' +
+                           ' Prefix with - for descending order.' +
+                           ' If not specified, results are sorted by relevance instead.',
+              schema: { type: :string },
+              example: '-created_at,id'
+  end
   create_member_setup = -> do
     instance_exec :member, &data_setup
     operationId 'createResourceMetadataWithId'
@@ -71,6 +91,200 @@ RSpec.describe Api::V1::MetadatasController, type: :request do
   context 'with valid Accept and API token headers' do
     let(:Accept)                                         { CONTENT_TYPE }
     let(Api::JsonApiController::API_TOKEN_HEADER.to_sym) { @application.token }
+
+    path '/metadatas' do
+      context 'with no filter param' do
+        get 'List Resources created by all applications and their Metadatas' do
+          instance_exec &search_setup
+
+          response 200, 'success (empty result)' do
+            schema metadata_schema_reference
+
+            let!(:expected_response) do
+              JSON.parse(Api::V1::MetadataSerializer.new([]).serialized_json).deep_symbolize_keys
+            end
+
+            run_test! { |response| expect(response.body_hash).to match expected_response }
+          end
+        end
+      end
+
+      context 'with a filter param' do
+        before(:all) do
+          DatabaseCleaner.start
+
+          simple  = FactoryBot.create :language, name: 'simple'
+          english = FactoryBot.create :language, name: 'english'
+
+          all_queries = [ 'lorem', 'jumps', 'jump', 'jumping', 'jumped' ]
+          [ @resource, @other_application_resource ] + 10.times.map do
+            FactoryBot.create :resource, application: @application, language: simple
+          end.each do |resource|
+            if all_queries.any? do |query|
+              resource.content.downcase.include?(query) || (
+                !resource.title.nil? && resource.title.downcase.include?(query)
+              )
+            end
+              resource.destroy
+            else
+              FactoryBot.create :metadata, resource: resource
+            end
+          end
+
+          @title_resource = FactoryBot.create(
+            :resource, application: @application,
+                       title: 'Lorem Ipsum',
+                       content: 'None',
+                       language: simple
+          )
+          @content_resource = FactoryBot.create(
+            :resource, application: @application,
+                       title: nil,
+                       content: 'Lorem Ipsum',
+                       language: simple
+          )
+          @both_resource = FactoryBot.create(
+            :resource, application: @application,
+                       title: 'Lorem Ipsum',
+                       content: 'Lorem Ipsum',
+                       language: simple
+          )
+          @fox_and_dog_resource = FactoryBot.create(
+            :resource, application: @application,
+                       title: 'The fox and the dog',
+                       content: 'The quick brown fox jumps over the lazy dog.',
+                       language: english
+          )
+          [
+            @title_resource, @content_resource, @both_resource, @fox_and_dog_resource
+          ].each do |resource|
+            FactoryBot.create :metadata, resource: resource
+          end
+        end
+        after(:all) do
+          DatabaseCleaner.clean
+
+          @resource.reload
+        end
+
+        context 'with no language param' do
+          let(:'filter[query]') { 'lorem' }
+
+          context 'with a sort param' do
+            let(:sort) { '-created_at,id' }
+
+            get 'List Resources created by all applications and their Metadatas' do
+              instance_exec &search_setup
+
+              response 200, 'success' do
+                schema metadata_schema_reference
+
+                let!(:expected_response) do
+                  JSON.parse(
+                    Api::V1::MetadataSerializer.new(
+                      Metadata.search(query: 'lorem', order_by: sort)
+                    ).serialized_json
+                  ).deep_symbolize_keys
+                end
+                before do
+                  expect(Metadata).to receive(:search).with(
+                    query: 'lorem', language: nil, order_by: sort
+                  ).and_call_original
+                end
+
+                run_test! { |response| expect(response.body_hash).to eq expected_response }
+              end
+            end
+          end
+
+          context 'with no sort param' do
+            get 'List Resources created by all applications and their Metadatas' do
+              instance_exec &search_setup
+
+              response 200, 'success' do
+                schema metadata_schema_reference
+
+                let!(:expected_response) do
+                  JSON.parse(
+                    Api::V1::MetadataSerializer.new(
+                      Metadata.search(query: 'lorem')
+                    ).serialized_json
+                  ).deep_symbolize_keys
+                end
+                before do
+                  expect(Metadata).to receive(:search).with(
+                    query: 'lorem', language: nil, order_by: nil
+                  ).and_call_original
+                end
+
+                run_test! { |response| expect(response.body_hash).to eq expected_response }
+              end
+            end
+          end
+        end
+
+        context 'with a language param' do
+          let(:'filter[query]')    { 'jumps' }
+          let(:'filter[language]') { 'english' }
+
+          context 'with a sort param' do
+            let(:sort) { '-created_at,id' }
+
+            get 'List Resources created by all applications and their Metadatas' do
+              instance_exec &search_setup
+
+              response 200, 'success' do
+                schema metadata_schema_reference
+
+                let!(:expected_response) do
+                  JSON.parse(
+                    Api::V1::MetadataSerializer.new(
+                      Metadata.search(
+                        query: 'jumps', language: 'english', order_by: '-created_at,id'
+                      )
+                    ).serialized_json
+                  ).deep_symbolize_keys
+                end
+                before do
+                  expect(Metadata).to(
+                    receive(:search).with(
+                      query: 'jumps', language: 'english', order_by: '-created_at,id'
+                    ).and_call_original
+                  )
+                end
+
+                run_test! { |response| expect(response.body_hash).to eq expected_response }
+              end
+            end
+          end
+
+          context 'with no sort param' do
+            get 'List Resources created by all applications and their Metadatas' do
+              instance_exec &search_setup
+
+              response 200, 'success' do
+                schema metadata_schema_reference
+
+                let!(:expected_response) do
+                  JSON.parse(
+                    Api::V1::MetadataSerializer.new(
+                      Metadata.search(query: 'jumps', language: 'english')
+                    ).serialized_json
+                  ).deep_symbolize_keys
+                end
+                before do
+                  expect(Metadata).to receive(:search).with(
+                    query: 'jumps', language: 'english', order_by: nil
+                  ).and_call_original
+                end
+
+                run_test! { |response| expect(response.body_hash).to eq expected_response }
+              end
+            end
+          end
+        end
+      end
+    end
 
     path '/resources/{resource_id}/metadatas' do
       get 'List Metadatas created by all applications for the given Resource' do
