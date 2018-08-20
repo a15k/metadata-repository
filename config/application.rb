@@ -39,11 +39,15 @@ module MetadataRepository
       # Make sure the mothership application exists if we have its secrets
       mothership_application_secrets = Rails.application.secrets['mothership_application']
 
-      ::Application.find_or_create_by(
-        name: "a15k Mothership",
-        uuid: mothership_application_secrets[:uuid],
-        token: mothership_application_secrets[:token]
-      ) if mothership_application_secrets.present?
+      begin
+        ::Application.find_or_create_by(
+          name: "a15k Mothership",
+          uuid: mothership_application_secrets[:uuid],
+          token: mothership_application_secrets[:token]
+        ) if mothership_application_secrets.present?
+      rescue ActiveRecord::StatementInvalid, ActiveRecord::NoDatabaseError => ee
+        # Likely because database not yet created, all good
+      end
     end
   end
 end
