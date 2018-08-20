@@ -19,7 +19,7 @@ module Api
       def create
         @resource = Resource.create! resource_create_params
 
-        render_resource status: 201
+        render_resource status: :created
       end
 
       def update
@@ -88,7 +88,7 @@ module Api
         )
       end
 
-      def render_resource(resources: resource, status: 200)
+      def render_resource(resources: resource, status: :ok)
         render json: ResourceSerializer.new(resources).serializable_hash, status: status
       end
     end
