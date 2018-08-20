@@ -12,7 +12,7 @@ module Api
       def create
         @application_user = ApplicationUser.create! application_user_create_params
 
-        render_application_user status: 201
+        render_application_user status: :created
       end
 
       def update
@@ -49,7 +49,7 @@ module Api
         )
       end
 
-      def render_application_user(application_users: application_user, status: 200)
+      def render_application_user(application_users: application_user, status: :ok)
         render json: ApplicationUserSerializer.new(application_users).serializable_hash,
                status: status
       end

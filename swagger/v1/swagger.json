@@ -57,7 +57,7 @@
                     "status": "400",
                     "code": "missing_api_token",
                     "title": "Missing api token",
-                    "detail": "No API token was provided in the Metadata-Api-Token header."
+                    "detail": "No API token was provided in the Authorization header."
                   }
                 ]
               }
@@ -79,7 +79,7 @@
                     "status": "403",
                     "code": "invalid_api_token",
                     "title": "Invalid api token",
-                    "detail": "The API token provided in the Metadata-Api-Token header (12d331b818e8d7907287f4e6150f2258bcc2ebe6f9e70d3cda8e831d6a701936) is invalid."
+                    "detail": "The API token provided in the Authorization header (12d331b818e8d7907287f4e6150f2258bcc2ebe6f9e70d3cda8e831d6a701936) is invalid."
                   }
                 ]
               }
@@ -204,7 +204,7 @@
         ],
         "parameters": [
           {
-            "name": "Metadata-Api-Token",
+            "name": "Authorization",
             "in": "header",
             "required": true,
             "schema": {
@@ -242,7 +242,7 @@
             "required": true
           },
           {
-            "name": "Metadata-Api-Token",
+            "name": "Authorization",
             "in": "header",
             "required": true,
             "schema": {
@@ -293,7 +293,7 @@
                     "status": "400",
                     "code": "missing_api_token",
                     "title": "Missing api token",
-                    "detail": "No API token was provided in the Metadata-Api-Token header."
+                    "detail": "No API token was provided in the Authorization header."
                   }
                 ]
               }
@@ -315,7 +315,7 @@
                     "status": "403",
                     "code": "invalid_api_token",
                     "title": "Invalid api token",
-                    "detail": "The API token provided in the Metadata-Api-Token header (7f97b3063e2fbe52d26d3be2309db4e73abdf3623a37d9d69e7de46efd3464cf) is invalid."
+                    "detail": "The API token provided in the Authorization header (7f97b3063e2fbe52d26d3be2309db4e73abdf3623a37d9d69e7de46efd3464cf) is invalid."
                   }
                 ]
               }
@@ -352,7 +352,7 @@
             "required": true
           },
           {
-            "name": "Metadata-Api-Token",
+            "name": "Authorization",
             "in": "header",
             "required": true,
             "schema": {
@@ -403,7 +403,7 @@
                     "status": "400",
                     "code": "missing_api_token",
                     "title": "Missing api token",
-                    "detail": "No API token was provided in the Metadata-Api-Token header."
+                    "detail": "No API token was provided in the Authorization header."
                   }
                 ]
               }
@@ -425,7 +425,7 @@
                     "status": "403",
                     "code": "invalid_api_token",
                     "title": "Invalid api token",
-                    "detail": "The API token provided in the Metadata-Api-Token header (e0a3ca9f2b44c945ba25e669bc649e157923b0cb2829ad1329fff86fbbd117b8) is invalid."
+                    "detail": "The API token provided in the Authorization header (e0a3ca9f2b44c945ba25e669bc649e157923b0cb2829ad1329fff86fbbd117b8) is invalid."
                   }
                 ]
               }
@@ -462,7 +462,7 @@
             "required": true
           },
           {
-            "name": "Metadata-Api-Token",
+            "name": "Authorization",
             "in": "header",
             "required": true,
             "schema": {
@@ -595,7 +595,7 @@
             }
           },
           {
-            "name": "Metadata-Api-Token",
+            "name": "Authorization",
             "in": "header",
             "required": true,
             "schema": {
@@ -724,7 +724,7 @@
             }
           },
           {
-            "name": "Metadata-Api-Token",
+            "name": "Authorization",
             "in": "header",
             "required": true,
             "schema": {
@@ -857,7 +857,7 @@
             "required": true
           },
           {
-            "name": "Metadata-Api-Token",
+            "name": "Authorization",
             "in": "header",
             "required": true,
             "schema": {
@@ -939,7 +939,7 @@
                     "status": "400",
                     "code": "missing_api_token",
                     "title": "Missing api token",
-                    "detail": "No API token was provided in the Metadata-Api-Token header."
+                    "detail": "No API token was provided in the Authorization header."
                   }
                 ]
               }
@@ -961,7 +961,7 @@
                     "status": "403",
                     "code": "invalid_api_token",
                     "title": "Invalid api token",
-                    "detail": "The API token provided in the Metadata-Api-Token header (3be76e064e9c47bf6efbb6632ea7029e07ea6d4c2070864a7ac4b791ea596887) is invalid."
+                    "detail": "The API token provided in the Authorization header (3be76e064e9c47bf6efbb6632ea7029e07ea6d4c2070864a7ac4b791ea596887) is invalid."
                   }
                 ]
               }
@@ -998,7 +998,7 @@
             "required": true
           },
           {
-            "name": "Metadata-Api-Token",
+            "name": "Authorization",
             "in": "header",
             "required": true,
             "schema": {
@@ -1175,7 +1175,7 @@
             "required": true
           },
           {
-            "name": "Metadata-Api-Token",
+            "name": "Authorization",
             "in": "header",
             "required": true,
             "schema": {
@@ -1255,7 +1255,7 @@
                     "status": "400",
                     "code": "missing_api_token",
                     "title": "Missing api token",
-                    "detail": "No API token was provided in the Metadata-Api-Token header."
+                    "detail": "No API token was provided in the Authorization header."
                   }
                 ]
               }
@@ -1277,7 +1277,7 @@
                     "status": "403",
                     "code": "invalid_api_token",
                     "title": "Invalid api token",
-                    "detail": "The API token provided in the Metadata-Api-Token header (34ab3fbeb862db28f6485c489e987e18055b1b3c7b92a32933c39357d5fd5340) is invalid."
+                    "detail": "The API token provided in the Authorization header (34ab3fbeb862db28f6485c489e987e18055b1b3c7b92a32933c39357d5fd5340) is invalid."
                   }
                 ]
               }
@@ -1325,7 +1325,7 @@
             "required": true
           },
           {
-            "name": "Metadata-Api-Token",
+            "name": "Authorization",
             "in": "header",
             "required": true,
             "schema": {
@@ -1405,7 +1405,7 @@
                     "status": "400",
                     "code": "missing_api_token",
                     "title": "Missing api token",
-                    "detail": "No API token was provided in the Metadata-Api-Token header."
+                    "detail": "No API token was provided in the Authorization header."
                   }
                 ]
               }
@@ -1427,7 +1427,7 @@
                     "status": "403",
                     "code": "invalid_api_token",
                     "title": "Invalid api token",
-                    "detail": "The API token provided in the Metadata-Api-Token header (d90dce9cb82ca2797a90e93c380e21afdb7bc9b5301648d312cacc9d6b5ea6c8) is invalid."
+                    "detail": "The API token provided in the Authorization header (d90dce9cb82ca2797a90e93c380e21afdb7bc9b5301648d312cacc9d6b5ea6c8) is invalid."
                   }
                 ]
               }
@@ -1475,7 +1475,7 @@
             "required": true
           },
           {
-            "name": "Metadata-Api-Token",
+            "name": "Authorization",
             "in": "header",
             "required": true,
             "schema": {
@@ -1650,7 +1650,7 @@
             "required": true
           },
           {
-            "name": "Metadata-Api-Token",
+            "name": "Authorization",
             "in": "header",
             "required": true,
             "schema": {
@@ -1844,7 +1844,7 @@
             "required": true
           },
           {
-            "name": "Metadata-Api-Token",
+            "name": "Authorization",
             "in": "header",
             "required": true,
             "schema": {
@@ -2086,7 +2086,7 @@
                     "status": "400",
                     "code": "missing_api_token",
                     "title": "Missing api token",
-                    "detail": "No API token was provided in the Metadata-Api-Token header."
+                    "detail": "No API token was provided in the Authorization header."
                   }
                 ]
               }
@@ -2108,7 +2108,7 @@
                     "status": "403",
                     "code": "invalid_api_token",
                     "title": "Invalid api token",
-                    "detail": "The API token provided in the Metadata-Api-Token header (ca11fd964d314aabf12b17527ce893db2ce7e959f0d8ed01c6b68f2de31f94c5) is invalid."
+                    "detail": "The API token provided in the Authorization header (ca11fd964d314aabf12b17527ce893db2ce7e959f0d8ed01c6b68f2de31f94c5) is invalid."
                   }
                 ]
               }
@@ -2152,7 +2152,7 @@
             "example": "-created_at,id"
           },
           {
-            "name": "Metadata-Api-Token",
+            "name": "Authorization",
             "in": "header",
             "required": true,
             "schema": {
@@ -2298,7 +2298,7 @@
         ],
         "parameters": [
           {
-            "name": "Metadata-Api-Token",
+            "name": "Authorization",
             "in": "header",
             "required": true,
             "schema": {
@@ -2336,7 +2336,7 @@
             "required": true
           },
           {
-            "name": "Metadata-Api-Token",
+            "name": "Authorization",
             "in": "header",
             "required": true,
             "schema": {
@@ -2412,7 +2412,7 @@
                     "status": "400",
                     "code": "missing_api_token",
                     "title": "Missing api token",
-                    "detail": "No API token was provided in the Metadata-Api-Token header."
+                    "detail": "No API token was provided in the Authorization header."
                   }
                 ]
               }
@@ -2434,7 +2434,7 @@
                     "status": "403",
                     "code": "invalid_api_token",
                     "title": "Invalid api token",
-                    "detail": "The API token provided in the Metadata-Api-Token header (3937c93c507b84079ece5b1ff360b73f1424244f2e0bb5996be2329b8f52b8f6) is invalid."
+                    "detail": "The API token provided in the Authorization header (3937c93c507b84079ece5b1ff360b73f1424244f2e0bb5996be2329b8f52b8f6) is invalid."
                   }
                 ]
               }
@@ -2471,7 +2471,7 @@
             "required": true
           },
           {
-            "name": "Metadata-Api-Token",
+            "name": "Authorization",
             "in": "header",
             "required": true,
             "schema": {
@@ -2547,7 +2547,7 @@
                     "status": "400",
                     "code": "missing_api_token",
                     "title": "Missing api token",
-                    "detail": "No API token was provided in the Metadata-Api-Token header."
+                    "detail": "No API token was provided in the Authorization header."
                   }
                 ]
               }
@@ -2569,7 +2569,7 @@
                     "status": "403",
                     "code": "invalid_api_token",
                     "title": "Invalid api token",
-                    "detail": "The API token provided in the Metadata-Api-Token header (c653204ba0a1bf18e0f975aa9bfbe81a7cbb6e80ae50a3868efc15a2c12abebc) is invalid."
+                    "detail": "The API token provided in the Authorization header (c653204ba0a1bf18e0f975aa9bfbe81a7cbb6e80ae50a3868efc15a2c12abebc) is invalid."
                   }
                 ]
               }
@@ -2606,7 +2606,7 @@
             "required": true
           },
           {
-            "name": "Metadata-Api-Token",
+            "name": "Authorization",
             "in": "header",
             "required": true,
             "schema": {
@@ -2772,7 +2772,7 @@
             "required": true
           },
           {
-            "name": "Metadata-Api-Token",
+            "name": "Authorization",
             "in": "header",
             "required": true,
             "schema": {
@@ -2951,7 +2951,7 @@
             "required": true
           },
           {
-            "name": "Metadata-Api-Token",
+            "name": "Authorization",
             "in": "header",
             "required": true,
             "schema": {
@@ -3132,7 +3132,7 @@
             "required": true
           },
           {
-            "name": "Metadata-Api-Token",
+            "name": "Authorization",
             "in": "header",
             "required": true,
             "schema": {
@@ -3214,7 +3214,7 @@
                     "status": "400",
                     "code": "missing_api_token",
                     "title": "Missing api token",
-                    "detail": "No API token was provided in the Metadata-Api-Token header."
+                    "detail": "No API token was provided in the Authorization header."
                   }
                 ]
               }
@@ -3236,7 +3236,7 @@
                     "status": "403",
                     "code": "invalid_api_token",
                     "title": "Invalid api token",
-                    "detail": "The API token provided in the Metadata-Api-Token header (995eb5023bb7a07e95ef062d2c1491bc438102341b7de487bc30129262461879) is invalid."
+                    "detail": "The API token provided in the Authorization header (995eb5023bb7a07e95ef062d2c1491bc438102341b7de487bc30129262461879) is invalid."
                   }
                 ]
               }
@@ -3273,7 +3273,7 @@
             "required": true
           },
           {
-            "name": "Metadata-Api-Token",
+            "name": "Authorization",
             "in": "header",
             "required": true,
             "schema": {
@@ -3450,7 +3450,7 @@
             "required": true
           },
           {
-            "name": "Metadata-Api-Token",
+            "name": "Authorization",
             "in": "header",
             "required": true,
             "schema": {
@@ -3530,7 +3530,7 @@
                     "status": "400",
                     "code": "missing_api_token",
                     "title": "Missing api token",
-                    "detail": "No API token was provided in the Metadata-Api-Token header."
+                    "detail": "No API token was provided in the Authorization header."
                   }
                 ]
               }
@@ -3552,7 +3552,7 @@
                     "status": "403",
                     "code": "invalid_api_token",
                     "title": "Invalid api token",
-                    "detail": "The API token provided in the Metadata-Api-Token header (979ee81cc55704836846ef672a505cc303b510066ea20713eb29bcb877c6125d) is invalid."
+                    "detail": "The API token provided in the Authorization header (979ee81cc55704836846ef672a505cc303b510066ea20713eb29bcb877c6125d) is invalid."
                   }
                 ]
               }
@@ -3600,7 +3600,7 @@
             "required": true
           },
           {
-            "name": "Metadata-Api-Token",
+            "name": "Authorization",
             "in": "header",
             "required": true,
             "schema": {
@@ -3680,7 +3680,7 @@
                     "status": "400",
                     "code": "missing_api_token",
                     "title": "Missing api token",
-                    "detail": "No API token was provided in the Metadata-Api-Token header."
+                    "detail": "No API token was provided in the Authorization header."
                   }
                 ]
               }
@@ -3702,7 +3702,7 @@
                     "status": "403",
                     "code": "invalid_api_token",
                     "title": "Invalid api token",
-                    "detail": "The API token provided in the Metadata-Api-Token header (0825bf64f466b61d8305e76fe1735c8ee0f1436b466eb4b9ff8a5b915c285a01) is invalid."
+                    "detail": "The API token provided in the Authorization header (0825bf64f466b61d8305e76fe1735c8ee0f1436b466eb4b9ff8a5b915c285a01) is invalid."
                   }
                 ]
               }
@@ -3750,7 +3750,7 @@
             "required": true
           },
           {
-            "name": "Metadata-Api-Token",
+            "name": "Authorization",
             "in": "header",
             "required": true,
             "schema": {
@@ -3925,7 +3925,7 @@
             "required": true
           },
           {
-            "name": "Metadata-Api-Token",
+            "name": "Authorization",
             "in": "header",
             "required": true,
             "schema": {
@@ -4119,7 +4119,7 @@
             "required": true
           },
           {
-            "name": "Metadata-Api-Token",
+            "name": "Authorization",
             "in": "header",
             "required": true,
             "schema": {
@@ -4332,7 +4332,7 @@
     "securitySchemes": {
       "apiToken": {
         "type": "apiKey",
-        "name": "Metadata-Api-Token",
+        "name": "Authorization",
         "in": "header"
       }
     },

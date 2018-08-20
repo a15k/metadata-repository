@@ -2,7 +2,7 @@ module Api
   class JsonApiController < ActionController::API
     respond_to CONTENT_TYPE
 
-    API_TOKEN_HEADER = 'Metadata-Api-Token'
+    API_TOKEN_HEADER = 'Authorization'
 
     before_action :require_api_token!, :validate_api_token!
     before_action :validate_type!, :validate_id!, :validate_relationships!,
@@ -80,7 +80,7 @@ module Api
     end
 
     def api_token
-      request.headers[API_TOKEN_HEADER]
+      request.headers[API_TOKEN_HEADER]&.sub('Bearer ', '')
     end
 
     def current_application

@@ -26,6 +26,7 @@ yarn-debug.log*
 yarn-error.log*
 .yarn-integrity
 
+coverage
 spec/examples.txt
 
 .DS_Store

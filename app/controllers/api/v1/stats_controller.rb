@@ -14,7 +14,7 @@ module Api
       def create
         @stats = Stats.create! stats_create_params
 
-        render_stats status: 201
+        render_stats status: :created
       end
 
       def update
@@ -82,7 +82,7 @@ module Api
         )
       end
 
-      def render_stats(stats: nil, status: 200)
+      def render_stats(stats: nil, status: :ok)
         stats ||= send :stats
 
         render json: StatsSerializer.new(stats).serializable_hash, status: status

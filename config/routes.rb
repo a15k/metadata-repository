@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   namespace :api do
     api_version(
       module: 'V1',
-      header: { name: 'Accept', value: "#{CONTENT_TYPE}; version=1" },
+      path: { value: 'v1' },
       defaults: { format: :json },
       default: true
     ) do
