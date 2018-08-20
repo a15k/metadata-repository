@@ -33,7 +33,7 @@ module MetadataRepository
     config.cache_store = :redis_cache_store, {
       url: redis_secrets[:url],
       namespace: redis_secrets[:namespaces][:cache]
-    }
+    } if redis_secrets.present? # won't be when installing prod secrets via install_secrets
 
     config.after_initialize do
       # Make sure the mothership application exists if we have its secrets
