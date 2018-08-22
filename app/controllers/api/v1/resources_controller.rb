@@ -9,7 +9,9 @@ module Api
           query: filter_params[:query],
           language: filter_params[:language],
           order_by: params[:sort]
-        )
+        ).preload(:unscoped_metadatas, :unscoped_stats).each do |resource|
+          resource.scoped_to_application = current_application
+        end
       end
 
       def show
@@ -56,7 +58,7 @@ module Api
       end
 
       def resource_relationship_params
-        @resource_relationship_params ||= json_api_relationships.permit(
+        @resource_relationship_params ||= json_api_relationships_to_one.permit(
           :application_user_id,
           :format_id,
           :language_id
@@ -85,7 +87,9 @@ module Api
       end
 
       def render_resource(resources: resource, status: :ok)
-        render json: ResourceSerializer.new(resources).serializable_hash, status: status
+        render json: ResourceSerializer.new(
+          resources, include: [ :metadatas, :stats ]
+        ).serializable_hash, status: status
       end
     end
   end

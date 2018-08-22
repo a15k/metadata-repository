@@ -1,11 +1,14 @@
 class Metadata < ApplicationRecord
+  include ApplicationScoping
   include ResourceSearch
 
   belongs_to :application,                      inverse_of: :metadatas
   belongs_to :application_user, optional: true, inverse_of: :metadatas
-  belongs_to :resource,                         inverse_of: :metadatas
+  scoped_belongs_to :resource,                  inverse_of: :metadatas
   belongs_to :format,                           inverse_of: :metadatas
   belongs_to :language,         optional: true, inverse_of: :metadatas
+
+  before_validation :set_resource_uuid
 
   validates :uuid,  presence: true, uniqueness: { scope: :application_id }
   validates :value, presence: true
@@ -34,6 +37,10 @@ class Metadata < ApplicationRecord
 
   trigger.before(:insert)            { TSVECTOR_UPDATE_SQL }
   trigger.before(:update).of(:value) { TSVECTOR_UPDATE_SQL }
+
+  def set_resource_uuid
+    self.resource_uuid = self.resource.uuid
+  end
 
   def application_uuid
     application.uuid

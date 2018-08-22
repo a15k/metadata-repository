@@ -111,7 +111,7 @@ module Api
             status: '400',
             code: 'missing_api_token',
             title: 'Missing api token',
-            detail: "No API token was provided in the #{API_TOKEN_HEADER} header."
+            detail: "No API token was provided in the \"#{API_TOKEN_HEADER}\" header."
           }
         ]
       } if api_token.nil?
@@ -124,8 +124,8 @@ module Api
             status: '403',
             code: 'invalid_api_token',
             title: 'Invalid api token',
-            detail: "The API token provided in the #{API_TOKEN_HEADER
-                    } header (#{api_token}) is invalid."
+            detail: "Invalid API token provided in the \"#{
+                    API_TOKEN_HEADER}\" header (\"#{api_token}\")."
           }
         ]
       } if current_application.nil?
@@ -138,8 +138,8 @@ module Api
             status: '409',
             code: 'invalid_type',
             title: 'Invalid type',
-            detail: "The type provided (#{type_param
-                    }) is not the one supported by this API endpoint (#{self.class.valid_type})."
+            detail: "Invalid type provided for this API endpoint" +
+                    " (expected \"#{self.class.valid_type}\", got \"#{type_param}\")."
           }
         ]
       } unless type_param == self.class.valid_type
@@ -152,8 +152,8 @@ module Api
             status: '409',
             code: 'invalid_id',
             title: 'Invalid id',
-            detail: "The id provided in the request body (#{body_id_param
-                    }) did not match the id provided in the API endpoint URL (#{path_id_param})."
+            detail: "The id provided in the request body (\"#{body_id_param}\")" +
+                    " did not match the id provided in the API endpoint URL (\"#{path_id_param}\")."
           }
         ]
       } unless path_id_param.nil? || body_id_param == path_id_param
@@ -163,21 +163,23 @@ module Api
       return if json_api_data[:relationships].nil?
 
       json_api_data[:relationships].each do |rel, val|
-        next if val.nil? || val.has_key?(:data) && val[:data].nil?
+        next if val.nil? || val.has_key?(:data) && val[:data].blank?
 
         data = val.require(:data)
 
         type = data.require(:type)
+        expected_type = rel.singularize
         render(status: :conflict, content_type: CONTENT_TYPE, json: {
           errors: [
             {
               status: '409',
-              code: "invalid_#{rel}_type",
-              title: "Invalid #{rel} type",
-              detail: "The type provided for the #{rel} relationship (#{type}) is invalid."
+              code: "invalid_#{expected_type}_type",
+              title: "Invalid #{expected_type} type",
+              detail: "Invalid type provided for the \"#{rel}\" relationship" +
+                      " (expected \"#{expected_type}\", got \"#{type}\")."
             }
           ]
-        }) && return unless type == rel
+        }) && return unless type == expected_type
 
         id = data.require :id
         render(status: :forbidden, content_type: CONTENT_TYPE, json: {
@@ -186,8 +188,8 @@ module Api
               status: '403',
               code: 'forbidden_application_id',
               title: "Forbidden application id",
-              detail: "You are only allowed to provide your own application id (#{
-                      current_application.uuid})."
+              detail: "You are only allowed to provide your own application id (\"#{
+                      current_application.uuid}\")."
             }
           ]
         }) && return if rel == 'application' && id != current_application.uuid
@@ -210,12 +212,15 @@ module Api
       attributes
     end
 
-    def json_api_relationships
+    def json_api_relationships_to_one
       ActionController::Parameters.new(
         {}.tap do |relationships|
           if json_api_data[:relationships]
             json_api_data.require(:relationships).each do |rel, val|
-              relationships["#{rel}_id".to_sym] = val.nil? ? nil : val.dig(:data, :id)
+              next if val.is_a?(Array)|| val.has_key?(:data) && val[:data].is_a?(Array)
+
+              relationships["#{rel}_id".to_sym] =
+                val.nil? || val.has_key?(:data) && val[:data].nil? ? nil : val.dig(:data, :id)
             end
           end
         end

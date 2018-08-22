@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_20_164320) do
+ActiveRecord::Schema.define(version: 2018_08_22_012954) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
@@ -61,11 +61,13 @@ ActiveRecord::Schema.define(version: 2018_08_20_164320) do
     t.tsvector "tsvector", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.uuid "resource_uuid", null: false
     t.index ["application_id"], name: "index_metadata_on_application_id"
     t.index ["application_user_id"], name: "index_metadata_on_application_user_id"
     t.index ["format_id"], name: "index_metadata_on_format_id"
     t.index ["language_id"], name: "index_metadata_on_language_id"
     t.index ["resource_id"], name: "index_metadata_on_resource_id"
+    t.index ["resource_uuid"], name: "index_metadata_on_resource_uuid"
     t.index ["tsvector"], name: "index_metadata_on_tsvector", using: :gin
     t.index ["uuid", "application_id"], name: "index_metadata_on_uuid_and_application_id", unique: true
     t.index ["value"], name: "index_metadata_on_value", using: :gin
@@ -109,11 +111,13 @@ ActiveRecord::Schema.define(version: 2018_08_20_164320) do
     t.tsvector "tsvector", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.uuid "resource_uuid", null: false
     t.index ["application_id"], name: "index_stats_on_application_id"
     t.index ["application_user_id"], name: "index_stats_on_application_user_id"
     t.index ["format_id"], name: "index_stats_on_format_id"
     t.index ["language_id"], name: "index_stats_on_language_id"
     t.index ["resource_id"], name: "index_stats_on_resource_id"
+    t.index ["resource_uuid"], name: "index_stats_on_resource_uuid"
     t.index ["tsvector"], name: "index_stats_on_tsvector", using: :gin
     t.index ["uuid", "application_id"], name: "index_stats_on_uuid_and_application_id", unique: true
     t.index ["value"], name: "index_stats_on_value", using: :gin

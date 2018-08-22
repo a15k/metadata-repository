@@ -80,7 +80,7 @@ RSpec.describe Api::V1::MetadatasController, type: :request do
     (example.metadata.dig(:operation, :parameters) || []).select do |parameter|
       parameter[:id] == :body
     end.each do |parameter|
-      parameter['example'] = request.body.read
+      parameter[:example] = request.body.read
       request.body.rewind
     end
     example.metadata[:response][:examples] = {
@@ -101,7 +101,9 @@ RSpec.describe Api::V1::MetadatasController, type: :request do
             schema metadata_schema_reference
 
             let!(:expected_response) do
-              JSON.parse(Api::V1::MetadataSerializer.new([]).serialized_json).deep_symbolize_keys
+              JSON.parse(
+                Api::V1::MetadataSerializer.new([], include: [ :'resource.stats' ]).serialized_json
+              ).deep_symbolize_keys
             end
 
             run_test! { |response| expect(response.body_hash).to match expected_response }
@@ -182,7 +184,8 @@ RSpec.describe Api::V1::MetadatasController, type: :request do
                 let!(:expected_response) do
                   JSON.parse(
                     Api::V1::MetadataSerializer.new(
-                      Metadata.search(query: 'lorem', order_by: sort)
+                      Metadata.search(query: 'lorem', order_by: sort),
+                      include: [ :'resource.stats' ]
                     ).serialized_json
                   ).deep_symbolize_keys
                 end
@@ -207,7 +210,7 @@ RSpec.describe Api::V1::MetadatasController, type: :request do
                 let!(:expected_response) do
                   JSON.parse(
                     Api::V1::MetadataSerializer.new(
-                      Metadata.search(query: 'lorem')
+                      Metadata.search(query: 'lorem'), include: [ :'resource.stats' ]
                     ).serialized_json
                   ).deep_symbolize_keys
                 end
@@ -241,7 +244,7 @@ RSpec.describe Api::V1::MetadatasController, type: :request do
                     Api::V1::MetadataSerializer.new(
                       Metadata.search(
                         query: 'jumps', language: 'english', order_by: '-created_at,id'
-                      )
+                      ), include: [ :'resource.stats' ]
                     ).serialized_json
                   ).deep_symbolize_keys
                 end
@@ -268,7 +271,8 @@ RSpec.describe Api::V1::MetadatasController, type: :request do
                 let!(:expected_response) do
                   JSON.parse(
                     Api::V1::MetadataSerializer.new(
-                      Metadata.search(query: 'jumps', language: 'english')
+                      Metadata.search(query: 'jumps', language: 'english'),
+                      include: [ :'resource.stats' ]
                     ).serialized_json
                   ).deep_symbolize_keys
                 end
@@ -296,7 +300,9 @@ RSpec.describe Api::V1::MetadatasController, type: :request do
 
           run_test! do |response|
             expect(response.body_hash).to eq JSON.parse(
-              Api::V1::MetadataSerializer.new([ @metadata ]).serialized_json
+              Api::V1::MetadataSerializer.new(
+                [ @metadata ], include: [ :'resource.stats' ]
+              ).serialized_json
             ).deep_symbolize_keys
           end
         end
@@ -321,7 +327,9 @@ RSpec.describe Api::V1::MetadatasController, type: :request do
         response 201, 'Metadata created' do
           schema metadata_schema_reference
 
-          run_test! { |response| expect(response.body_hash).to match expected_response }
+          run_test! do |response|
+            expect(response.body_hash.except(:included)).to match expected_response
+          end
         end
       end
     end
@@ -337,7 +345,9 @@ RSpec.describe Api::V1::MetadatasController, type: :request do
 
             run_test! do |response|
               expect(response.body_hash).to eq JSON.parse(
-                Api::V1::MetadataSerializer.new(@metadata).serialized_json
+                Api::V1::MetadataSerializer.new(
+                  @metadata, include: [ :'resource.stats' ]
+                ).serialized_json
               ).deep_symbolize_keys
             end
           end
@@ -361,7 +371,9 @@ RSpec.describe Api::V1::MetadatasController, type: :request do
         end
 
         let(:metadata) do
-          Api::V1::MetadataSerializer.new(@metadata).serializable_hash.tap do |hash|
+          Api::V1::MetadataSerializer.new(
+            @metadata, include: [ :'resource.stats' ]
+          ).serializable_hash.tap do |hash|
             hash[:data][:relationships][:application][:data][:id] = @application.uuid
             hash[:data][:relationships][:application_user][:data] = {
               id: @application_user.uuid, type: :application_user
@@ -383,7 +395,11 @@ RSpec.describe Api::V1::MetadatasController, type: :request do
       end
 
       context 'when the Metadata already exists' do
-        let(:metadata) { Api::V1::MetadataSerializer.new(@metadata).serializable_hash }
+        let(:metadata) do
+          Api::V1::MetadataSerializer.new(
+            @metadata, include: [ :'resource.stats' ]
+          ).serializable_hash
+        end
 
         post 'Create a new Metadata with the given Id for the given Resource' do
           instance_exec &create_member_setup
@@ -409,9 +425,7 @@ RSpec.describe Api::V1::MetadatasController, type: :request do
           after(:all) { @metadata.reload }
 
           let(:metadata) do
-            Api::V1::MetadataSerializer.new(@other_application_metadata)
-                                       .serializable_hash
-                                       .tap do |hash|
+            Api::V1::MetadataSerializer.new(@other_application_metadata).serializable_hash.tap do |hash|
               hash[:data][:id] = @metadata.uuid
               hash[:data][:relationships][:application][:data][:id] = @application.uuid
               hash[:data][:relationships][:application_user][:data] = nil
@@ -424,7 +438,9 @@ RSpec.describe Api::V1::MetadatasController, type: :request do
               schema metadata_schema_reference
 
               run_test! do |response|
-                expect(response.body_hash).to eq JSON.parse(metadata.to_json).deep_symbolize_keys
+                expect(response.body_hash.except(:included)).to eq(
+                  JSON.parse(metadata.to_json).deep_symbolize_keys
+                )
               end
             end
           end
@@ -442,7 +458,7 @@ RSpec.describe Api::V1::MetadatasController, type: :request do
             schema metadata_schema_reference
 
             run_test! do |response|
-              expect(response.body_hash).to eq JSON.parse(
+              expect(response.body_hash.except(:included)).to eq JSON.parse(
                 Api::V1::MetadataSerializer.new(@metadata).serialized_json
               ).deep_symbolize_keys
             end

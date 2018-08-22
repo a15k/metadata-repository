@@ -80,7 +80,7 @@ RSpec.describe Api::V1::StatsController, type: :request do
     (example.metadata.dig(:operation, :parameters) || []).select do |parameter|
       parameter[:id] == :body
     end.each do |parameter|
-      parameter['example'] = request.body.read
+      parameter[:example] = request.body.read
       request.body.rewind
     end
     example.metadata[:response][:examples] = {
@@ -101,7 +101,9 @@ RSpec.describe Api::V1::StatsController, type: :request do
             schema stats_schema_reference
 
             let!(:expected_response) do
-              JSON.parse(Api::V1::StatsSerializer.new([]).serialized_json).deep_symbolize_keys
+              JSON.parse(Api::V1::StatsSerializer.new(
+                [], include: [ :'resource.metadatas' ]
+              ).serialized_json).deep_symbolize_keys
             end
 
             run_test! { |response| expect(response.body_hash).to match expected_response }
@@ -182,7 +184,8 @@ RSpec.describe Api::V1::StatsController, type: :request do
                 let!(:expected_response) do
                   JSON.parse(
                     Api::V1::StatsSerializer.new(
-                      Stats.search(query: 'lorem', order_by: sort)
+                      Stats.search(query: 'lorem', order_by: sort),
+                      include: [ :'resource.metadatas' ]
                     ).serialized_json
                   ).deep_symbolize_keys
                 end
@@ -207,7 +210,7 @@ RSpec.describe Api::V1::StatsController, type: :request do
                 let!(:expected_response) do
                   JSON.parse(
                     Api::V1::StatsSerializer.new(
-                      Stats.search(query: 'lorem')
+                      Stats.search(query: 'lorem'), include: [ :'resource.metadatas' ]
                     ).serialized_json
                   ).deep_symbolize_keys
                 end
@@ -241,7 +244,7 @@ RSpec.describe Api::V1::StatsController, type: :request do
                     Api::V1::StatsSerializer.new(
                       Stats.search(
                         query: 'jumps', language: 'english', order_by: '-created_at,id'
-                      )
+                      ), include: [ :'resource.metadatas' ]
                     ).serialized_json
                   ).deep_symbolize_keys
                 end
@@ -268,7 +271,8 @@ RSpec.describe Api::V1::StatsController, type: :request do
                 let!(:expected_response) do
                   JSON.parse(
                     Api::V1::StatsSerializer.new(
-                      Stats.search(query: 'jumps', language: 'english')
+                      Stats.search(query: 'jumps', language: 'english'),
+                      include: [ :'resource.metadatas' ]
                     ).serialized_json
                   ).deep_symbolize_keys
                 end
@@ -296,7 +300,9 @@ RSpec.describe Api::V1::StatsController, type: :request do
 
           run_test! do |response|
             expect(response.body_hash).to eq JSON.parse(
-              Api::V1::StatsSerializer.new([ @stats ]).serialized_json
+              Api::V1::StatsSerializer.new(
+                [ @stats ], include: [ :'resource.metadatas' ]
+              ).serialized_json
             ).deep_symbolize_keys
           end
         end
@@ -321,7 +327,9 @@ RSpec.describe Api::V1::StatsController, type: :request do
         response 201, 'Stats created' do
           schema stats_schema_reference
 
-          run_test! { |response| expect(response.body_hash).to match expected_response }
+          run_test! do |response|
+            expect(response.body_hash.except(:included)).to match expected_response
+          end
         end
       end
     end
@@ -337,7 +345,9 @@ RSpec.describe Api::V1::StatsController, type: :request do
 
             run_test! do |response|
               expect(response.body_hash).to eq JSON.parse(
-                Api::V1::StatsSerializer.new(@stats).serialized_json
+                Api::V1::StatsSerializer.new(
+                  @stats, include: [ :'resource.metadatas' ]
+                ).serialized_json
               ).deep_symbolize_keys
             end
           end
@@ -376,14 +386,20 @@ RSpec.describe Api::V1::StatsController, type: :request do
             schema stats_schema_reference
 
             run_test! do |response|
-              expect(response.body_hash).to eq JSON.parse(stats.to_json).deep_symbolize_keys
+              expect(response.body_hash.except(:included)).to eq(
+                JSON.parse(stats.to_json).deep_symbolize_keys
+              )
             end
           end
         end
       end
 
       context 'when the Stats already exists' do
-        let(:stats) { Api::V1::StatsSerializer.new(@stats).serializable_hash }
+        let(:stats) do
+          Api::V1::StatsSerializer.new(
+            @stats, include: [ :'resource.metadatas' ]
+          ).serializable_hash
+        end
 
         post 'Create a new Stats with the given Id for the given Resource' do
           instance_exec &create_member_setup
@@ -409,9 +425,7 @@ RSpec.describe Api::V1::StatsController, type: :request do
           after(:all) { @stats.reload }
 
           let(:stats) do
-            Api::V1::StatsSerializer.new(@other_application_stats)
-                                       .serializable_hash
-                                       .tap do |hash|
+            Api::V1::StatsSerializer.new(@other_application_stats).serializable_hash.tap do |hash|
               hash[:data][:id] = @stats.uuid
               hash[:data][:relationships][:application][:data][:id] = @application.uuid
               hash[:data][:relationships][:application_user][:data] = nil
@@ -424,7 +438,9 @@ RSpec.describe Api::V1::StatsController, type: :request do
               schema stats_schema_reference
 
               run_test! do |response|
-                expect(response.body_hash).to eq JSON.parse(stats.to_json).deep_symbolize_keys
+                expect(response.body_hash.except(:included)).to eq(
+                  JSON.parse(stats.to_json).deep_symbolize_keys
+                )
               end
             end
           end
@@ -443,7 +459,9 @@ RSpec.describe Api::V1::StatsController, type: :request do
 
             run_test! do |response|
               expect(response.body_hash).to eq JSON.parse(
-                Api::V1::StatsSerializer.new(@stats).serialized_json
+                Api::V1::StatsSerializer.new(
+                  @stats, include: [ :'resource.metadatas' ]
+                ).serialized_json
               ).deep_symbolize_keys
             end
           end

@@ -8,7 +8,9 @@ module Api
           query: filter_params[:query],
           language: filter_params[:language],
           order_by: params[:sort]
-        ).preload(:resource)
+        ).preload(unscoped_resources: :unscoped_stats).each do |metadata|
+          metatada.scoped_to_application = current_application
+        end
       end
 
       def index
@@ -60,7 +62,7 @@ module Api
       end
 
       def metadata_relationship_params
-        @metadata_relationship_params ||= json_api_relationships.permit(
+        @metadata_relationship_params ||= json_api_relationships_to_one.permit(
           :application_user_id,
           :resource_id,
           :format_id,
@@ -91,7 +93,9 @@ module Api
       end
 
       def render_metadata(metadatas: metadata, status: :ok)
-        render json: MetadataSerializer.new(metadatas).serializable_hash, status: status
+        render json: MetadataSerializer.new(
+          metadatas, include: [ :'resource.stats' ]
+        ).serializable_hash, status: status
       end
     end
   end

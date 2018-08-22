@@ -26,12 +26,12 @@
               "response": {
                 "data": [
                   {
-                    "id": "11f9bc69-239a-4468-ae77-d9e4ba837071",
+                    "id": "30d73c0f-523b-4bf0-b6eb-bee1a0c2d006",
                     "type": "application_user",
                     "relationships": {
                       "application": {
                         "data": {
-                          "id": "e70f6e0d-af5e-4544-af94-5abcb15cc26c",
+                          "id": "60a3fb3c-a558-4fed-9e2b-12fa090758de",
                           "type": "application"
                         }
                       }
@@ -57,7 +57,7 @@
                     "status": "400",
                     "code": "missing_api_token",
                     "title": "Missing api token",
-                    "detail": "No API token was provided in the Authorization header."
+                    "detail": "No API token was provided in the \"Authorization\" header."
                   }
                 ]
               }
@@ -79,7 +79,7 @@
                     "status": "403",
                     "code": "invalid_api_token",
                     "title": "Invalid api token",
-                    "detail": "The API token provided in the Authorization header (61c33ea509a527c087a28ac14a541c1455f27341223b1d2937595ba439d853dc) is invalid."
+                    "detail": "Invalid API token provided in the \"Authorization\" header (\"832f2f85bfdb2fe46cce29042d1737631ef947fbbe07a14d5229b2a3e2b7b5da\")."
                   }
                 ]
               }
@@ -116,12 +116,12 @@
             "examples": {
               "response": {
                 "data": {
-                  "id": "7c8a9b1d-c4f4-40a8-9db6-46159f516ff6",
+                  "id": "a96d0eb6-c534-4764-84dd-d393f3ae691b",
                   "type": "application_user",
                   "relationships": {
                     "application": {
                       "data": {
-                        "id": "e70f6e0d-af5e-4544-af94-5abcb15cc26c",
+                        "id": "60a3fb3c-a558-4fed-9e2b-12fa090758de",
                         "type": "application"
                       }
                     }
@@ -168,7 +168,7 @@
                     "status": "403",
                     "code": "forbidden_application_id",
                     "title": "Forbidden application id",
-                    "detail": "You are only allowed to provide your own application id (e70f6e0d-af5e-4544-af94-5abcb15cc26c)."
+                    "detail": "You are only allowed to provide your own application id (\"60a3fb3c-a558-4fed-9e2b-12fa090758de\")."
                   }
                 ]
               }
@@ -190,7 +190,7 @@
                     "status": "409",
                     "code": "invalid_application_type",
                     "title": "Invalid application type",
-                    "detail": "The type provided for the application relationship (resource) is invalid."
+                    "detail": "Invalid type provided for the \"application\" relationship (expected \"application\", got \"resource\")."
                   }
                 ]
               }
@@ -238,7 +238,7 @@
               "type": "string",
               "format": "uuid"
             },
-            "example": "66bc5883-269d-40a8-a525-b1b0110c3a50",
+            "example": "417b89d3-d9b7-4d13-a9eb-c57c7ad2f45d",
             "required": true
           },
           {
@@ -263,12 +263,12 @@
             "examples": {
               "response": {
                 "data": {
-                  "id": "11f9bc69-239a-4468-ae77-d9e4ba837071",
+                  "id": "30d73c0f-523b-4bf0-b6eb-bee1a0c2d006",
                   "type": "application_user",
                   "relationships": {
                     "application": {
                       "data": {
-                        "id": "e70f6e0d-af5e-4544-af94-5abcb15cc26c",
+                        "id": "60a3fb3c-a558-4fed-9e2b-12fa090758de",
                         "type": "application"
                       }
                     }
@@ -293,7 +293,7 @@
                     "status": "400",
                     "code": "missing_api_token",
                     "title": "Missing api token",
-                    "detail": "No API token was provided in the Authorization header."
+                    "detail": "No API token was provided in the \"Authorization\" header."
                   }
                 ]
               }
@@ -315,7 +315,7 @@
                     "status": "403",
                     "code": "invalid_api_token",
                     "title": "Invalid api token",
-                    "detail": "The API token provided in the Authorization header (655120b2d2f8889530476d520458507b240011ad0c8288481ee0927f23799988) is invalid."
+                    "detail": "Invalid API token provided in the \"Authorization\" header (\"8d20f7abdcaf6df6e300b003c2fac35d9b7d6153a3a4b6956f6603a704c76f87\")."
                   }
                 ]
               }
@@ -348,7 +348,7 @@
               "type": "string",
               "format": "uuid"
             },
-            "example": "028b2da4-d915-47bf-99ce-2befb9a5f989",
+            "example": "56d380a4-505c-49a5-a037-3cdc845bfdc5",
             "required": true
           },
           {
@@ -373,12 +373,12 @@
             "examples": {
               "response": {
                 "data": {
-                  "id": "11f9bc69-239a-4468-ae77-d9e4ba837071",
+                  "id": "30d73c0f-523b-4bf0-b6eb-bee1a0c2d006",
                   "type": "application_user",
                   "relationships": {
                     "application": {
                       "data": {
-                        "id": "e70f6e0d-af5e-4544-af94-5abcb15cc26c",
+                        "id": "60a3fb3c-a558-4fed-9e2b-12fa090758de",
                         "type": "application"
                       }
                     }
@@ -403,7 +403,7 @@
                     "status": "400",
                     "code": "missing_api_token",
                     "title": "Missing api token",
-                    "detail": "No API token was provided in the Authorization header."
+                    "detail": "No API token was provided in the \"Authorization\" header."
                   }
                 ]
               }
@@ -425,7 +425,7 @@
                     "status": "403",
                     "code": "invalid_api_token",
                     "title": "Invalid api token",
-                    "detail": "The API token provided in the Authorization header (15f803e2e1271af6700185fbf25c1c53a5aaea62af4ed083cc0560723e6810ff) is invalid."
+                    "detail": "Invalid API token provided in the \"Authorization\" header (\"cc5d313153dc0ca7bb0fc1a24c6e403e51a21f73bbed3e397b4b9923dce3c359\")."
                   }
                 ]
               }
@@ -458,7 +458,7 @@
               "type": "string",
               "format": "uuid"
             },
-            "example": "6ea6a098-2b61-4f5d-b008-1a50a46b9728",
+            "example": "9b623a17-a4fb-4fa3-9637-b254d6903ed1",
             "required": true
           },
           {
@@ -483,12 +483,12 @@
             "examples": {
               "response": {
                 "data": {
-                  "id": "11f9bc69-239a-4468-ae77-d9e4ba837071",
+                  "id": "30d73c0f-523b-4bf0-b6eb-bee1a0c2d006",
                   "type": "application_user",
                   "relationships": {
                     "application": {
                       "data": {
-                        "id": "e70f6e0d-af5e-4544-af94-5abcb15cc26c",
+                        "id": "60a3fb3c-a558-4fed-9e2b-12fa090758de",
                         "type": "application"
                       }
                     }
@@ -535,7 +535,7 @@
                     "status": "403",
                     "code": "forbidden_application_id",
                     "title": "Forbidden application id",
-                    "detail": "You are only allowed to provide your own application id (e70f6e0d-af5e-4544-af94-5abcb15cc26c)."
+                    "detail": "You are only allowed to provide your own application id (\"60a3fb3c-a558-4fed-9e2b-12fa090758de\")."
                   }
                 ]
               }
@@ -642,7 +642,7 @@
                     "status": "403",
                     "code": "forbidden_application_id",
                     "title": "Forbidden application id",
-                    "detail": "You are only allowed to provide your own application id (e70f6e0d-af5e-4544-af94-5abcb15cc26c)."
+                    "detail": "You are only allowed to provide your own application id (\"60a3fb3c-a558-4fed-9e2b-12fa090758de\")."
                   }
                 ]
               }
@@ -686,7 +686,7 @@
                     "status": "409",
                     "code": "invalid_application_type",
                     "title": "Invalid application type",
-                    "detail": "The type provided for the application relationship (resource) is invalid."
+                    "detail": "Invalid type provided for the \"application\" relationship (expected \"application\", got \"resource\")."
                   }
                 ]
               }
@@ -771,7 +771,7 @@
                     "status": "403",
                     "code": "forbidden_application_id",
                     "title": "Forbidden application id",
-                    "detail": "You are only allowed to provide your own application id (e70f6e0d-af5e-4544-af94-5abcb15cc26c)."
+                    "detail": "You are only allowed to provide your own application id (\"60a3fb3c-a558-4fed-9e2b-12fa090758de\")."
                   }
                 ]
               }
@@ -815,7 +815,7 @@
                     "status": "409",
                     "code": "invalid_application_type",
                     "title": "Invalid application type",
-                    "detail": "The type provided for the application relationship (resource) is invalid."
+                    "detail": "Invalid type provided for the \"application\" relationship (expected \"application\", got \"resource\")."
                   }
                 ]
               }
@@ -853,7 +853,7 @@
               "type": "string",
               "format": "uuid"
             },
-            "example": "77afd05b-1d5c-4345-a384-5bfdce92d26f",
+            "example": "7990fb4e-5181-40be-980c-f9438229f53f",
             "required": true
           },
           {
@@ -879,7 +879,7 @@
               "response": {
                 "data": [
                   {
-                    "id": "995552f4-988f-4264-b48a-0d250ea0b386",
+                    "id": "8df8364e-32e2-4fbe-a042-1146a182214c",
                     "type": "metadata",
                     "attributes": {
                       "value": {
@@ -889,31 +889,81 @@
                     "relationships": {
                       "application": {
                         "data": {
-                          "id": "adcc4242-bc98-4b94-a831-e02c5185c35c",
+                          "id": "9f82002d-8347-437c-a651-82cbfb097940",
                           "type": "application"
                         }
                       },
                       "application_user": {
                         "data": {
-                          "id": "6e832092-1fd4-4e97-a6cf-a159de9b0e4a",
+                          "id": "4eea9aed-86f2-4b5d-922e-e0a16893d832",
                           "type": "application_user"
                         }
                       },
                       "resource": {
                         "data": {
-                          "id": "4b4a80cd-8a52-44bf-aa4f-a1ddd28a49e8",
+                          "id": "dd2ad9cd-f063-43be-9338-fb665f211fe7",
                           "type": "resource"
                         }
                       },
                       "format": {
                         "data": {
-                          "id": "assumenda ut id neque animi id facere error enim et",
+                          "id": "quidem non expedita numquam velit nesciunt odio eum suscipit ea",
                           "type": "format"
                         }
                       },
                       "language": {
                         "data": {
-                          "id": "ab est quisquam occaecati architecto nam est sit voluptatem possimus",
+                          "id": "cupiditate error et quibusdam quia sit saepe sunt ea omnis",
+                          "type": "language"
+                        }
+                      }
+                    }
+                  }
+                ],
+                "included": [
+                  {
+                    "id": "dd2ad9cd-f063-43be-9338-fb665f211fe7",
+                    "type": "resource",
+                    "attributes": {
+                      "uri": "https://example.com/assessments/dd2ad9cd-f063-43be-9338-fb665f211fe7",
+                      "resource_type": "assessment",
+                      "title": null,
+                      "content": "esse et sit at consequatur fuga vitae sint eveniet architecto",
+                      "headline": null
+                    },
+                    "relationships": {
+                      "metadatas": {
+                        "data": [
+                          {
+                            "id": "8df8364e-32e2-4fbe-a042-1146a182214c",
+                            "type": "metadata"
+                          }
+                        ]
+                      },
+                      "stats": {
+                        "data": []
+                      },
+                      "application": {
+                        "data": {
+                          "id": "fe8c6488-c09e-4d84-9776-2ce23c42ab8f",
+                          "type": "application"
+                        }
+                      },
+                      "application_user": {
+                        "data": {
+                          "id": "631e1674-a4da-4685-b785-7cc2377c38f6",
+                          "type": "application_user"
+                        }
+                      },
+                      "format": {
+                        "data": {
+                          "id": "odit ipsam doloremque nihil labore nobis cupiditate ipsa est cumque",
+                          "type": "format"
+                        }
+                      },
+                      "language": {
+                        "data": {
+                          "id": "adipisci qui exercitationem omnis praesentium blanditiis voluptas saepe rerum sed",
                           "type": "language"
                         }
                       }
@@ -939,7 +989,7 @@
                     "status": "400",
                     "code": "missing_api_token",
                     "title": "Missing api token",
-                    "detail": "No API token was provided in the Authorization header."
+                    "detail": "No API token was provided in the \"Authorization\" header."
                   }
                 ]
               }
@@ -961,7 +1011,7 @@
                     "status": "403",
                     "code": "invalid_api_token",
                     "title": "Invalid api token",
-                    "detail": "The API token provided in the Authorization header (da0222f8d11f253527b2252751366b76bad237202623c399cb631a6069dbff31) is invalid."
+                    "detail": "Invalid API token provided in the \"Authorization\" header (\"e78b237fddc4befe8dd5bfd833e0cb6685c74b7b6e03f81241e0659b5b685c48\")."
                   }
                 ]
               }
@@ -994,7 +1044,7 @@
               "type": "string",
               "format": "uuid"
             },
-            "example": "a76c812a-66ca-420a-91d7-bc81c8fb829d",
+            "example": "77dc49a5-ff3a-44dd-b83b-ced99e88a939",
             "required": true
           },
           {
@@ -1019,7 +1069,7 @@
             "examples": {
               "response": {
                 "data": {
-                  "id": "28c3f34d-7c05-4097-914b-d67b971d844d",
+                  "id": "8f281be8-dd00-4917-bc3b-e165d0622701",
                   "type": "metadata",
                   "attributes": {
                     "value": {
@@ -1029,36 +1079,90 @@
                   "relationships": {
                     "application": {
                       "data": {
-                        "id": "adcc4242-bc98-4b94-a831-e02c5185c35c",
+                        "id": "9f82002d-8347-437c-a651-82cbfb097940",
                         "type": "application"
                       }
                     },
                     "application_user": {
                       "data": {
-                        "id": "6e832092-1fd4-4e97-a6cf-a159de9b0e4a",
+                        "id": "4eea9aed-86f2-4b5d-922e-e0a16893d832",
                         "type": "application_user"
                       }
                     },
                     "resource": {
                       "data": {
-                        "id": "4b4a80cd-8a52-44bf-aa4f-a1ddd28a49e8",
+                        "id": "dd2ad9cd-f063-43be-9338-fb665f211fe7",
                         "type": "resource"
                       }
                     },
                     "format": {
                       "data": {
-                        "id": "assumenda ut id neque animi id facere error enim et",
+                        "id": "quidem non expedita numquam velit nesciunt odio eum suscipit ea",
                         "type": "format"
                       }
                     },
                     "language": {
                       "data": {
-                        "id": "ab est quisquam occaecati architecto nam est sit voluptatem possimus",
+                        "id": "cupiditate error et quibusdam quia sit saepe sunt ea omnis",
                         "type": "language"
                       }
                     }
                   }
-                }
+                },
+                "included": [
+                  {
+                    "id": "dd2ad9cd-f063-43be-9338-fb665f211fe7",
+                    "type": "resource",
+                    "attributes": {
+                      "uri": "https://example.com/assessments/dd2ad9cd-f063-43be-9338-fb665f211fe7",
+                      "resource_type": "assessment",
+                      "title": null,
+                      "content": "esse et sit at consequatur fuga vitae sint eveniet architecto",
+                      "headline": null
+                    },
+                    "relationships": {
+                      "metadatas": {
+                        "data": [
+                          {
+                            "id": "8df8364e-32e2-4fbe-a042-1146a182214c",
+                            "type": "metadata"
+                          },
+                          {
+                            "id": "8f281be8-dd00-4917-bc3b-e165d0622701",
+                            "type": "metadata"
+                          }
+                        ]
+                      },
+                      "stats": {
+                        "data": []
+                      },
+                      "application": {
+                        "data": {
+                          "id": "fe8c6488-c09e-4d84-9776-2ce23c42ab8f",
+                          "type": "application"
+                        }
+                      },
+                      "application_user": {
+                        "data": {
+                          "id": "631e1674-a4da-4685-b785-7cc2377c38f6",
+                          "type": "application_user"
+                        }
+                      },
+                      "format": {
+                        "data": {
+                          "id": "odit ipsam doloremque nihil labore nobis cupiditate ipsa est cumque",
+                          "type": "format"
+                        }
+                      },
+                      "language": {
+                        "data": {
+                          "id": "adipisci qui exercitationem omnis praesentium blanditiis voluptas saepe rerum sed",
+                          "type": "language"
+                        }
+                      }
+                    }
+                  }
+                ]
               }
             }
           },
@@ -1100,7 +1204,7 @@
                     "status": "403",
                     "code": "forbidden_application_id",
                     "title": "Forbidden application id",
-                    "detail": "You are only allowed to provide your own application id (adcc4242-bc98-4b94-a831-e02c5185c35c)."
+                    "detail": "You are only allowed to provide your own application id (\"9f82002d-8347-437c-a651-82cbfb097940\")."
                   }
                 ]
               }
@@ -1122,7 +1226,7 @@
                     "status": "409",
                     "code": "invalid_application_type",
                     "title": "Invalid application type",
-                    "detail": "The type provided for the application relationship (resource) is invalid."
+                    "detail": "Invalid type provided for the \"application\" relationship (expected \"application\", got \"resource\")."
                   }
                 ]
               }
@@ -1160,7 +1264,7 @@
               "type": "string",
               "format": "uuid"
             },
-            "example": "7d6735b7-fbae-4282-8194-f200d0ac7072",
+            "example": "adc1d0b6-5f0c-41e5-9be4-84e526326b7e",
             "required": true
           },
           {
@@ -1171,7 +1275,7 @@
               "type": "string",
               "format": "uuid"
             },
-            "example": "4f3a7ab5-98b1-45ac-ac6b-6e2eb9d9eccc",
+            "example": "7d852739-ead5-423b-b73b-812548cda44a",
             "required": true
           },
           {
@@ -1196,7 +1300,7 @@
             "examples": {
               "response": {
                 "data": {
-                  "id": "995552f4-988f-4264-b48a-0d250ea0b386",
+                  "id": "8df8364e-32e2-4fbe-a042-1146a182214c",
                   "type": "metadata",
                   "attributes": {
                     "value": {
@@ -1206,36 +1310,86 @@
                   "relationships": {
                     "application": {
                       "data": {
-                        "id": "adcc4242-bc98-4b94-a831-e02c5185c35c",
+                        "id": "9f82002d-8347-437c-a651-82cbfb097940",
                         "type": "application"
                       }
                     },
                     "application_user": {
                       "data": {
-                        "id": "6e832092-1fd4-4e97-a6cf-a159de9b0e4a",
+                        "id": "4eea9aed-86f2-4b5d-922e-e0a16893d832",
                         "type": "application_user"
                       }
                     },
                     "resource": {
                       "data": {
-                        "id": "4b4a80cd-8a52-44bf-aa4f-a1ddd28a49e8",
+                        "id": "dd2ad9cd-f063-43be-9338-fb665f211fe7",
                         "type": "resource"
                       }
                     },
                     "format": {
                       "data": {
-                        "id": "assumenda ut id neque animi id facere error enim et",
+                        "id": "quidem non expedita numquam velit nesciunt odio eum suscipit ea",
                         "type": "format"
                       }
                     },
                     "language": {
                       "data": {
-                        "id": "ab est quisquam occaecati architecto nam est sit voluptatem possimus",
+                        "id": "cupiditate error et quibusdam quia sit saepe sunt ea omnis",
                         "type": "language"
                       }
                     }
                   }
-                }
+                },
+                "included": [
+                  {
+                    "id": "dd2ad9cd-f063-43be-9338-fb665f211fe7",
+                    "type": "resource",
+                    "attributes": {
+                      "uri": "https://example.com/assessments/dd2ad9cd-f063-43be-9338-fb665f211fe7",
+                      "resource_type": "assessment",
+                      "title": null,
+                      "content": "esse et sit at consequatur fuga vitae sint eveniet architecto",
+                      "headline": null
+                    },
+                    "relationships": {
+                      "metadatas": {
+                        "data": [
+                          {
+                            "id": "8df8364e-32e2-4fbe-a042-1146a182214c",
+                            "type": "metadata"
+                          }
+                        ]
+                      },
+                      "stats": {
+                        "data": []
+                      },
+                      "application": {
+                        "data": {
+                          "id": "fe8c6488-c09e-4d84-9776-2ce23c42ab8f",
+                          "type": "application"
+                        }
+                      },
+                      "application_user": {
+                        "data": {
+                          "id": "631e1674-a4da-4685-b785-7cc2377c38f6",
+                          "type": "application_user"
+                        }
+                      },
+                      "format": {
+                        "data": {
+                          "id": "odit ipsam doloremque nihil labore nobis cupiditate ipsa est cumque",
+                          "type": "format"
+                        }
+                      },
+                      "language": {
+                        "data": {
+                          "id": "adipisci qui exercitationem omnis praesentium blanditiis voluptas saepe rerum sed",
+                          "type": "language"
+                        }
+                      }
+                    }
+                  }
+                ]
               }
             }
           },
@@ -1255,7 +1409,7 @@
                     "status": "400",
                     "code": "missing_api_token",
                     "title": "Missing api token",
-                    "detail": "No API token was provided in the Authorization header."
+                    "detail": "No API token was provided in the \"Authorization\" header."
                   }
                 ]
               }
@@ -1277,7 +1431,7 @@
                     "status": "403",
                     "code": "invalid_api_token",
                     "title": "Invalid api token",
-                    "detail": "The API token provided in the Authorization header (14f419eba36fcd2c52e4f2cd206b77e5cac3a206648dafaa1a43f49e09d616d2) is invalid."
+                    "detail": "Invalid API token provided in the \"Authorization\" header (\"f0bfd5ad0d86c09590bd7dcd96ddcda2c5fd5f36b2d7c51b3cc406bd10a119e3\")."
                   }
                 ]
               }
@@ -1310,7 +1464,7 @@
               "type": "string",
               "format": "uuid"
             },
-            "example": "f2cc240b-eb72-402f-9842-7dcd20e1001f",
+            "example": "6d825236-a3f4-41d9-8f73-dfd2680d35d8",
             "required": true
           },
           {
@@ -1321,7 +1475,7 @@
               "type": "string",
               "format": "uuid"
             },
-            "example": "5e4e0657-aede-4eb6-ad21-5df156a27e13",
+            "example": "45bc812b-4d31-443a-84bb-c1accc9f2437",
             "required": true
           },
           {
@@ -1346,7 +1500,7 @@
             "examples": {
               "response": {
                 "data": {
-                  "id": "995552f4-988f-4264-b48a-0d250ea0b386",
+                  "id": "8df8364e-32e2-4fbe-a042-1146a182214c",
                   "type": "metadata",
                   "attributes": {
                     "value": {
@@ -1356,36 +1510,81 @@
                   "relationships": {
                     "application": {
                       "data": {
-                        "id": "adcc4242-bc98-4b94-a831-e02c5185c35c",
+                        "id": "9f82002d-8347-437c-a651-82cbfb097940",
                         "type": "application"
                       }
                     },
                     "application_user": {
                       "data": {
-                        "id": "6e832092-1fd4-4e97-a6cf-a159de9b0e4a",
+                        "id": "4eea9aed-86f2-4b5d-922e-e0a16893d832",
                         "type": "application_user"
                       }
                     },
                     "resource": {
                       "data": {
-                        "id": "4b4a80cd-8a52-44bf-aa4f-a1ddd28a49e8",
+                        "id": "dd2ad9cd-f063-43be-9338-fb665f211fe7",
                         "type": "resource"
                       }
                     },
                     "format": {
                       "data": {
-                        "id": "assumenda ut id neque animi id facere error enim et",
+                        "id": "quidem non expedita numquam velit nesciunt odio eum suscipit ea",
                         "type": "format"
                       }
                     },
                     "language": {
                       "data": {
-                        "id": "ab est quisquam occaecati architecto nam est sit voluptatem possimus",
+                        "id": "cupiditate error et quibusdam quia sit saepe sunt ea omnis",
                         "type": "language"
                       }
                     }
                   }
-                }
+                },
+                "included": [
+                  {
+                    "id": "dd2ad9cd-f063-43be-9338-fb665f211fe7",
+                    "type": "resource",
+                    "attributes": {
+                      "uri": "https://example.com/assessments/dd2ad9cd-f063-43be-9338-fb665f211fe7",
+                      "resource_type": "assessment",
+                      "title": null,
+                      "content": "esse et sit at consequatur fuga vitae sint eveniet architecto",
+                      "headline": null
+                    },
+                    "relationships": {
+                      "metadatas": {
+                        "data": []
+                      },
+                      "stats": {
+                        "data": []
+                      },
+                      "application": {
+                        "data": {
+                          "id": "fe8c6488-c09e-4d84-9776-2ce23c42ab8f",
+                          "type": "application"
+                        }
+                      },
+                      "application_user": {
+                        "data": {
+                          "id": "631e1674-a4da-4685-b785-7cc2377c38f6",
+                          "type": "application_user"
+                        }
+                      },
+                      "format": {
+                        "data": {
+                          "id": "odit ipsam doloremque nihil labore nobis cupiditate ipsa est cumque",
+                          "type": "format"
+                        }
+                      },
+                      "language": {
+                        "data": {
+                          "id": "adipisci qui exercitationem omnis praesentium blanditiis voluptas saepe rerum sed",
+                          "type": "language"
+                        }
+                      }
+                    }
+                  }
+                ]
               }
             }
           },
@@ -1405,7 +1604,7 @@
                     "status": "400",
                     "code": "missing_api_token",
                     "title": "Missing api token",
-                    "detail": "No API token was provided in the Authorization header."
+                    "detail": "No API token was provided in the \"Authorization\" header."
                   }
                 ]
               }
@@ -1427,7 +1626,7 @@
                     "status": "403",
                     "code": "invalid_api_token",
                     "title": "Invalid api token",
-                    "detail": "The API token provided in the Authorization header (9c56bea06e3390657b9efbae8b663f9dd9fb210d1f1a3c110ea59a7fce15832a) is invalid."
+                    "detail": "Invalid API token provided in the \"Authorization\" header (\"02529a9da4aac6971bc19e5d8b1ad3a01bb86c6456ae1c53b115de5f31daca7e\")."
                   }
                 ]
               }
@@ -1460,7 +1659,7 @@
               "type": "string",
               "format": "uuid"
             },
-            "example": "5b425d67-5779-4523-913f-09bf8ca82f8d",
+            "example": "e61197f7-d259-426d-b504-adcf0460273e",
             "required": true
           },
           {
@@ -1471,7 +1670,7 @@
               "type": "string",
               "format": "uuid"
             },
-            "example": "2a151088-369f-42ae-b8aa-6b019a463cb6",
+            "example": "a0acc45a-15f0-4d68-bebe-be007b44ed46",
             "required": true
           },
           {
@@ -1496,7 +1695,7 @@
             "examples": {
               "response": {
                 "data": {
-                  "id": "995552f4-988f-4264-b48a-0d250ea0b386",
+                  "id": "8df8364e-32e2-4fbe-a042-1146a182214c",
                   "type": "metadata",
                   "attributes": {
                     "value": {
@@ -1506,36 +1705,86 @@
                   "relationships": {
                     "application": {
                       "data": {
-                        "id": "adcc4242-bc98-4b94-a831-e02c5185c35c",
+                        "id": "9f82002d-8347-437c-a651-82cbfb097940",
                         "type": "application"
                       }
                     },
                     "application_user": {
                       "data": {
-                        "id": "6e832092-1fd4-4e97-a6cf-a159de9b0e4a",
+                        "id": "4eea9aed-86f2-4b5d-922e-e0a16893d832",
                         "type": "application_user"
                       }
                     },
                     "resource": {
                       "data": {
-                        "id": "4b4a80cd-8a52-44bf-aa4f-a1ddd28a49e8",
+                        "id": "dd2ad9cd-f063-43be-9338-fb665f211fe7",
                         "type": "resource"
                       }
                     },
                     "format": {
                       "data": {
-                        "id": "assumenda ut id neque animi id facere error enim et",
+                        "id": "quidem non expedita numquam velit nesciunt odio eum suscipit ea",
                         "type": "format"
                       }
                     },
                     "language": {
                       "data": {
-                        "id": "ab est quisquam occaecati architecto nam est sit voluptatem possimus",
+                        "id": "cupiditate error et quibusdam quia sit saepe sunt ea omnis",
                         "type": "language"
                       }
                     }
                   }
-                }
+                },
+                "included": [
+                  {
+                    "id": "dd2ad9cd-f063-43be-9338-fb665f211fe7",
+                    "type": "resource",
+                    "attributes": {
+                      "uri": "https://example.com/assessments/dd2ad9cd-f063-43be-9338-fb665f211fe7",
+                      "resource_type": "assessment",
+                      "title": null,
+                      "content": "esse et sit at consequatur fuga vitae sint eveniet architecto",
+                      "headline": null
+                    },
+                    "relationships": {
+                      "metadatas": {
+                        "data": [
+                          {
+                            "id": "8df8364e-32e2-4fbe-a042-1146a182214c",
+                            "type": "metadata"
+                          }
+                        ]
+                      },
+                      "stats": {
+                        "data": []
+                      },
+                      "application": {
+                        "data": {
+                          "id": "fe8c6488-c09e-4d84-9776-2ce23c42ab8f",
+                          "type": "application"
+                        }
+                      },
+                      "application_user": {
+                        "data": {
+                          "id": "631e1674-a4da-4685-b785-7cc2377c38f6",
+                          "type": "application_user"
+                        }
+                      },
+                      "format": {
+                        "data": {
+                          "id": "odit ipsam doloremque nihil labore nobis cupiditate ipsa est cumque",
+                          "type": "format"
+                        }
+                      },
+                      "language": {
+                        "data": {
+                          "id": "adipisci qui exercitationem omnis praesentium blanditiis voluptas saepe rerum sed",
+                          "type": "language"
+                        }
+                      }
+                    }
+                  }
+                ]
               }
             }
           },
@@ -1577,7 +1826,7 @@
                     "status": "403",
                     "code": "forbidden_application_id",
                     "title": "Forbidden application id",
-                    "detail": "You are only allowed to provide your own application id (adcc4242-bc98-4b94-a831-e02c5185c35c)."
+                    "detail": "You are only allowed to provide your own application id (\"9f82002d-8347-437c-a651-82cbfb097940\")."
                   }
                 ]
               }
@@ -1635,7 +1884,7 @@
               "type": "string",
               "format": "uuid"
             },
-            "example": "f82c5eb7-02cb-4bd1-a319-62d62c68a95d",
+            "example": "cd033e36-01ad-49e2-a65f-0c074bb007cc",
             "required": true
           },
           {
@@ -1646,7 +1895,7 @@
               "type": "string",
               "format": "uuid"
             },
-            "example": "72af3085-159b-4d0e-8f33-22fd2f7820a0",
+            "example": "90cf1090-6fb3-4d8a-a1ca-7ce863a663ce",
             "required": true
           },
           {
@@ -1671,7 +1920,7 @@
             "examples": {
               "response": {
                 "data": {
-                  "id": "995552f4-988f-4264-b48a-0d250ea0b386",
+                  "id": "8df8364e-32e2-4fbe-a042-1146a182214c",
                   "type": "metadata",
                   "attributes": {
                     "value": {
@@ -1681,7 +1930,7 @@
                   "relationships": {
                     "application": {
                       "data": {
-                        "id": "adcc4242-bc98-4b94-a831-e02c5185c35c",
+                        "id": "9f82002d-8347-437c-a651-82cbfb097940",
                         "type": "application"
                       }
                     },
@@ -1690,24 +1939,74 @@
                     },
                     "resource": {
                       "data": {
-                        "id": "4b4a80cd-8a52-44bf-aa4f-a1ddd28a49e8",
+                        "id": "dd2ad9cd-f063-43be-9338-fb665f211fe7",
                         "type": "resource"
                       }
                     },
                     "format": {
                       "data": {
-                        "id": "enim dignissimos ab neque fuga repudiandae dolorem et consequatur voluptatem",
+                        "id": "eum eveniet harum laborum officiis quibusdam quia ut error accusantium",
                         "type": "format"
                       }
                     },
                     "language": {
                       "data": {
-                        "id": "inventore consectetur fugiat quasi earum voluptas dignissimos aperiam rem est",
+                        "id": "quidem autem voluptatem ipsam rerum ab voluptate ut aliquam dolores",
                         "type": "language"
                       }
                     }
                   }
-                }
+                },
+                "included": [
+                  {
+                    "id": "dd2ad9cd-f063-43be-9338-fb665f211fe7",
+                    "type": "resource",
+                    "attributes": {
+                      "uri": "https://example.com/assessments/dd2ad9cd-f063-43be-9338-fb665f211fe7",
+                      "resource_type": "assessment",
+                      "title": null,
+                      "content": "esse et sit at consequatur fuga vitae sint eveniet architecto",
+                      "headline": null
+                    },
+                    "relationships": {
+                      "metadatas": {
+                        "data": [
+                          {
+                            "id": "8df8364e-32e2-4fbe-a042-1146a182214c",
+                            "type": "metadata"
+                          }
+                        ]
+                      },
+                      "stats": {
+                        "data": []
+                      },
+                      "application": {
+                        "data": {
+                          "id": "fe8c6488-c09e-4d84-9776-2ce23c42ab8f",
+                          "type": "application"
+                        }
+                      },
+                      "application_user": {
+                        "data": {
+                          "id": "631e1674-a4da-4685-b785-7cc2377c38f6",
+                          "type": "application_user"
+                        }
+                      },
+                      "format": {
+                        "data": {
+                          "id": "odit ipsam doloremque nihil labore nobis cupiditate ipsa est cumque",
+                          "type": "format"
+                        }
+                      },
+                      "language": {
+                        "data": {
+                          "id": "adipisci qui exercitationem omnis praesentium blanditiis voluptas saepe rerum sed",
+                          "type": "language"
+                        }
+                      }
+                    }
+                  }
+                ]
               }
             }
           },
@@ -1749,7 +2048,7 @@
                     "status": "403",
                     "code": "forbidden_application_id",
                     "title": "Forbidden application id",
-                    "detail": "You are only allowed to provide your own application id (adcc4242-bc98-4b94-a831-e02c5185c35c)."
+                    "detail": "You are only allowed to provide your own application id (\"9f82002d-8347-437c-a651-82cbfb097940\")."
                   }
                 ]
               }
@@ -1793,7 +2092,7 @@
                     "status": "409",
                     "code": "invalid_application_type",
                     "title": "Invalid application type",
-                    "detail": "The type provided for the application relationship (resource) is invalid."
+                    "detail": "Invalid type provided for the \"application\" relationship (expected \"application\", got \"resource\")."
                   }
                 ]
               }
@@ -1829,7 +2128,7 @@
               "type": "string",
               "format": "uuid"
             },
-            "example": "2a01e776-6584-4c72-86b9-a7f38458db18",
+            "example": "5af650a0-81f6-42da-b282-56cedc2e484d",
             "required": true
           },
           {
@@ -1840,7 +2139,7 @@
               "type": "string",
               "format": "uuid"
             },
-            "example": "3c9c27a6-6a61-4798-a196-9090b83b56d2",
+            "example": "ad87296e-d7f4-48cd-9ef8-0275c4c7eb9c",
             "required": true
           },
           {
@@ -1865,7 +2164,7 @@
             "examples": {
               "response": {
                 "data": {
-                  "id": "995552f4-988f-4264-b48a-0d250ea0b386",
+                  "id": "8df8364e-32e2-4fbe-a042-1146a182214c",
                   "type": "metadata",
                   "attributes": {
                     "value": {
@@ -1875,7 +2174,7 @@
                   "relationships": {
                     "application": {
                       "data": {
-                        "id": "adcc4242-bc98-4b94-a831-e02c5185c35c",
+                        "id": "9f82002d-8347-437c-a651-82cbfb097940",
                         "type": "application"
                       }
                     },
@@ -1884,24 +2183,74 @@
                     },
                     "resource": {
                       "data": {
-                        "id": "4b4a80cd-8a52-44bf-aa4f-a1ddd28a49e8",
+                        "id": "dd2ad9cd-f063-43be-9338-fb665f211fe7",
                         "type": "resource"
                       }
                     },
                     "format": {
                       "data": {
-                        "id": "enim dignissimos ab neque fuga repudiandae dolorem et consequatur voluptatem",
+                        "id": "eum eveniet harum laborum officiis quibusdam quia ut error accusantium",
                         "type": "format"
                       }
                     },
                     "language": {
                       "data": {
-                        "id": "inventore consectetur fugiat quasi earum voluptas dignissimos aperiam rem est",
+                        "id": "quidem autem voluptatem ipsam rerum ab voluptate ut aliquam dolores",
                         "type": "language"
                       }
                     }
                   }
-                }
+                },
+                "included": [
+                  {
+                    "id": "dd2ad9cd-f063-43be-9338-fb665f211fe7",
+                    "type": "resource",
+                    "attributes": {
+                      "uri": "https://example.com/assessments/dd2ad9cd-f063-43be-9338-fb665f211fe7",
+                      "resource_type": "assessment",
+                      "title": null,
+                      "content": "esse et sit at consequatur fuga vitae sint eveniet architecto",
+                      "headline": null
+                    },
+                    "relationships": {
+                      "metadatas": {
+                        "data": [
+                          {
+                            "id": "8df8364e-32e2-4fbe-a042-1146a182214c",
+                            "type": "metadata"
+                          }
+                        ]
+                      },
+                      "stats": {
+                        "data": []
+                      },
+                      "application": {
+                        "data": {
+                          "id": "fe8c6488-c09e-4d84-9776-2ce23c42ab8f",
+                          "type": "application"
+                        }
+                      },
+                      "application_user": {
+                        "data": {
+                          "id": "631e1674-a4da-4685-b785-7cc2377c38f6",
+                          "type": "application_user"
+                        }
+                      },
+                      "format": {
+                        "data": {
+                          "id": "odit ipsam doloremque nihil labore nobis cupiditate ipsa est cumque",
+                          "type": "format"
+                        }
+                      },
+                      "language": {
+                        "data": {
+                          "id": "adipisci qui exercitationem omnis praesentium blanditiis voluptas saepe rerum sed",
+                          "type": "language"
+                        }
+                      }
+                    }
+                  }
+                ]
               }
             }
           },
@@ -1943,7 +2292,7 @@
                     "status": "403",
                     "code": "forbidden_application_id",
                     "title": "Forbidden application id",
-                    "detail": "You are only allowed to provide your own application id (adcc4242-bc98-4b94-a831-e02c5185c35c)."
+                    "detail": "You are only allowed to provide your own application id (\"9f82002d-8347-437c-a651-82cbfb097940\")."
                   }
                 ]
               }
@@ -1987,7 +2336,7 @@
                     "status": "409",
                     "code": "invalid_application_type",
                     "title": "Invalid application type",
-                    "detail": "The type provided for the application relationship (resource) is invalid."
+                    "detail": "Invalid type provided for the \"application\" relationship (expected \"application\", got \"resource\")."
                   }
                 ]
               }
@@ -2029,7 +2378,7 @@
               "type": "string",
               "format": "uuid"
             },
-            "example": "fa993b76-f607-41b0-be62-2af237cd80d5",
+            "example": "0db06622-2e6d-4568-9cee-a18018540b0a",
             "required": true
           },
           {
@@ -2084,7 +2433,8 @@
             },
             "examples": {
               "response": {
-                "data": []
+                "data": [],
+                "included": []
               }
             }
           }
@@ -2117,31 +2467,37 @@
               "response": {
                 "data": [
                   {
-                    "id": "0a808012-b0f4-467e-bc0e-f656dd910a12",
+                    "id": "c865a148-71e3-43b9-a7a5-81577303b8cf",
                     "type": "resource",
                     "attributes": {
-                      "uri": "https://example.com/assessments/0a808012-b0f4-467e-bc0e-f656dd910a12",
+                      "uri": "https://example.com/assessments/c865a148-71e3-43b9-a7a5-81577303b8cf",
                       "resource_type": "assessment",
                       "title": "The fox and the dog",
                       "content": "The quick brown fox jumps over the lazy dog.",
                       "headline": "\u0026hellip; quick brown fox \u003cb\u003ejumps\u003c/b\u003e over the lazy \u0026hellip;"
                     },
                     "relationships": {
+                      "metadatas": {
+                        "data": []
+                      },
+                      "stats": {
+                        "data": []
+                      },
                       "application": {
                         "data": {
-                          "id": "e01d099b-3d19-4f29-9468-91aa197782ab",
+                          "id": "1be02305-4503-4fe7-8d8b-3e6d704a2f6b",
                           "type": "application"
                         }
                       },
                       "application_user": {
                         "data": {
-                          "id": "2e5a3888-3ccc-4dca-8682-7bdbd80eb21d",
+                          "id": "0d3ec7e6-16a4-455f-865d-2b88478862fc",
                           "type": "application_user"
                         }
                       },
                       "format": {
                         "data": {
-                          "id": "quod voluptatem non quam maxime ullam alias aut explicabo recusandae",
+                          "id": "consequatur repellat eum modi deleniti quos aut sed facere fugit",
                           "type": "format"
                         }
                       },
@@ -2153,7 +2509,8 @@
                       }
                     }
                   }
-                ]
+                ],
+                "included": []
               }
             }
           },
@@ -2173,7 +2530,7 @@
                     "status": "400",
                     "code": "missing_api_token",
                     "title": "Missing api token",
-                    "detail": "No API token was provided in the Authorization header."
+                    "detail": "No API token was provided in the \"Authorization\" header."
                   }
                 ]
               }
@@ -2195,7 +2552,7 @@
                     "status": "403",
                     "code": "invalid_api_token",
                     "title": "Invalid api token",
-                    "detail": "The API token provided in the Authorization header (bcd23036aebf68a4721306ba912d7c5a6de203ee950ab7e0ba85974ce494d945) is invalid."
+                    "detail": "Invalid API token provided in the \"Authorization\" header (\"3223f2734841e655856b07989bfd6e3c0022ef7151afdc3a91cd37a10fba88df\")."
                   }
                 ]
               }
@@ -2272,42 +2629,49 @@
             "examples": {
               "response": {
                 "data": {
-                  "id": "cde2972f-31bd-4672-89b7-c7f727ade2de",
+                  "id": "40609152-f0d3-4590-95eb-e0c9579d169c",
                   "type": "resource",
                   "attributes": {
-                    "uri": "https://example.com/assessments/27dc28f6-4df1-4faf-9f8c-272a7d09dbcd",
+                    "uri": "https://example.com/assessments/940a7eb5-5ae8-4e57-af08-7f3c0b536f12",
                     "resource_type": "assessment",
                     "title": null,
-                    "content": "pariatur natus consequatur aut error iure sapiente officiis maiores vero",
+                    "content": "quia cupiditate voluptate amet atque et ut eius voluptas laboriosam",
                     "headline": null
                   },
                   "relationships": {
+                    "metadatas": {
+                      "data": []
+                    },
+                    "stats": {
+                      "data": []
+                    },
                     "application": {
                       "data": {
-                        "id": "e01d099b-3d19-4f29-9468-91aa197782ab",
+                        "id": "1be02305-4503-4fe7-8d8b-3e6d704a2f6b",
                         "type": "application"
                       }
                     },
                     "application_user": {
                       "data": {
-                        "id": "aee77be5-399a-4b7c-93cb-d1081636ba5c",
+                        "id": "d2aa275b-0f45-48c1-a64b-9f30648be59a",
                         "type": "application_user"
                       }
                     },
                     "format": {
                       "data": {
-                        "id": "itaque ipsum eum voluptates eveniet error eligendi eius expedita at",
+                        "id": "exercitationem est consequatur adipisci et enim dolore omnis laborum dolorem",
                         "type": "format"
                       }
                     },
                     "language": {
                       "data": {
-                        "id": "doloribus maxime et distinctio rerum possimus dolorem quia praesentium quaerat",
+                        "id": "tenetur eos sed earum illo et esse cupiditate dolorem harum",
                         "type": "language"
                       }
                     }
                   }
-                }
+                },
+                "included": []
               }
             }
           },
@@ -2349,7 +2713,7 @@
                     "status": "403",
                     "code": "forbidden_application_id",
                     "title": "Forbidden application id",
-                    "detail": "You are only allowed to provide your own application id (e01d099b-3d19-4f29-9468-91aa197782ab)."
+                    "detail": "You are only allowed to provide your own application id (\"1be02305-4503-4fe7-8d8b-3e6d704a2f6b\")."
                   }
                 ]
               }
@@ -2419,7 +2783,7 @@
               "type": "string",
               "format": "uuid"
             },
-            "example": "d918741b-ad11-4cf2-bbc0-0ef93de80a3c",
+            "example": "7fb80040-0678-44ed-bf3a-634777f93427",
             "required": true
           },
           {
@@ -2444,42 +2808,49 @@
             "examples": {
               "response": {
                 "data": {
-                  "id": "a20da6bd-d8e8-4881-8530-726d6bd2cce4",
+                  "id": "dc4657e3-d851-4a48-99e5-78044425796c",
                   "type": "resource",
                   "attributes": {
-                    "uri": "https://example.com/assessments/a20da6bd-d8e8-4881-8530-726d6bd2cce4",
+                    "uri": "https://example.com/assessments/dc4657e3-d851-4a48-99e5-78044425796c",
                     "resource_type": "assessment",
                     "title": null,
-                    "content": "pariatur natus consequatur aut error iure sapiente officiis maiores vero",
+                    "content": "quia cupiditate voluptate amet atque et ut eius voluptas laboriosam",
                     "headline": null
                   },
                   "relationships": {
+                    "metadatas": {
+                      "data": []
+                    },
+                    "stats": {
+                      "data": []
+                    },
                     "application": {
                       "data": {
-                        "id": "e01d099b-3d19-4f29-9468-91aa197782ab",
+                        "id": "1be02305-4503-4fe7-8d8b-3e6d704a2f6b",
                         "type": "application"
                       }
                     },
                     "application_user": {
                       "data": {
-                        "id": "aee77be5-399a-4b7c-93cb-d1081636ba5c",
+                        "id": "d2aa275b-0f45-48c1-a64b-9f30648be59a",
                         "type": "application_user"
                       }
                     },
                     "format": {
                       "data": {
-                        "id": "itaque ipsum eum voluptates eveniet error eligendi eius expedita at",
+                        "id": "exercitationem est consequatur adipisci et enim dolore omnis laborum dolorem",
                         "type": "format"
                       }
                     },
                     "language": {
                       "data": {
-                        "id": "doloribus maxime et distinctio rerum possimus dolorem quia praesentium quaerat",
+                        "id": "tenetur eos sed earum illo et esse cupiditate dolorem harum",
                         "type": "language"
                       }
                     }
                   }
-                }
+                },
+                "included": []
               }
             }
           },
@@ -2499,7 +2870,7 @@
                     "status": "400",
                     "code": "missing_api_token",
                     "title": "Missing api token",
-                    "detail": "No API token was provided in the Authorization header."
+                    "detail": "No API token was provided in the \"Authorization\" header."
                   }
                 ]
               }
@@ -2521,7 +2892,7 @@
                     "status": "403",
                     "code": "invalid_api_token",
                     "title": "Invalid api token",
-                    "detail": "The API token provided in the Authorization header (0d787d0e2707fb8f0305c81b1fc184a81fcccdb123a0dcc0973e0969baea3540) is invalid."
+                    "detail": "Invalid API token provided in the \"Authorization\" header (\"d20c7513c64573f5d5a8ca378234ed987012e3bfcd23fa985b8434ca78d9cc58\")."
                   }
                 ]
               }
@@ -2554,7 +2925,7 @@
               "type": "string",
               "format": "uuid"
             },
-            "example": "f84aed38-3f1a-4f05-8134-d31b29182919",
+            "example": "e6223cea-2d3b-4a8f-89b1-d56b36bb3af9",
             "required": true
           },
           {
@@ -2579,42 +2950,49 @@
             "examples": {
               "response": {
                 "data": {
-                  "id": "a20da6bd-d8e8-4881-8530-726d6bd2cce4",
+                  "id": "dc4657e3-d851-4a48-99e5-78044425796c",
                   "type": "resource",
                   "attributes": {
-                    "uri": "https://example.com/assessments/a20da6bd-d8e8-4881-8530-726d6bd2cce4",
+                    "uri": "https://example.com/assessments/dc4657e3-d851-4a48-99e5-78044425796c",
                     "resource_type": "assessment",
                     "title": null,
-                    "content": "pariatur natus consequatur aut error iure sapiente officiis maiores vero",
+                    "content": "quia cupiditate voluptate amet atque et ut eius voluptas laboriosam",
                     "headline": null
                   },
                   "relationships": {
+                    "metadatas": {
+                      "data": []
+                    },
+                    "stats": {
+                      "data": []
+                    },
                     "application": {
                       "data": {
-                        "id": "e01d099b-3d19-4f29-9468-91aa197782ab",
+                        "id": "1be02305-4503-4fe7-8d8b-3e6d704a2f6b",
                         "type": "application"
                       }
                     },
                     "application_user": {
                       "data": {
-                        "id": "aee77be5-399a-4b7c-93cb-d1081636ba5c",
+                        "id": "d2aa275b-0f45-48c1-a64b-9f30648be59a",
                         "type": "application_user"
                       }
                     },
                     "format": {
                       "data": {
-                        "id": "itaque ipsum eum voluptates eveniet error eligendi eius expedita at",
+                        "id": "exercitationem est consequatur adipisci et enim dolore omnis laborum dolorem",
                         "type": "format"
                       }
                     },
                     "language": {
                       "data": {
-                        "id": "doloribus maxime et distinctio rerum possimus dolorem quia praesentium quaerat",
+                        "id": "tenetur eos sed earum illo et esse cupiditate dolorem harum",
                         "type": "language"
                       }
                     }
                   }
-                }
+                },
+                "included": []
               }
             }
           },
@@ -2634,7 +3012,7 @@
                     "status": "400",
                     "code": "missing_api_token",
                     "title": "Missing api token",
-                    "detail": "No API token was provided in the Authorization header."
+                    "detail": "No API token was provided in the \"Authorization\" header."
                   }
                 ]
               }
@@ -2656,7 +3034,7 @@
                     "status": "403",
                     "code": "invalid_api_token",
                     "title": "Invalid api token",
-                    "detail": "The API token provided in the Authorization header (6e0fe982b1b89efbbc2ae1bae01f9cfb1d29a13a4ee01c5638e4e3cb8c0e5162) is invalid."
+                    "detail": "Invalid API token provided in the \"Authorization\" header (\"4ba329f0e51ab3167761c455d00532364034e6f4f158a62538de917b6ffede4a\")."
                   }
                 ]
               }
@@ -2689,7 +3067,7 @@
               "type": "string",
               "format": "uuid"
             },
-            "example": "d9e280b8-0fc7-4046-a45a-7b468eaf89e7",
+            "example": "280f4fc8-24aa-43be-a9aa-c5d1d4b67987",
             "required": true
           },
           {
@@ -2714,42 +3092,49 @@
             "examples": {
               "response": {
                 "data": {
-                  "id": "a20da6bd-d8e8-4881-8530-726d6bd2cce4",
+                  "id": "dc4657e3-d851-4a48-99e5-78044425796c",
                   "type": "resource",
                   "attributes": {
-                    "uri": "https://example.com/assessments/a20da6bd-d8e8-4881-8530-726d6bd2cce4",
+                    "uri": "https://example.com/assessments/dc4657e3-d851-4a48-99e5-78044425796c",
                     "resource_type": "assessment",
                     "title": null,
-                    "content": "pariatur natus consequatur aut error iure sapiente officiis maiores vero",
+                    "content": "quia cupiditate voluptate amet atque et ut eius voluptas laboriosam",
                     "headline": null
                   },
                   "relationships": {
+                    "metadatas": {
+                      "data": []
+                    },
+                    "stats": {
+                      "data": []
+                    },
                     "application": {
                       "data": {
-                        "id": "e01d099b-3d19-4f29-9468-91aa197782ab",
+                        "id": "1be02305-4503-4fe7-8d8b-3e6d704a2f6b",
                         "type": "application"
                       }
                     },
                     "application_user": {
                       "data": {
-                        "id": "aee77be5-399a-4b7c-93cb-d1081636ba5c",
+                        "id": "d2aa275b-0f45-48c1-a64b-9f30648be59a",
                         "type": "application_user"
                       }
                     },
                     "format": {
                       "data": {
-                        "id": "itaque ipsum eum voluptates eveniet error eligendi eius expedita at",
+                        "id": "exercitationem est consequatur adipisci et enim dolore omnis laborum dolorem",
                         "type": "format"
                       }
                     },
                     "language": {
                       "data": {
-                        "id": "doloribus maxime et distinctio rerum possimus dolorem quia praesentium quaerat",
+                        "id": "tenetur eos sed earum illo et esse cupiditate dolorem harum",
                         "type": "language"
                       }
                     }
                   }
-                }
+                },
+                "included": []
               }
             }
           },
@@ -2791,7 +3176,7 @@
                     "status": "403",
                     "code": "forbidden_application_id",
                     "title": "Forbidden application id",
-                    "detail": "You are only allowed to provide your own application id (e01d099b-3d19-4f29-9468-91aa197782ab)."
+                    "detail": "You are only allowed to provide your own application id (\"1be02305-4503-4fe7-8d8b-3e6d704a2f6b\")."
                   }
                 ]
               }
@@ -2855,7 +3240,7 @@
               "type": "string",
               "format": "uuid"
             },
-            "example": "0e1eed7f-7190-49ff-b8de-502a6df9d0b1",
+            "example": "64763f2b-9d3c-45dc-9a55-f2d154315338",
             "required": true
           },
           {
@@ -2880,19 +3265,25 @@
             "examples": {
               "response": {
                 "data": {
-                  "id": "a20da6bd-d8e8-4881-8530-726d6bd2cce4",
+                  "id": "dc4657e3-d851-4a48-99e5-78044425796c",
                   "type": "resource",
                   "attributes": {
-                    "uri": "https://example.com/assessments/5851e274-424f-4aee-ab7c-83c3c7bbb810",
+                    "uri": "https://example.com/assessments/17b1086a-f016-4cca-b62c-a840079565e2",
                     "resource_type": "assessment",
                     "title": null,
-                    "content": "totam aut sit ipsum maxime velit ipsam dolorum veritatis minima",
+                    "content": "at in debitis vitae officiis ipsa numquam unde in commodi",
                     "headline": null
                   },
                   "relationships": {
+                    "metadatas": {
+                      "data": []
+                    },
+                    "stats": {
+                      "data": []
+                    },
                     "application": {
                       "data": {
-                        "id": "e01d099b-3d19-4f29-9468-91aa197782ab",
+                        "id": "1be02305-4503-4fe7-8d8b-3e6d704a2f6b",
                         "type": "application"
                       }
                     },
@@ -2901,18 +3292,19 @@
                     },
                     "format": {
                       "data": {
-                        "id": "enim eos vel corporis ea ut sit labore maiores molestias",
+                        "id": "voluptate ipsam adipisci dignissimos commodi recusandae sed ratione aperiam iusto",
                         "type": "format"
                       }
                     },
                     "language": {
                       "data": {
-                        "id": "accusamus aliquam adipisci nemo voluptatem deleniti iure dolores aperiam in",
+                        "id": "dolore dignissimos similique dolor aperiam quasi rerum itaque blanditiis fugiat",
                         "type": "language"
                       }
                     }
                   }
-                }
+                },
+                "included": []
               }
             }
           },
@@ -2954,7 +3346,7 @@
                     "status": "403",
                     "code": "forbidden_application_id",
                     "title": "Forbidden application id",
-                    "detail": "You are only allowed to provide your own application id (e01d099b-3d19-4f29-9468-91aa197782ab)."
+                    "detail": "You are only allowed to provide your own application id (\"1be02305-4503-4fe7-8d8b-3e6d704a2f6b\")."
                   }
                 ]
               }
@@ -2998,7 +3390,7 @@
                     "status": "409",
                     "code": "invalid_application_type",
                     "title": "Invalid application type",
-                    "detail": "The type provided for the application relationship (resource) is invalid."
+                    "detail": "Invalid type provided for the \"application\" relationship (expected \"application\", got \"resource\")."
                   }
                 ]
               }
@@ -3034,7 +3426,7 @@
               "type": "string",
               "format": "uuid"
             },
-            "example": "6c6c11ce-8eee-463a-a285-3412eddd1de8",
+            "example": "62c7edc0-0bf5-40f1-a975-77cf0afac4dd",
             "required": true
           },
           {
@@ -3059,19 +3451,25 @@
             "examples": {
               "response": {
                 "data": {
-                  "id": "a20da6bd-d8e8-4881-8530-726d6bd2cce4",
+                  "id": "dc4657e3-d851-4a48-99e5-78044425796c",
                   "type": "resource",
                   "attributes": {
-                    "uri": "https://example.com/assessments/5851e274-424f-4aee-ab7c-83c3c7bbb810",
+                    "uri": "https://example.com/assessments/17b1086a-f016-4cca-b62c-a840079565e2",
                     "resource_type": "assessment",
                     "title": null,
-                    "content": "totam aut sit ipsum maxime velit ipsam dolorum veritatis minima",
+                    "content": "at in debitis vitae officiis ipsa numquam unde in commodi",
                     "headline": null
                   },
                   "relationships": {
+                    "metadatas": {
+                      "data": []
+                    },
+                    "stats": {
+                      "data": []
+                    },
                     "application": {
                       "data": {
-                        "id": "e01d099b-3d19-4f29-9468-91aa197782ab",
+                        "id": "1be02305-4503-4fe7-8d8b-3e6d704a2f6b",
                         "type": "application"
                       }
                     },
@@ -3080,18 +3478,19 @@
                     },
                     "format": {
                       "data": {
-                        "id": "enim eos vel corporis ea ut sit labore maiores molestias",
+                        "id": "voluptate ipsam adipisci dignissimos commodi recusandae sed ratione aperiam iusto",
                         "type": "format"
                       }
                     },
                     "language": {
                       "data": {
-                        "id": "accusamus aliquam adipisci nemo voluptatem deleniti iure dolores aperiam in",
+                        "id": "dolore dignissimos similique dolor aperiam quasi rerum itaque blanditiis fugiat",
                         "type": "language"
                       }
                     }
                   }
-                }
+                },
+                "included": []
               }
             }
           },
@@ -3133,7 +3532,7 @@
                     "status": "403",
                     "code": "forbidden_application_id",
                     "title": "Forbidden application id",
-                    "detail": "You are only allowed to provide your own application id (e01d099b-3d19-4f29-9468-91aa197782ab)."
+                    "detail": "You are only allowed to provide your own application id (\"1be02305-4503-4fe7-8d8b-3e6d704a2f6b\")."
                   }
                 ]
               }
@@ -3177,7 +3576,7 @@
                     "status": "409",
                     "code": "invalid_application_type",
                     "title": "Invalid application type",
-                    "detail": "The type provided for the application relationship (resource) is invalid."
+                    "detail": "Invalid type provided for the \"application\" relationship (expected \"application\", got \"resource\")."
                   }
                 ]
               }
@@ -3215,7 +3614,7 @@
               "type": "string",
               "format": "uuid"
             },
-            "example": "80ebeaa4-7a84-48db-9617-016a0c6ff8ff",
+            "example": "1653e150-9a21-4b88-9fd3-60b2dfd6393f",
             "required": true
           },
           {
@@ -3241,7 +3640,7 @@
               "response": {
                 "data": [
                   {
-                    "id": "311cfa1b-3ac7-46bd-8063-f77942ff9d9b",
+                    "id": "f89b7144-c388-45ae-be9e-1d22ba0daa76",
                     "type": "stats",
                     "attributes": {
                       "value": {
@@ -3251,31 +3650,81 @@
                     "relationships": {
                       "application": {
                         "data": {
-                          "id": "9f34f4e3-0650-47ba-8fb5-00036b819e1b",
+                          "id": "86dc5346-3bdf-43bb-8b46-a83cde39a94c",
                           "type": "application"
                         }
                       },
                       "application_user": {
                         "data": {
-                          "id": "aa80542c-c972-4df1-a682-edba2ffaca4d",
+                          "id": "ff203743-acb4-46dc-b392-4d40e40e9d4a",
                           "type": "application_user"
                         }
                       },
                       "resource": {
                         "data": {
-                          "id": "6611e2eb-3e03-4974-b546-2b2a0ece72af",
+                          "id": "b8de60d0-dcc3-4881-9c67-6367aa26edeb",
                           "type": "resource"
                         }
                       },
                       "format": {
                         "data": {
-                          "id": "veritatis quia recusandae labore porro in officiis id quam eaque",
+                          "id": "accusamus iure sapiente rerum corrupti nobis animi aut omnis sequi",
                           "type": "format"
                         }
                       },
                       "language": {
                         "data": {
-                          "id": "dolorem pariatur ut quia facilis architecto totam illum enim sunt",
+                          "id": "et occaecati ab eius vero sit natus dolore ad excepturi",
+                          "type": "language"
+                        }
+                      }
+                    }
+                  }
+                ],
+                "included": [
+                  {
+                    "id": "b8de60d0-dcc3-4881-9c67-6367aa26edeb",
+                    "type": "resource",
+                    "attributes": {
+                      "uri": "https://example.com/assessments/b8de60d0-dcc3-4881-9c67-6367aa26edeb",
+                      "resource_type": "assessment",
+                      "title": null,
+                      "content": "fugiat numquam eligendi debitis temporibus voluptatem nihil voluptas commodi saepe",
+                      "headline": null
+                    },
+                    "relationships": {
+                      "metadatas": {
+                        "data": []
+                      },
+                      "stats": {
+                        "data": [
+                          {
+                            "id": "f89b7144-c388-45ae-be9e-1d22ba0daa76",
+                            "type": "stats"
+                          }
+                        ]
+                      },
+                      "application": {
+                        "data": {
+                          "id": "dabbeb9d-1f36-445b-aa53-850e1423cfc9",
+                          "type": "application"
+                        }
+                      },
+                      "application_user": {
+                        "data": {
+                          "id": "4f16c7d0-0461-4c29-9612-e4b80df936d4",
+                          "type": "application_user"
+                        }
+                      },
+                      "format": {
+                        "data": {
+                          "id": "quisquam labore est qui aut qui sint minima excepturi ratione",
+                          "type": "format"
+                        }
+                      },
+                      "language": {
+                        "data": {
+                          "id": "et eius provident ex a facilis molestias velit molestiae libero",
                           "type": "language"
                         }
                       }
@@ -3301,7 +3750,7 @@
                     "status": "400",
                     "code": "missing_api_token",
                     "title": "Missing api token",
-                    "detail": "No API token was provided in the Authorization header."
+                    "detail": "No API token was provided in the \"Authorization\" header."
                   }
                 ]
               }
@@ -3323,7 +3772,7 @@
                     "status": "403",
                     "code": "invalid_api_token",
                     "title": "Invalid api token",
-                    "detail": "The API token provided in the Authorization header (324250babb72bdacc93b41c9413d6fd1ff4b5b3ff26c6c8eb1efa9a815d2bf00) is invalid."
+                    "detail": "Invalid API token provided in the \"Authorization\" header (\"ce39087814b406b6c3e1b5e8fda6185ce74941410df551ad689ca621a8e11602\")."
                   }
                 ]
               }
@@ -3356,7 +3805,7 @@
               "type": "string",
               "format": "uuid"
             },
-            "example": "8fcc5c17-6838-4679-910c-a37ab2d19e44",
+            "example": "c66ea30b-358d-4982-b762-1e37caa8eead",
             "required": true
           },
           {
@@ -3381,7 +3830,7 @@
             "examples": {
               "response": {
                 "data": {
-                  "id": "76a8b9b5-2b33-4f60-a0e0-d17d6ffbf4d0",
+                  "id": "9b422e69-c9f2-46f2-a0d9-f8c2bf5dd58f",
                   "type": "stats",
                   "attributes": {
                     "value": {
@@ -3391,36 +3840,90 @@
                   "relationships": {
                     "application": {
                       "data": {
-                        "id": "9f34f4e3-0650-47ba-8fb5-00036b819e1b",
+                        "id": "86dc5346-3bdf-43bb-8b46-a83cde39a94c",
                         "type": "application"
                       }
                     },
                     "application_user": {
                       "data": {
-                        "id": "aa80542c-c972-4df1-a682-edba2ffaca4d",
+                        "id": "ff203743-acb4-46dc-b392-4d40e40e9d4a",
                         "type": "application_user"
                       }
                     },
                     "resource": {
                       "data": {
-                        "id": "6611e2eb-3e03-4974-b546-2b2a0ece72af",
+                        "id": "b8de60d0-dcc3-4881-9c67-6367aa26edeb",
                         "type": "resource"
                       }
                     },
                     "format": {
                       "data": {
-                        "id": "veritatis quia recusandae labore porro in officiis id quam eaque",
+                        "id": "accusamus iure sapiente rerum corrupti nobis animi aut omnis sequi",
                         "type": "format"
                       }
                     },
                     "language": {
                       "data": {
-                        "id": "dolorem pariatur ut quia facilis architecto totam illum enim sunt",
+                        "id": "et occaecati ab eius vero sit natus dolore ad excepturi",
                         "type": "language"
                       }
                     }
                   }
-                }
+                },
+                "included": [
+                  {
+                    "id": "b8de60d0-dcc3-4881-9c67-6367aa26edeb",
+                    "type": "resource",
+                    "attributes": {
+                      "uri": "https://example.com/assessments/b8de60d0-dcc3-4881-9c67-6367aa26edeb",
+                      "resource_type": "assessment",
+                      "title": null,
+                      "content": "fugiat numquam eligendi debitis temporibus voluptatem nihil voluptas commodi saepe",
+                      "headline": null
+                    },
+                    "relationships": {
+                      "metadatas": {
+                        "data": []
+                      },
+                      "stats": {
+                        "data": [
+                          {
+                            "id": "f89b7144-c388-45ae-be9e-1d22ba0daa76",
+                            "type": "stats"
+                          },
+                          {
+                            "id": "9b422e69-c9f2-46f2-a0d9-f8c2bf5dd58f",
+                            "type": "stats"
+                          }
+                        ]
+                      },
+                      "application": {
+                        "data": {
+                          "id": "dabbeb9d-1f36-445b-aa53-850e1423cfc9",
+                          "type": "application"
+                        }
+                      },
+                      "application_user": {
+                        "data": {
+                          "id": "4f16c7d0-0461-4c29-9612-e4b80df936d4",
+                          "type": "application_user"
+                        }
+                      },
+                      "format": {
+                        "data": {
+                          "id": "quisquam labore est qui aut qui sint minima excepturi ratione",
+                          "type": "format"
+                        }
+                      },
+                      "language": {
+                        "data": {
+                          "id": "et eius provident ex a facilis molestias velit molestiae libero",
+                          "type": "language"
+                        }
+                      }
+                    }
+                  }
+                ]
               }
             }
           },
@@ -3462,7 +3965,7 @@
                     "status": "403",
                     "code": "forbidden_application_id",
                     "title": "Forbidden application id",
-                    "detail": "You are only allowed to provide your own application id (9f34f4e3-0650-47ba-8fb5-00036b819e1b)."
+                    "detail": "You are only allowed to provide your own application id (\"86dc5346-3bdf-43bb-8b46-a83cde39a94c\")."
                   }
                 ]
               }
@@ -3484,7 +3987,7 @@
                     "status": "409",
                     "code": "invalid_application_type",
                     "title": "Invalid application type",
-                    "detail": "The type provided for the application relationship (resource) is invalid."
+                    "detail": "Invalid type provided for the \"application\" relationship (expected \"application\", got \"resource\")."
                   }
                 ]
               }
@@ -3522,7 +4025,7 @@
               "type": "string",
               "format": "uuid"
             },
-            "example": "6a878887-8e9e-4899-b2be-49867e542ca9",
+            "example": "6ce7f4e2-1804-4622-b484-6d544aaa6194",
             "required": true
           },
           {
@@ -3533,7 +4036,7 @@
               "type": "string",
               "format": "uuid"
             },
-            "example": "36911572-3621-4cbd-8a0f-38846bb907f7",
+            "example": "ddaa2084-a0a5-4b58-b53b-ba60b65e27f3",
             "required": true
           },
           {
@@ -3558,7 +4061,7 @@
             "examples": {
               "response": {
                 "data": {
-                  "id": "311cfa1b-3ac7-46bd-8063-f77942ff9d9b",
+                  "id": "f89b7144-c388-45ae-be9e-1d22ba0daa76",
                   "type": "stats",
                   "attributes": {
                     "value": {
@@ -3568,36 +4071,86 @@
                   "relationships": {
                     "application": {
                       "data": {
-                        "id": "9f34f4e3-0650-47ba-8fb5-00036b819e1b",
+                        "id": "86dc5346-3bdf-43bb-8b46-a83cde39a94c",
                         "type": "application"
                       }
                     },
                     "application_user": {
                       "data": {
-                        "id": "aa80542c-c972-4df1-a682-edba2ffaca4d",
+                        "id": "ff203743-acb4-46dc-b392-4d40e40e9d4a",
                         "type": "application_user"
                       }
                     },
                     "resource": {
                       "data": {
-                        "id": "6611e2eb-3e03-4974-b546-2b2a0ece72af",
+                        "id": "b8de60d0-dcc3-4881-9c67-6367aa26edeb",
                         "type": "resource"
                       }
                     },
                     "format": {
                       "data": {
-                        "id": "veritatis quia recusandae labore porro in officiis id quam eaque",
+                        "id": "accusamus iure sapiente rerum corrupti nobis animi aut omnis sequi",
                         "type": "format"
                       }
                     },
                     "language": {
                       "data": {
-                        "id": "dolorem pariatur ut quia facilis architecto totam illum enim sunt",
+                        "id": "et occaecati ab eius vero sit natus dolore ad excepturi",
                         "type": "language"
                       }
                     }
                   }
-                }
+                },
+                "included": [
+                  {
+                    "id": "b8de60d0-dcc3-4881-9c67-6367aa26edeb",
+                    "type": "resource",
+                    "attributes": {
+                      "uri": "https://example.com/assessments/b8de60d0-dcc3-4881-9c67-6367aa26edeb",
+                      "resource_type": "assessment",
+                      "title": null,
+                      "content": "fugiat numquam eligendi debitis temporibus voluptatem nihil voluptas commodi saepe",
+                      "headline": null
+                    },
+                    "relationships": {
+                      "metadatas": {
+                        "data": []
+                      },
+                      "stats": {
+                        "data": [
+                          {
+                            "id": "f89b7144-c388-45ae-be9e-1d22ba0daa76",
+                            "type": "stats"
+                          }
+                        ]
+                      },
+                      "application": {
+                        "data": {
+                          "id": "dabbeb9d-1f36-445b-aa53-850e1423cfc9",
+                          "type": "application"
+                        }
+                      },
+                      "application_user": {
+                        "data": {
+                          "id": "4f16c7d0-0461-4c29-9612-e4b80df936d4",
+                          "type": "application_user"
+                        }
+                      },
+                      "format": {
+                        "data": {
+                          "id": "quisquam labore est qui aut qui sint minima excepturi ratione",
+                          "type": "format"
+                        }
+                      },
+                      "language": {
+                        "data": {
+                          "id": "et eius provident ex a facilis molestias velit molestiae libero",
+                          "type": "language"
+                        }
+                      }
+                    }
+                  }
+                ]
               }
             }
           },
@@ -3617,7 +4170,7 @@
                     "status": "400",
                     "code": "missing_api_token",
                     "title": "Missing api token",
-                    "detail": "No API token was provided in the Authorization header."
+                    "detail": "No API token was provided in the \"Authorization\" header."
                   }
                 ]
               }
@@ -3639,7 +4192,7 @@
                     "status": "403",
                     "code": "invalid_api_token",
                     "title": "Invalid api token",
-                    "detail": "The API token provided in the Authorization header (1456c238bfb35eed1a6929f4fe3eac133955a877cf543f21acb0b3b593d7b71d) is invalid."
+                    "detail": "Invalid API token provided in the \"Authorization\" header (\"b4807e4b8b0c1f5434cf4cc0fc20e2dbf1b9d4f63418c8c8b9f51179f9f9fd9c\")."
                   }
                 ]
               }
@@ -3672,7 +4225,7 @@
               "type": "string",
               "format": "uuid"
             },
-            "example": "74b0e604-64d0-4b22-b248-4e997d41bd6a",
+            "example": "bbc83ea0-53ad-4788-8702-d6e5234eb140",
             "required": true
           },
           {
@@ -3683,7 +4236,7 @@
               "type": "string",
               "format": "uuid"
             },
-            "example": "5df6e1d8-8e4b-4b2b-b89f-6f0189fd0d86",
+            "example": "bb126f10-2c84-44c8-b363-52da4a591cfd",
             "required": true
           },
           {
@@ -3708,7 +4261,7 @@
             "examples": {
               "response": {
                 "data": {
-                  "id": "311cfa1b-3ac7-46bd-8063-f77942ff9d9b",
+                  "id": "f89b7144-c388-45ae-be9e-1d22ba0daa76",
                   "type": "stats",
                   "attributes": {
                     "value": {
@@ -3718,36 +4271,81 @@
                   "relationships": {
                     "application": {
                       "data": {
-                        "id": "9f34f4e3-0650-47ba-8fb5-00036b819e1b",
+                        "id": "86dc5346-3bdf-43bb-8b46-a83cde39a94c",
                         "type": "application"
                       }
                     },
                     "application_user": {
                       "data": {
-                        "id": "aa80542c-c972-4df1-a682-edba2ffaca4d",
+                        "id": "ff203743-acb4-46dc-b392-4d40e40e9d4a",
                         "type": "application_user"
                       }
                     },
                     "resource": {
                       "data": {
-                        "id": "6611e2eb-3e03-4974-b546-2b2a0ece72af",
+                        "id": "b8de60d0-dcc3-4881-9c67-6367aa26edeb",
                         "type": "resource"
                       }
                     },
                     "format": {
                       "data": {
-                        "id": "veritatis quia recusandae labore porro in officiis id quam eaque",
+                        "id": "accusamus iure sapiente rerum corrupti nobis animi aut omnis sequi",
                         "type": "format"
                       }
                     },
                     "language": {
                       "data": {
-                        "id": "dolorem pariatur ut quia facilis architecto totam illum enim sunt",
+                        "id": "et occaecati ab eius vero sit natus dolore ad excepturi",
                         "type": "language"
                       }
                     }
                   }
-                }
+                },
+                "included": [
+                  {
+                    "id": "b8de60d0-dcc3-4881-9c67-6367aa26edeb",
+                    "type": "resource",
+                    "attributes": {
+                      "uri": "https://example.com/assessments/b8de60d0-dcc3-4881-9c67-6367aa26edeb",
+                      "resource_type": "assessment",
+                      "title": null,
+                      "content": "fugiat numquam eligendi debitis temporibus voluptatem nihil voluptas commodi saepe",
+                      "headline": null
+                    },
+                    "relationships": {
+                      "metadatas": {
+                        "data": []
+                      },
+                      "stats": {
+                        "data": []
+                      },
+                      "application": {
+                        "data": {
+                          "id": "dabbeb9d-1f36-445b-aa53-850e1423cfc9",
+                          "type": "application"
+                        }
+                      },
+                      "application_user": {
+                        "data": {
+                          "id": "4f16c7d0-0461-4c29-9612-e4b80df936d4",
+                          "type": "application_user"
+                        }
+                      },
+                      "format": {
+                        "data": {
+                          "id": "quisquam labore est qui aut qui sint minima excepturi ratione",
+                          "type": "format"
+                        }
+                      },
+                      "language": {
+                        "data": {
+                          "id": "et eius provident ex a facilis molestias velit molestiae libero",
+                          "type": "language"
+                        }
+                      }
+                    }
+                  }
+                ]
               }
             }
           },
@@ -3767,7 +4365,7 @@
                     "status": "400",
                     "code": "missing_api_token",
                     "title": "Missing api token",
-                    "detail": "No API token was provided in the Authorization header."
+                    "detail": "No API token was provided in the \"Authorization\" header."
                   }
                 ]
               }
@@ -3789,7 +4387,7 @@
                     "status": "403",
                     "code": "invalid_api_token",
                     "title": "Invalid api token",
-                    "detail": "The API token provided in the Authorization header (a6b2b01c23f4ecd0bba78a03f30074415c37c3df46086f0e7df3b2557a8e50b4) is invalid."
+                    "detail": "Invalid API token provided in the \"Authorization\" header (\"29583a5ac3e254fe6fdda683d02efc51ad94c63be3da4bdff946a41811fba0a6\")."
                   }
                 ]
               }
@@ -3822,7 +4420,7 @@
               "type": "string",
               "format": "uuid"
             },
-            "example": "622420db-a614-4baa-9cc8-2e3ad8089650",
+            "example": "98d7a31d-db21-4bea-b22b-8bd53f7fbd42",
             "required": true
           },
           {
@@ -3833,7 +4431,7 @@
               "type": "string",
               "format": "uuid"
             },
-            "example": "fd0076be-f80b-49c8-a36f-80b8558cd820",
+            "example": "825fa2bf-3309-4866-9402-c9050319a238",
             "required": true
           },
           {
@@ -3858,7 +4456,7 @@
             "examples": {
               "response": {
                 "data": {
-                  "id": "311cfa1b-3ac7-46bd-8063-f77942ff9d9b",
+                  "id": "f89b7144-c388-45ae-be9e-1d22ba0daa76",
                   "type": "stats",
                   "attributes": {
                     "value": {
@@ -3868,36 +4466,86 @@
                   "relationships": {
                     "application": {
                       "data": {
-                        "id": "9f34f4e3-0650-47ba-8fb5-00036b819e1b",
+                        "id": "86dc5346-3bdf-43bb-8b46-a83cde39a94c",
                         "type": "application"
                       }
                     },
                     "application_user": {
                       "data": {
-                        "id": "aa80542c-c972-4df1-a682-edba2ffaca4d",
+                        "id": "ff203743-acb4-46dc-b392-4d40e40e9d4a",
                         "type": "application_user"
                       }
                     },
                     "resource": {
                       "data": {
-                        "id": "6611e2eb-3e03-4974-b546-2b2a0ece72af",
+                        "id": "b8de60d0-dcc3-4881-9c67-6367aa26edeb",
                         "type": "resource"
                       }
                     },
                     "format": {
                       "data": {
-                        "id": "veritatis quia recusandae labore porro in officiis id quam eaque",
+                        "id": "accusamus iure sapiente rerum corrupti nobis animi aut omnis sequi",
                         "type": "format"
                       }
                     },
                     "language": {
                       "data": {
-                        "id": "dolorem pariatur ut quia facilis architecto totam illum enim sunt",
+                        "id": "et occaecati ab eius vero sit natus dolore ad excepturi",
                         "type": "language"
                       }
                     }
                   }
-                }
+                },
+                "included": [
+                  {
+                    "id": "b8de60d0-dcc3-4881-9c67-6367aa26edeb",
+                    "type": "resource",
+                    "attributes": {
+                      "uri": "https://example.com/assessments/b8de60d0-dcc3-4881-9c67-6367aa26edeb",
+                      "resource_type": "assessment",
+                      "title": null,
+                      "content": "fugiat numquam eligendi debitis temporibus voluptatem nihil voluptas commodi saepe",
+                      "headline": null
+                    },
+                    "relationships": {
+                      "metadatas": {
+                        "data": []
+                      },
+                      "stats": {
+                        "data": [
+                          {
+                            "id": "f89b7144-c388-45ae-be9e-1d22ba0daa76",
+                            "type": "stats"
+                          }
+                        ]
+                      },
+                      "application": {
+                        "data": {
+                          "id": "dabbeb9d-1f36-445b-aa53-850e1423cfc9",
+                          "type": "application"
+                        }
+                      },
+                      "application_user": {
+                        "data": {
+                          "id": "4f16c7d0-0461-4c29-9612-e4b80df936d4",
+                          "type": "application_user"
+                        }
+                      },
+                      "format": {
+                        "data": {
+                          "id": "quisquam labore est qui aut qui sint minima excepturi ratione",
+                          "type": "format"
+                        }
+                      },
+                      "language": {
+                        "data": {
+                          "id": "et eius provident ex a facilis molestias velit molestiae libero",
+                          "type": "language"
+                        }
+                      }
+                    }
+                  }
+                ]
               }
             }
           },
@@ -3939,7 +4587,7 @@
                     "status": "403",
                     "code": "forbidden_application_id",
                     "title": "Forbidden application id",
-                    "detail": "You are only allowed to provide your own application id (9f34f4e3-0650-47ba-8fb5-00036b819e1b)."
+                    "detail": "You are only allowed to provide your own application id (\"86dc5346-3bdf-43bb-8b46-a83cde39a94c\")."
                   }
                 ]
               }
@@ -3997,7 +4645,7 @@
               "type": "string",
               "format": "uuid"
             },
-            "example": "d7d300b0-0a8f-4743-a0fd-24085213f7f7",
+            "example": "5c08a7e7-f10a-4b33-b71d-1a6f915cd232",
             "required": true
           },
           {
@@ -4008,7 +4656,7 @@
               "type": "string",
               "format": "uuid"
             },
-            "example": "3b9b64fe-39ff-42ad-b24e-c3f2b9393fb5",
+            "example": "ffe73dba-97cf-4908-bf9a-ee7845803a6b",
             "required": true
           },
           {
@@ -4033,7 +4681,7 @@
             "examples": {
               "response": {
                 "data": {
-                  "id": "311cfa1b-3ac7-46bd-8063-f77942ff9d9b",
+                  "id": "f89b7144-c388-45ae-be9e-1d22ba0daa76",
                   "type": "stats",
                   "attributes": {
                     "value": {
@@ -4043,7 +4691,7 @@
                   "relationships": {
                     "application": {
                       "data": {
-                        "id": "9f34f4e3-0650-47ba-8fb5-00036b819e1b",
+                        "id": "86dc5346-3bdf-43bb-8b46-a83cde39a94c",
                         "type": "application"
                       }
                     },
@@ -4052,24 +4700,74 @@
                     },
                     "resource": {
                       "data": {
-                        "id": "6611e2eb-3e03-4974-b546-2b2a0ece72af",
+                        "id": "b8de60d0-dcc3-4881-9c67-6367aa26edeb",
                         "type": "resource"
                       }
                     },
                     "format": {
                       "data": {
-                        "id": "iure est cumque autem iusto aliquam ut dolores ipsam asperiores",
+                        "id": "animi odio molestiae error est nisi aut nihil nemo repudiandae",
                         "type": "format"
                       }
                     },
                     "language": {
                       "data": {
-                        "id": "possimus totam et omnis numquam veniam qui dicta culpa sapiente",
+                        "id": "ad minima aspernatur alias ex officia tenetur et amet eum",
                         "type": "language"
                       }
                     }
                   }
-                }
+                },
+                "included": [
+                  {
+                    "id": "b8de60d0-dcc3-4881-9c67-6367aa26edeb",
+                    "type": "resource",
+                    "attributes": {
+                      "uri": "https://example.com/assessments/b8de60d0-dcc3-4881-9c67-6367aa26edeb",
+                      "resource_type": "assessment",
+                      "title": null,
+                      "content": "fugiat numquam eligendi debitis temporibus voluptatem nihil voluptas commodi saepe",
+                      "headline": null
+                    },
+                    "relationships": {
+                      "metadatas": {
+                        "data": []
+                      },
+                      "stats": {
+                        "data": [
+                          {
+                            "id": "f89b7144-c388-45ae-be9e-1d22ba0daa76",
+                            "type": "stats"
+                          }
+                        ]
+                      },
+                      "application": {
+                        "data": {
+                          "id": "dabbeb9d-1f36-445b-aa53-850e1423cfc9",
+                          "type": "application"
+                        }
+                      },
+                      "application_user": {
+                        "data": {
+                          "id": "4f16c7d0-0461-4c29-9612-e4b80df936d4",
+                          "type": "application_user"
+                        }
+                      },
+                      "format": {
+                        "data": {
+                          "id": "quisquam labore est qui aut qui sint minima excepturi ratione",
+                          "type": "format"
+                        }
+                      },
+                      "language": {
+                        "data": {
+                          "id": "et eius provident ex a facilis molestias velit molestiae libero",
+                          "type": "language"
+                        }
+                      }
+                    }
+                  }
+                ]
               }
             }
           },
@@ -4111,7 +4809,7 @@
                     "status": "403",
                     "code": "forbidden_application_id",
                     "title": "Forbidden application id",
-                    "detail": "You are only allowed to provide your own application id (9f34f4e3-0650-47ba-8fb5-00036b819e1b)."
+                    "detail": "You are only allowed to provide your own application id (\"86dc5346-3bdf-43bb-8b46-a83cde39a94c\")."
                   }
                 ]
               }
@@ -4155,7 +4853,7 @@
                     "status": "409",
                     "code": "invalid_application_type",
                     "title": "Invalid application type",
-                    "detail": "The type provided for the application relationship (resource) is invalid."
+                    "detail": "Invalid type provided for the \"application\" relationship (expected \"application\", got \"resource\")."
                   }
                 ]
               }
@@ -4191,7 +4889,7 @@
               "type": "string",
               "format": "uuid"
             },
-            "example": "e9fcfdde-5617-4a3e-b85b-ddece8460cbf",
+            "example": "74410342-7c0a-4fed-902b-e6085b6280ca",
             "required": true
           },
           {
@@ -4202,7 +4900,7 @@
               "type": "string",
               "format": "uuid"
             },
-            "example": "66dc885a-6854-469e-bd9a-92b67a2baeb0",
+            "example": "e6eb554f-2c6f-46d4-a59c-d13ba8d31e40",
             "required": true
           },
           {
@@ -4227,7 +4925,7 @@
             "examples": {
               "response": {
                 "data": {
-                  "id": "311cfa1b-3ac7-46bd-8063-f77942ff9d9b",
+                  "id": "f89b7144-c388-45ae-be9e-1d22ba0daa76",
                   "type": "stats",
                   "attributes": {
                     "value": {
@@ -4237,7 +4935,7 @@
                   "relationships": {
                     "application": {
                       "data": {
-                        "id": "9f34f4e3-0650-47ba-8fb5-00036b819e1b",
+                        "id": "86dc5346-3bdf-43bb-8b46-a83cde39a94c",
                         "type": "application"
                       }
                     },
@@ -4246,24 +4944,74 @@
                     },
                     "resource": {
                       "data": {
-                        "id": "6611e2eb-3e03-4974-b546-2b2a0ece72af",
+                        "id": "b8de60d0-dcc3-4881-9c67-6367aa26edeb",
                         "type": "resource"
                       }
                     },
                     "format": {
                       "data": {
-                        "id": "iure est cumque autem iusto aliquam ut dolores ipsam asperiores",
+                        "id": "animi odio molestiae error est nisi aut nihil nemo repudiandae",
                         "type": "format"
                       }
                     },
                     "language": {
                       "data": {
-                        "id": "possimus totam et omnis numquam veniam qui dicta culpa sapiente",
+                        "id": "ad minima aspernatur alias ex officia tenetur et amet eum",
                         "type": "language"
                       }
                     }
                   }
-                }
+                },
+                "included": [
+                  {
+                    "id": "b8de60d0-dcc3-4881-9c67-6367aa26edeb",
+                    "type": "resource",
+                    "attributes": {
+                      "uri": "https://example.com/assessments/b8de60d0-dcc3-4881-9c67-6367aa26edeb",
+                      "resource_type": "assessment",
+                      "title": null,
+                      "content": "fugiat numquam eligendi debitis temporibus voluptatem nihil voluptas commodi saepe",
+                      "headline": null
+                    },
+                    "relationships": {
+                      "metadatas": {
+                        "data": []
+                      },
+                      "stats": {
+                        "data": [
+                          {
+                            "id": "f89b7144-c388-45ae-be9e-1d22ba0daa76",
+                            "type": "stats"
+                          }
+                        ]
+                      },
+                      "application": {
+                        "data": {
+                          "id": "dabbeb9d-1f36-445b-aa53-850e1423cfc9",
+                          "type": "application"
+                        }
+                      },
+                      "application_user": {
+                        "data": {
+                          "id": "4f16c7d0-0461-4c29-9612-e4b80df936d4",
+                          "type": "application_user"
+                        }
+                      },
+                      "format": {
+                        "data": {
+                          "id": "quisquam labore est qui aut qui sint minima excepturi ratione",
+                          "type": "format"
+                        }
+                      },
+                      "language": {
+                        "data": {
+                          "id": "et eius provident ex a facilis molestias velit molestiae libero",
+                          "type": "language"
+                        }
+                      }
+                    }
+                  }
+                ]
               }
             }
           },
@@ -4305,7 +5053,7 @@
                     "status": "403",
                     "code": "forbidden_application_id",
                     "title": "Forbidden application id",
-                    "detail": "You are only allowed to provide your own application id (9f34f4e3-0650-47ba-8fb5-00036b819e1b)."
+                    "detail": "You are only allowed to provide your own application id (\"86dc5346-3bdf-43bb-8b46-a83cde39a94c\")."
                   }
                 ]
               }
@@ -4349,7 +5097,7 @@
                     "status": "409",
                     "code": "invalid_application_type",
                     "title": "Invalid application type",
-                    "detail": "The type provided for the application relationship (resource) is invalid."
+                    "detail": "Invalid type provided for the \"application\" relationship (expected \"application\", got \"resource\")."
                   }
                 ]
               }
@@ -4391,7 +5139,7 @@
               "type": "string",
               "format": "uuid"
             },
-            "example": "c62b7bd6-daf8-49bb-9d05-c89f2e8e5125",
+            "example": "2d710fd3-e2ce-4770-850b-416d7e3dd78c",
             "required": true
           },
           {
@@ -4446,7 +5194,8 @@
             },
             "examples": {
               "response": {
-                "data": []
+                "data": [],
+                "included": []
               }
             }
           }

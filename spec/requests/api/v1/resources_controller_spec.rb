@@ -68,7 +68,7 @@ RSpec.describe Api::V1::ResourcesController, type: :request do
     (example.metadata.dig(:operation, :parameters) || []).select do |parameter|
       parameter[:id] == :body
     end.each do |parameter|
-      parameter['example'] = request.body.read
+      parameter[:example] = request.body.read
       request.body.rewind
     end
     example.metadata[:response][:examples] = {
@@ -89,7 +89,9 @@ RSpec.describe Api::V1::ResourcesController, type: :request do
             schema resource_schema_reference
 
             let!(:expected_response) do
-              JSON.parse(Api::V1::ResourceSerializer.new([]).serialized_json).deep_symbolize_keys
+              JSON.parse(Api::V1::ResourceSerializer.new(
+                [], include: [ :metadatas, :stats ]
+              ).serialized_json).deep_symbolize_keys
             end
 
             run_test! { |response| expect(response.body_hash).to match expected_response }
@@ -161,7 +163,8 @@ RSpec.describe Api::V1::ResourcesController, type: :request do
                 let!(:expected_response) do
                   JSON.parse(
                     Api::V1::ResourceSerializer.new(
-                      Resource.search(query: 'lorem', order_by: sort)
+                      Resource.search(query: 'lorem', order_by: sort),
+                      include: [ :metadatas, :stats ]
                     ).serialized_json
                   ).deep_symbolize_keys
                 end
@@ -186,7 +189,7 @@ RSpec.describe Api::V1::ResourcesController, type: :request do
                 let!(:expected_response) do
                   JSON.parse(
                     Api::V1::ResourceSerializer.new(
-                      Resource.search(query: 'lorem')
+                      Resource.search(query: 'lorem'), include: [ :metadatas, :stats ]
                     ).serialized_json
                   ).deep_symbolize_keys
                 end
@@ -220,7 +223,7 @@ RSpec.describe Api::V1::ResourcesController, type: :request do
                     Api::V1::ResourceSerializer.new(
                       Resource.search(
                         query: 'jumps', language: 'english', order_by: '-created_at,id'
-                      )
+                      ), include: [ :metadatas, :stats ]
                     ).serialized_json
                   ).deep_symbolize_keys
                 end
@@ -247,7 +250,8 @@ RSpec.describe Api::V1::ResourcesController, type: :request do
                 let!(:expected_response) do
                   JSON.parse(
                     Api::V1::ResourceSerializer.new(
-                      Resource.search(query: 'jumps', language: 'english')
+                      Resource.search(query: 'jumps', language: 'english'),
+                      include: [ :metadatas, :stats ]
                     ).serialized_json
                   ).deep_symbolize_keys
                 end
@@ -267,7 +271,9 @@ RSpec.describe Api::V1::ResourcesController, type: :request do
       context 'when the provided uri does not yet exist' do
         let(:uri)      { "https://example.com/assessments/#{SecureRandom.uuid}" }
         let(:resource) do
-          Api::V1::ResourceSerializer.new(@resource).serializable_hash.tap do |hash|
+          Api::V1::ResourceSerializer.new(
+            @resource, include: [ :metadatas, :stats ]
+          ).serializable_hash.tap do |hash|
             hash[:data].delete(:id)
             hash[:data][:attributes][:uri] = uri
           end
@@ -291,7 +297,9 @@ RSpec.describe Api::V1::ResourcesController, type: :request do
 
       context 'when the provided uri already exists' do
         let(:resource) do
-          Api::V1::ResourceSerializer.new(@resource).serializable_hash.tap do |hash|
+          Api::V1::ResourceSerializer.new(
+            @resource, include: [ :metadatas, :stats ]
+          ).serializable_hash.tap do |hash|
             hash[:data].delete(:id)
           end
         end
@@ -324,7 +332,9 @@ RSpec.describe Api::V1::ResourcesController, type: :request do
 
             run_test! do |response|
               expect(response.body_hash).to eq JSON.parse(
-                Api::V1::ResourceSerializer.new(@resource).serialized_json
+                Api::V1::ResourceSerializer.new(
+                  @resource, include: [ :metadatas, :stats ]
+                ).serialized_json
               ).deep_symbolize_keys
             end
           end
@@ -348,7 +358,9 @@ RSpec.describe Api::V1::ResourcesController, type: :request do
         end
 
         let(:resource) do
-          Api::V1::ResourceSerializer.new(@resource).serializable_hash.tap do |hash|
+          Api::V1::ResourceSerializer.new(
+            @resource, include: [ :metadatas, :stats ]
+          ).serializable_hash.tap do |hash|
             hash[:data][:relationships][:application][:data][:id] = @application.uuid
             hash[:data][:relationships][:application_user][:data] = {
               id: @application_user.uuid, type: :application_user
@@ -391,7 +403,11 @@ RSpec.describe Api::V1::ResourcesController, type: :request do
       end
 
       context 'when the Resource already exists' do
-        let(:resource) { Api::V1::ResourceSerializer.new(@resource).serializable_hash }
+        let(:resource) do
+          Api::V1::ResourceSerializer.new(
+            @resource, include: [ :metadatas, :stats ]
+          ).serializable_hash
+        end
 
         post 'Create a new Resource with the given Id' do
           instance_exec &create_member_setup
@@ -417,9 +433,9 @@ RSpec.describe Api::V1::ResourcesController, type: :request do
           after(:all) { @resource.reload }
 
           let(:resource) do
-            Api::V1::ResourceSerializer.new(@other_application_resource)
-                                       .serializable_hash
-                                       .tap do |hash|
+            Api::V1::ResourceSerializer.new(
+              @other_application_resource, include: [ :metadatas, :stats ]
+            ).serializable_hash.tap do |hash|
               hash[:data][:id] = @resource.uuid
               hash[:data][:relationships][:application][:data][:id] = @application.uuid
               hash[:data][:relationships][:application_user][:data] = nil
@@ -450,7 +466,9 @@ RSpec.describe Api::V1::ResourcesController, type: :request do
 
             run_test! do |response|
               expect(response.body_hash).to eq JSON.parse(
-                Api::V1::ResourceSerializer.new(@resource).serialized_json
+                Api::V1::ResourceSerializer.new(
+                  @resource, include: [ :metadatas, :stats ]
+                ).serialized_json
               ).deep_symbolize_keys
             end
           end

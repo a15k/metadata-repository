@@ -1,8 +1,9 @@
 class Resource < ApplicationRecord
+  include ApplicationScoping
   include ResourceSearch
 
-  has_many :metadatas,          dependent: :destroy, inverse_of: :resource
-  has_many :stats,              dependent: :destroy, inverse_of: :resource
+  scoped_has_many :metadatas,   dependent: :destroy, inverse_of: :resource
+  scoped_has_many :stats,       dependent: :destroy, inverse_of: :resource
 
   belongs_to :application,                           inverse_of: :resources
   belongs_to :application_user, optional: true,      inverse_of: :resources
@@ -40,6 +41,14 @@ class Resource < ApplicationRecord
     if uri.present?
       self.content ||= FaradayWithRedirects.get uri
     end
+  end
+
+  def metadata_uuids
+    metadatas.map(&:uuid).uniq
+  end
+
+  def stats_uuids
+    stats.map(&:uuid).uniq
   end
 
   def application_uuid
