@@ -48,6 +48,26 @@ RSpec.describe Api::V1::MetadatasController, type: :request do
     parameter name: :metadata, in: :body, schema: metadata_schema_reference
   end
 
+  search_setup = -> do
+    instance_exec :collection, &no_data_setup
+    operationId 'searchMetadatas'
+    parameter name: :'filter[query]',    in: :query, type: :string, required: false,
+              description: 'Query used for full text search on the Metadatas.' +
+                           ' If not specified, no results are returned.',
+              schema: { type: :string },
+              example: 'physics'
+    parameter name: :'filter[language]', in: :query, type: :string, required: false,
+              description: 'Language used for full text search on the Metadatas.' +
+                           ' If not specified, only exact word matches will be returned.',
+              schema: { type: :string },
+              example: 'english'
+    parameter name: :sort, in: :query, type: :string, required: false,
+              description: 'Comma-separated field names to sort Metadatas by.' +
+                           ' Prefix with - for descending order.' +
+                           ' If not specified, results are sorted by relevance instead.',
+              schema: { type: :string },
+              example: '-created_at,id'
+  end
   create_member_setup = -> do
     instance_exec :member, &data_setup
     operationId 'createResourceMetadataWithId'
@@ -60,7 +80,7 @@ RSpec.describe Api::V1::MetadatasController, type: :request do
     (example.metadata.dig(:operation, :parameters) || []).select do |parameter|
       parameter[:id] == :body
     end.each do |parameter|
-      parameter['example'] = request.body.read
+      parameter[:example] = request.body.read
       request.body.rewind
     end
     example.metadata[:response][:examples] = {
@@ -72,6 +92,204 @@ RSpec.describe Api::V1::MetadatasController, type: :request do
     let(:Accept)                                         { CONTENT_TYPE }
     let(Api::JsonApiController::API_TOKEN_HEADER.to_sym) { @application.token }
 
+    path '/metadatas' do
+      context 'with no filter param' do
+        get 'List Resources created by all applications and their Metadatas' do
+          instance_exec &search_setup
+
+          response 200, 'success (empty result)' do
+            schema metadata_schema_reference
+
+            let!(:expected_response) do
+              JSON.parse(
+                Api::V1::MetadataSerializer.new([], include: [ :'resource.stats' ]).serialized_json
+              ).deep_symbolize_keys
+            end
+
+            run_test! { |response| expect(response.body_hash).to match expected_response }
+          end
+        end
+      end
+
+      context 'with a filter param' do
+        before(:all) do
+          DatabaseCleaner.start
+
+          simple  = FactoryBot.create :language, name: 'simple'
+          english = FactoryBot.create :language, name: 'english'
+
+          all_queries = [ 'lorem', 'jumps', 'jump', 'jumping', 'jumped' ]
+          [ @resource, @other_application_resource ] + 10.times.map do
+            FactoryBot.create :resource, application: @application, language: simple
+          end.each do |resource|
+            if all_queries.any? do |query|
+              resource.content.downcase.include?(query) || (
+                !resource.title.nil? && resource.title.downcase.include?(query)
+              )
+            end
+              resource.destroy
+            else
+              FactoryBot.create :metadata, resource: resource
+            end
+          end
+
+          @title_resource = FactoryBot.create(
+            :resource, application: @application,
+                       title: 'Lorem Ipsum',
+                       content: 'None',
+                       language: simple
+          )
+          @content_resource = FactoryBot.create(
+            :resource, application: @application,
+                       title: nil,
+                       content: 'Lorem Ipsum',
+                       language: simple
+          )
+          @both_resource = FactoryBot.create(
+            :resource, application: @application,
+                       title: 'Lorem Ipsum',
+                       content: 'Lorem Ipsum',
+                       language: simple
+          )
+          @fox_and_dog_resource = FactoryBot.create(
+            :resource, application: @application,
+                       title: 'The fox and the dog',
+                       content: 'The quick brown fox jumps over the lazy dog.',
+                       language: english
+          )
+          [
+            @title_resource, @content_resource, @both_resource, @fox_and_dog_resource
+          ].each do |resource|
+            FactoryBot.create :metadata, resource: resource
+          end
+        end
+        after(:all) do
+          DatabaseCleaner.clean
+
+          @resource.reload
+        end
+
+        context 'with no language param' do
+          let(:'filter[query]') { 'lorem' }
+
+          context 'with a sort param' do
+            let(:sort) { '-created_at,id' }
+
+            get 'List Resources created by all applications and their Metadatas' do
+              instance_exec &search_setup
+
+              response 200, 'success' do
+                schema metadata_schema_reference
+
+                let!(:expected_response) do
+                  JSON.parse(
+                    Api::V1::MetadataSerializer.new(
+                      Metadata.search(query: 'lorem', order_by: sort),
+                      include: [ :'resource.stats' ]
+                    ).serialized_json
+                  ).deep_symbolize_keys
+                end
+                before do
+                  expect(Metadata).to receive(:search).with(
+                    query: 'lorem', language: nil, order_by: sort
+                  ).and_call_original
+                end
+
+                run_test! { |response| expect(response.body_hash).to eq expected_response }
+              end
+            end
+          end
+
+          context 'with no sort param' do
+            get 'List Resources created by all applications and their Metadatas' do
+              instance_exec &search_setup
+
+              response 200, 'success' do
+                schema metadata_schema_reference
+
+                let!(:expected_response) do
+                  JSON.parse(
+                    Api::V1::MetadataSerializer.new(
+                      Metadata.search(query: 'lorem'), include: [ :'resource.stats' ]
+                    ).serialized_json
+                  ).deep_symbolize_keys
+                end
+                before do
+                  expect(Metadata).to receive(:search).with(
+                    query: 'lorem', language: nil, order_by: nil
+                  ).and_call_original
+                end
+
+                run_test! { |response| expect(response.body_hash).to eq expected_response }
+              end
+            end
+          end
+        end
+
+        context 'with a language param' do
+          let(:'filter[query]')    { 'jumps' }
+          let(:'filter[language]') { 'english' }
+
+          context 'with a sort param' do
+            let(:sort) { '-created_at,id' }
+
+            get 'List Resources created by all applications and their Metadatas' do
+              instance_exec &search_setup
+
+              response 200, 'success' do
+                schema metadata_schema_reference
+
+                let!(:expected_response) do
+                  JSON.parse(
+                    Api::V1::MetadataSerializer.new(
+                      Metadata.search(
+                        query: 'jumps', language: 'english', order_by: '-created_at,id'
+                      ), include: [ :'resource.stats' ]
+                    ).serialized_json
+                  ).deep_symbolize_keys
+                end
+                before do
+                  expect(Metadata).to(
+                    receive(:search).with(
+                      query: 'jumps', language: 'english', order_by: '-created_at,id'
+                    ).and_call_original
+                  )
+                end
+
+                run_test! { |response| expect(response.body_hash).to eq expected_response }
+              end
+            end
+          end
+
+          context 'with no sort param' do
+            get 'List Resources created by all applications and their Metadatas' do
+              instance_exec &search_setup
+
+              response 200, 'success' do
+                schema metadata_schema_reference
+
+                let!(:expected_response) do
+                  JSON.parse(
+                    Api::V1::MetadataSerializer.new(
+                      Metadata.search(query: 'jumps', language: 'english'),
+                      include: [ :'resource.stats' ]
+                    ).serialized_json
+                  ).deep_symbolize_keys
+                end
+                before do
+                  expect(Metadata).to receive(:search).with(
+                    query: 'jumps', language: 'english', order_by: nil
+                  ).and_call_original
+                end
+
+                run_test! { |response| expect(response.body_hash).to eq expected_response }
+              end
+            end
+          end
+        end
+      end
+    end
+
     path '/resources/{resource_id}/metadatas' do
       get 'List Metadatas created by all applications for the given Resource' do
         instance_exec :collection, &no_data_setup
@@ -82,7 +300,9 @@ RSpec.describe Api::V1::MetadatasController, type: :request do
 
           run_test! do |response|
             expect(response.body_hash).to eq JSON.parse(
-              Api::V1::MetadataSerializer.new([ @metadata ]).serialized_json
+              Api::V1::MetadataSerializer.new(
+                [ @metadata ], include: [ :'resource.stats' ]
+              ).serialized_json
             ).deep_symbolize_keys
           end
         end
@@ -107,7 +327,9 @@ RSpec.describe Api::V1::MetadatasController, type: :request do
         response 201, 'Metadata created' do
           schema metadata_schema_reference
 
-          run_test! { |response| expect(response.body_hash).to match expected_response }
+          run_test! do |response|
+            expect(response.body_hash.except(:included)).to match expected_response
+          end
         end
       end
     end
@@ -123,7 +345,9 @@ RSpec.describe Api::V1::MetadatasController, type: :request do
 
             run_test! do |response|
               expect(response.body_hash).to eq JSON.parse(
-                Api::V1::MetadataSerializer.new(@metadata).serialized_json
+                Api::V1::MetadataSerializer.new(
+                  @metadata, include: [ :'resource.stats' ]
+                ).serialized_json
               ).deep_symbolize_keys
             end
           end
@@ -147,7 +371,9 @@ RSpec.describe Api::V1::MetadatasController, type: :request do
         end
 
         let(:metadata) do
-          Api::V1::MetadataSerializer.new(@metadata).serializable_hash.tap do |hash|
+          Api::V1::MetadataSerializer.new(
+            @metadata, include: [ :'resource.stats' ]
+          ).serializable_hash.tap do |hash|
             hash[:data][:relationships][:application][:data][:id] = @application.uuid
             hash[:data][:relationships][:application_user][:data] = {
               id: @application_user.uuid, type: :application_user
@@ -169,7 +395,11 @@ RSpec.describe Api::V1::MetadatasController, type: :request do
       end
 
       context 'when the Metadata already exists' do
-        let(:metadata) { Api::V1::MetadataSerializer.new(@metadata).serializable_hash }
+        let(:metadata) do
+          Api::V1::MetadataSerializer.new(
+            @metadata, include: [ :'resource.stats' ]
+          ).serializable_hash
+        end
 
         post 'Create a new Metadata with the given Id for the given Resource' do
           instance_exec &create_member_setup
@@ -195,9 +425,7 @@ RSpec.describe Api::V1::MetadatasController, type: :request do
           after(:all) { @metadata.reload }
 
           let(:metadata) do
-            Api::V1::MetadataSerializer.new(@other_application_metadata)
-                                       .serializable_hash
-                                       .tap do |hash|
+            Api::V1::MetadataSerializer.new(@other_application_metadata).serializable_hash.tap do |hash|
               hash[:data][:id] = @metadata.uuid
               hash[:data][:relationships][:application][:data][:id] = @application.uuid
               hash[:data][:relationships][:application_user][:data] = nil
@@ -210,7 +438,9 @@ RSpec.describe Api::V1::MetadatasController, type: :request do
               schema metadata_schema_reference
 
               run_test! do |response|
-                expect(response.body_hash).to eq JSON.parse(metadata.to_json).deep_symbolize_keys
+                expect(response.body_hash.except(:included)).to eq(
+                  JSON.parse(metadata.to_json).deep_symbolize_keys
+                )
               end
             end
           end
@@ -228,7 +458,7 @@ RSpec.describe Api::V1::MetadatasController, type: :request do
             schema metadata_schema_reference
 
             run_test! do |response|
-              expect(response.body_hash).to eq JSON.parse(
+              expect(response.body_hash.except(:included)).to eq JSON.parse(
                 Api::V1::MetadataSerializer.new(@metadata).serialized_json
               ).deep_symbolize_keys
             end

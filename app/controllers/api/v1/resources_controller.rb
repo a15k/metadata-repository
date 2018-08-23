@@ -6,10 +6,12 @@ module Api
 
       def index
         render_resource resources: Resource.search(
-          query: resource_filter_params[:query],
-          language: resource_filter_params[:language],
+          query: filter_params[:query],
+          language: filter_params[:language],
           order_by: params[:sort]
-        )
+        ).preload(:unscoped_metadatas, :unscoped_stats).each do |resource|
+          resource.scoped_to_application = current_application
+        end
       end
 
       def show
@@ -36,10 +38,6 @@ module Api
 
       protected
 
-      def resource_filter_params
-        params.permit(filter: [ :query, :language ]).fetch(:filter, {})
-      end
-
       def resource
         @resource ||= Resource.find_by(application: current_application, uuid: path_id_param) ||
                       Resource.order(:id).find_by!(uuid: path_id_param)
@@ -60,7 +58,7 @@ module Api
       end
 
       def resource_relationship_params
-        @resource_relationship_params ||= json_api_relationships.permit(
+        @resource_relationship_params ||= json_api_relationships_to_one.permit(
           :application_user_id,
           :format_id,
           :language_id
@@ -89,7 +87,9 @@ module Api
       end
 
       def render_resource(resources: resource, status: :ok)
-        render json: ResourceSerializer.new(resources).serializable_hash, status: status
+        render json: ResourceSerializer.new(
+          resources, include: [ :metadatas, :stats ]
+        ).serializable_hash, status: status
       end
     end
   end

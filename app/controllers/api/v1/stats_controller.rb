@@ -3,6 +3,16 @@ module Api
     class StatsController < JsonApiController
       before_action :can_modify!, only: [ :update, :destroy ]
 
+      def search
+        render_stats stats: Stats.search(
+          query: filter_params[:query],
+          language: filter_params[:language],
+          order_by: params[:sort]
+        ).preload(unscoped_resources: :unscoped_metadatas).each do |stats|
+          stats.scoped_to_application = current_application
+        end
+      end
+
       def index
         render_stats stats: resource.same_resource_uuid_stats
       end
@@ -52,7 +62,7 @@ module Api
       end
 
       def stats_relationship_params
-        @stats_relationship_params ||= json_api_relationships.permit(
+        @stats_relationship_params ||= json_api_relationships_to_one.permit(
           :application_user_id,
           :resource_id,
           :format_id,
@@ -85,7 +95,9 @@ module Api
       def render_stats(stats: nil, status: :ok)
         stats ||= send :stats
 
-        render json: StatsSerializer.new(stats).serializable_hash, status: status
+        render json: StatsSerializer.new(
+          stats, include: [ :'resource.metadatas' ]
+        ).serializable_hash, status: status
       end
     end
   end

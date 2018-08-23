@@ -29,10 +29,6 @@ module Api
 
       protected
 
-      def application_user_filter_params
-        params.permit(filter: [ :query, :language ]).fetch(:filter, {})
-      end
-
       def application_user
         @application_user ||= ApplicationUser.find_by!(
           application: current_application, uuid: path_id_param

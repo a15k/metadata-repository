@@ -4,6 +4,18 @@ RSpec.describe 'metadatas API V1 routes', type: :routing do
   let(:resource_uuid) { SecureRandom.uuid }
   let(:metadata_uuid) { SecureRandom.uuid }
 
+  context 'GET /api/metadatas' do
+    it 'routes to api/v1/metadatas#search.json' do
+      expect(get: "/api/metadatas").to(
+        route_to(
+          controller: 'api/v1/metadatas',
+          action: 'search',
+          format: :json
+        )
+      )
+    end
+  end
+
   context 'GET /api/resources/:resource_uuid/metadatas' do
     it 'routes to api/v1/metadatas#index.json' do
       expect(get: "/api/resources/#{resource_uuid}/metadatas").to(

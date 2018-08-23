@@ -16,7 +16,6 @@ gem 'puma', '~> 3.7'
 
 # Use Redis for caching
 gem 'redis', '~> 4.0'
-gem 'hiredis'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false

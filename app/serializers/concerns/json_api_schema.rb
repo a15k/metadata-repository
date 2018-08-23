@@ -1,7 +1,8 @@
 module JsonApiSchema
   extend ActiveSupport::Concern
 
-  REQUIRED_RELATIONSHIP_SCHEMA = {
+  # These differ from JSON-API in that the linkage is inside the data field
+  REQUIRED_RELATIONSHIP_TO_ONE_SCHEMA = {
     type: :object,
     properties: {
       links: {
@@ -19,7 +20,7 @@ module JsonApiSchema
     additionalProperties: false
   }
 
-  OPTIONAL_RELATIONSHIP_SCHEMA = {
+  OPTIONAL_RELATIONSHIP_TO_ONE_SCHEMA = {
     type: :object,
     properties: {
       links: {
@@ -28,6 +29,24 @@ module JsonApiSchema
       data: {
         description: 'Member, whose value represents "resource linkage".',
         '$ref': '#/definitions/relationshipToOne'
+      },
+      meta: {
+        '$ref': '#/definitions/meta'
+      }
+    },
+    required: [ :data ],
+    additionalProperties: false
+  }
+
+  RELATIONSHIP_TO_MANY_SCHEMA = {
+    type: :object,
+    properties: {
+      links: {
+        '$ref': '#/definitions/relationshipLinks'
+      },
+      data: {
+        description: 'Member, whose value represents "resource linkage".',
+        '$ref': '#/definitions/relationshipToMany'
       },
       meta: {
         '$ref': '#/definitions/meta'
@@ -53,7 +72,10 @@ module JsonApiSchema
     def json_schema_hash(create: false)
       class_name = name.demodulize.chomp('Serializer')
       attributes = (attributes_to_serialize || {}).keys
-      relationships = (relationships_to_serialize || {}).keys
+      to_many_relationships, to_one_relationships = (relationships_to_serialize || [])
+                                                      .partition do |key, value|
+        value.relationship_type == :has_many
+      end
 
       # Load the generic json-api success schema
       json_api_schema_filepath = Rails.root.join 'app', 'schemas', 'success.schema.json'
@@ -63,6 +85,18 @@ module JsonApiSchema
       # Customize the schema for the current model
       json_api_schema[:title] = "#{class_name} JSON API Schema"
       json_api_schema[:description] = "JSON API schema for #{class_name} objects."
+
+      json_api_schema[:definitions][:includedAttributes] =
+        json_api_schema[:definitions][:attributes].deep_dup
+      json_api_schema[:definitions][:includedRelationships] =
+        json_api_schema[:definitions][:relationships].deep_dup
+      json_api_schema[:definitions][:includedResource] =
+        json_api_schema[:definitions][:resource].deep_dup
+      json_api_schema[:definitions][:includedResource][:properties][:attributes][:$ref] =
+        '#/definitions/includedAttributes'
+      json_api_schema[:definitions][:includedResource][:properties][:relationships][:$ref] =
+        '#/definitions/includedRelationships'
+      json_api_schema[:properties][:included][:items][:$ref] = '#/definitions/includedResource'
 
       json_api_schema[:definitions][:resource][:required] = [ :type ] if create
       json_api_schema[:definitions][:resource][:required] << :attributes \
@@ -86,12 +120,18 @@ module JsonApiSchema
       json_api_schema[:definitions][:data][:oneOf].delete_at -1
 
       json_api_schema[:definitions][:relationships][:properties] = {}
-      relationships.each do |relationship|
-        relationship_sym = relationship.to_sym
+      to_many_relationships.each do |to_many_relationship, _|
+        to_many_relationship_sym = to_many_relationship.to_sym
 
-        json_api_schema[:definitions][:relationships][:properties][relationship_sym] =
-          (@required_relationships || []).include?(relationship_sym) ?
-            REQUIRED_RELATIONSHIP_SCHEMA : OPTIONAL_RELATIONSHIP_SCHEMA
+        json_api_schema[:definitions][:relationships][:properties][to_many_relationship_sym] =
+          RELATIONSHIP_TO_MANY_SCHEMA
+      end
+      to_one_relationships.each do |to_one_relationship, _|
+        to_one_relationship_sym = to_one_relationship.to_sym
+
+        json_api_schema[:definitions][:relationships][:properties][to_one_relationship_sym] =
+          (@required_relationships || []).include?(to_one_relationship_sym) ?
+            REQUIRED_RELATIONSHIP_TO_ONE_SCHEMA : OPTIONAL_RELATIONSHIP_TO_ONE_SCHEMA
       end
       json_api_schema[:definitions][:relationships][:required] = @required_relationships \
         unless @required_relationships.blank?

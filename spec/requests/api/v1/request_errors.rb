@@ -79,7 +79,7 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
     (example.metadata.dig(:operation, :parameters) || []).select do |parameter|
       parameter[:id] == :body
     end.each do |parameter|
-      parameter['example'] = request.body.read
+      parameter[:example] = request.body.read
       request.body.rewind
     end
     example.metadata[:response][:examples] = {
@@ -123,8 +123,8 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
               expect(response.errors.first[:code]).to eq 'missing_api_token'
               expect(response.errors.first[:title]).to eq 'Missing api token'
               expect(response.errors.first[:detail]).to eq(
-                "No API token was provided in the #{
-                Api::JsonApiController::API_TOKEN_HEADER} header."
+                "No API token was provided in the \"#{
+                Api::JsonApiController::API_TOKEN_HEADER}\" header."
               )
             end
           end
@@ -153,8 +153,8 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
               expect(response.errors.first[:code]).to eq 'invalid_api_token'
               expect(response.errors.first[:title]).to eq 'Invalid api token'
               expect(response.errors.first[:detail]).to eq(
-                "The API token provided in the #{
-                Api::JsonApiController::API_TOKEN_HEADER} header (#{token}) is invalid."
+                "Invalid API token provided in the \"#{
+                Api::JsonApiController::API_TOKEN_HEADER}\" header (\"#{token}\")."
               )
             end
           end
@@ -241,8 +241,8 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
                   expect(response.errors.first[:code]).to eq 'invalid_type'
                   expect(response.errors.first[:title]).to eq 'Invalid type'
                   expect(response.errors.first[:detail]).to eq(
-                    "The type provided (#{type}) is not the one supported by this API endpoint (#{
-                    controller.class.valid_type})."
+                    "Invalid type provided for this API endpoint (expected \"#{
+                    controller.class.valid_type}\", got \"#{type}\")."
                   )
                 end
               end
@@ -304,8 +304,8 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
                     expect(response.errors.first[:code]).to eq 'invalid_id'
                     expect(response.errors.first[:title]).to eq 'Invalid id'
                     expect(response.errors.first[:detail]).to eq(
-                      "The id provided in the request body (#{body_id
-                      }) did not match the id provided in the API endpoint URL (#{id})."
+                      "The id provided in the request body (\"#{body_id
+                      }\") did not match the id provided in the API endpoint URL (\"#{id}\")."
                     )
                   end
                 end
@@ -490,8 +490,8 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
                           expect(response.errors.first[:code]).to eq 'invalid_application_type'
                           expect(response.errors.first[:title]).to eq 'Invalid application type'
                           expect(response.errors.first[:detail]).to eq(
-                            'The type provided for the application' +
-                            ' relationship (resource) is invalid.'
+                            'Invalid type provided for the "application" relationship' +
+                            ' (expected "application", got "resource").'
                           )
                         end
                       end
@@ -570,8 +570,8 @@ RSpec.shared_examples 'api v1 request errors' do |application_proc:,
                       expect(response.errors.first[:code]).to eq 'forbidden_application_id'
                       expect(response.errors.first[:title]).to eq 'Forbidden application id'
                       expect(response.errors.first[:detail]).to eq(
-                        "You are only allowed to provide your own application id (#{
-                        application.uuid})."
+                        "You are only allowed to provide your own application id (\"#{
+                        application.uuid}\")."
                       )
                     end
                   end
