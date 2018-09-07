@@ -42,8 +42,8 @@ module ResourceSearch
   included do
     scope :search, ->(query: nil, prefix: false, language: nil,
                       order_by: nil, page: nil, per_page: nil) do
-      page ||= 1
-      per_page ||= 10
+      page = page ? page.to_i : 1
+      per_page = per_page ? per_page.to_i : 10
 
       # Return early if the pagination is invalid
       return none if page < 1 || per_page < 1

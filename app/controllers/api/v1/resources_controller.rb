@@ -7,6 +7,8 @@ module Api
       def index
         render_resource resources: Resource.search(
           query: filter_params[:query],
+          page: filter_params[:page],
+          per_page: filter_params[:per_page],
           language: filter_params[:language],
           order_by: params[:sort]
         ).preload(:unscoped_metadatas, :unscoped_stats).each do |resource|
