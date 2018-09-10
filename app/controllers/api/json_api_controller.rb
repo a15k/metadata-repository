@@ -228,7 +228,11 @@ module Api
     end
 
     def filter_params
-      params.fetch(:filter, {}).permit(:query, :language, page: [ :number, :size ])
+      params.fetch(:filter, {}).permit(:query, :language)
+    end
+
+    def page_params
+      params.fetch(:page, {}).permit(:number, :size)
     end
   end
 end

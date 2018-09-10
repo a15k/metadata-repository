@@ -8,8 +8,8 @@ module Api
           query: filter_params[:query],
           language: filter_params[:language],
           order_by: params[:sort],
-          page: filter_params.dig(:page, :number),
-          per_page: filter_params.dig(:page, :size)
+          page: page_params[:number],
+          per_page: page_params[:size]
         )
         metadatas = search_results.items.preload(unscoped_resources: :unscoped_stats).to_a
         metadatas.each { |metadata| metadata.scoped_to_application = current_application }
