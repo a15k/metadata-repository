@@ -4,13 +4,17 @@ module Api
       before_action :can_modify!, only: [ :update, :destroy ]
 
       def search
-        render_metadata metadatas: Metadata.search(
+        search_results = Metadata.search(
           query: filter_params[:query],
           language: filter_params[:language],
-          order_by: params[:sort]
-        ).preload(unscoped_resources: :unscoped_stats).each do |metadata|
-          metatada.scoped_to_application = current_application
-        end
+          order_by: params[:sort],
+          page: filter_params.dig(:page, :number),
+          per_page: filter_params.dig(:page, :size)
+        )
+        metadatas = search_results.items.preload(unscoped_resources: :unscoped_stats).to_a
+        metadatas.each { |metadata| metadata.scoped_to_application = current_application }
+
+        render_metadata metadatas: metadatas, meta: { count: search_results.count }
       end
 
       def index
@@ -92,9 +96,9 @@ module Api
         )
       end
 
-      def render_metadata(metadatas: metadata, status: :ok)
+      def render_metadata(metadatas: metadata, status: :ok, **options)
         render json: MetadataSerializer.new(
-          metadatas, include: [ :'resource.stats' ]
+          metadatas, options.merge(include: [ :'resource.stats' ])
         ).serializable_hash, status: status
       end
     end

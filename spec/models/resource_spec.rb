@@ -54,18 +54,22 @@ RSpec.describe Resource, type: :model, vcr: VCR_OPTS do
     before       { Resource::SEARCH_CACHE.clear }
 
     it 'returns Resources matching the given query, ordered by relevance' do
-      expect(Resource.search(query: 'lorem')).to(
-        eq [ @both_resource, @title_resource, @content_resource ]
+      expect(Resource.search(query: 'lorem')).to eq(
+        SearchResults.new([ @both_resource, @title_resource, @content_resource ], 3)
       )
     end
 
     it 'can use dictionaries for specific languages' do
       # "jumps" is normalized to "jump" by the english dictionary
-      expect(Resource.search(query: 'jumps')).to eq []
-      expect(Resource.search(query: 'jumps', language: 'english')).to eq [ @fox_and_dog_resource ]
+      expect(Resource.search(query: 'jumps')).to eq SearchResults.new([], 0)
+      expect(Resource.search(query: 'jumps', language: 'english')).to eq(
+        SearchResults.new([ @fox_and_dog_resource ], 1)
+      )
 
-      expect(Resource.search(query: 'jump')).to eq [ @fox_and_dog_resource ]
-      expect(Resource.search(query: 'jump', language: 'english')).to eq [ @fox_and_dog_resource ]
+      expect(Resource.search(query: 'jump')).to eq SearchResults.new([ @fox_and_dog_resource ], 1)
+      expect(Resource.search(query: 'jump', language: 'english')).to eq(
+        SearchResults.new([ @fox_and_dog_resource ], 1)
+      )
     end
 
     it "defaults to 'simple' dictionary if the given language is invalid" do
@@ -74,56 +78,56 @@ RSpec.describe Resource, type: :model, vcr: VCR_OPTS do
     end
 
     it 'can return results in a specific order' do
-      expect(Resource.search(query: 'lorem', order_by: 'created_at,id')).to(
-        eq [ @title_resource, @content_resource, @both_resource ]
+      expect(Resource.search(query: 'lorem', order_by: 'created_at,id')).to eq(
+        SearchResults.new([ @title_resource, @content_resource, @both_resource ], 3)
       )
 
-      expect(Resource.search(query: 'lorem', order_by: '-created_at,id')).to(
-        eq [ @both_resource, @content_resource, @title_resource ]
+      expect(Resource.search(query: 'lorem', order_by: '-created_at,id')).to eq(
+        SearchResults.new([ @both_resource, @content_resource, @title_resource ], 3)
       )
     end
 
     it 'can paginate the results' do
-      expect(Resource.search(query: 'lorem', page: 0, per_page: 0)).to eq []
-      expect(Resource.search(query: 'lorem', page: 1, per_page: 0)).to eq []
+      expect(Resource.search(query: 'lorem', page: 0, per_page: 0)).to eq SearchResults.new([], 0)
+      expect(Resource.search(query: 'lorem', page: 1, per_page: 0)).to eq SearchResults.new([], 0)
 
       expect(Resource.search(query: 'lorem', order_by: 'created_at,id', page: 0, per_page: 1)).to(
-        eq []
+        eq SearchResults.new([], 3)
       )
       expect(Resource.search(query: 'lorem', order_by: 'created_at,id', page: 1, per_page: 1)).to(
-        eq [ @title_resource ]
+        eq SearchResults.new([ @title_resource ], 3)
       )
       expect(Resource.search(query: 'lorem', order_by: 'created_at,id', page: 2, per_page: 1)).to(
-        eq [ @content_resource ]
+        eq SearchResults.new([ @content_resource ], 3)
       )
       expect(Resource.search(query: 'lorem', order_by: 'created_at,id', page: 3, per_page: 1)).to(
-        eq [ @both_resource ]
+        eq SearchResults.new([ @both_resource ], 3)
       )
       expect(Resource.search(query: 'lorem', order_by: 'created_at,id', page: 4, per_page: 1)).to(
-        eq []
+        eq SearchResults.new([], 3)
       )
 
       expect(Resource.search(query: 'lorem', order_by: '-created_at,id', page: 0, per_page: 2)).to(
-        eq []
+        eq SearchResults.new([], 3)
       )
       expect(Resource.search(query: 'lorem', order_by: '-created_at,id', page: 1, per_page: 2)).to(
-        eq [ @both_resource, @content_resource ]
+        eq SearchResults.new([ @both_resource, @content_resource ], 3)
       )
       expect(Resource.search(query: 'lorem', order_by: '-created_at,id', page: 2, per_page: 2)).to(
-        eq [ @title_resource ]
+        eq SearchResults.new([ @title_resource ], 3)
       )
       expect(Resource.search(query: 'lorem', order_by: '-created_at,id', page: 3, per_page: 2)).to(
-        eq []
+        eq SearchResults.new([], 3)
       )
     end
 
     it 'can highlight the query terms within the original text' do
-      expect(Resource.search(query: 'lorem').map(&:headline)).to eq [
+      expect(Resource.search(query: 'lorem').items.map(&:headline)).to eq [
         '<b>Lorem</b> Ipsum <b>Lorem</b> Ipsum', '<b>Lorem</b> Ipsum None', '<b>Lorem</b> Ipsum'
       ]
 
       expect(
-        Resource.search(query: 'jump', language: 'english').first.headline
+        Resource.search(query: 'jump', language: 'english').items.first.headline
       ).to eq '&hellip; quick brown fox <b>jumps</b> over the lazy &hellip;'
     end
 
@@ -133,12 +137,14 @@ RSpec.describe Resource, type: :model, vcr: VCR_OPTS do
       FactoryBot.create :metadata, resource: @both_resource,
                                    value: { book: 'Intro to Learning' }
 
-      expect(Resource.search(query: 'learning jumps')).to eq [ @fox_and_dog_resource ]
+      expect(Resource.search(query: 'learning jumps')).to eq(
+        SearchResults.new([ @fox_and_dog_resource ], 1)
+      )
 
       FactoryBot.create :stats, resource: @title_resource, value: { students: 'Few' }
       FactoryBot.create :stats, resource: @both_resource,  value: { students: 'Many' }
 
-      expect(Resource.search(query: 'many lorem')).to eq [ @both_resource ]
+      expect(Resource.search(query: 'many lorem')).to eq SearchResults.new([ @both_resource ], 1)
     end
   end
 
