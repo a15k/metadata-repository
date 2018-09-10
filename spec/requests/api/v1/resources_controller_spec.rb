@@ -90,7 +90,7 @@ RSpec.describe Api::V1::ResourcesController, type: :request do
 
             let!(:expected_response) do
               JSON.parse(Api::V1::ResourceSerializer.new(
-                [], include: [ :metadatas, :stats ]
+                [], include: [ :metadatas, :stats ], meta: { count: 0 }
               ).serialized_json).deep_symbolize_keys
             end
 
@@ -160,17 +160,18 @@ RSpec.describe Api::V1::ResourcesController, type: :request do
               response 200, 'success' do
                 schema resource_schema_reference
 
+                let(:search_results) { Resource.search(query: 'lorem', order_by: sort) }
                 let!(:expected_response) do
                   JSON.parse(
                     Api::V1::ResourceSerializer.new(
-                      Resource.search(query: 'lorem', order_by: sort),
-                      include: [ :metadatas, :stats ]
+                      search_results.items,
+                      include: [ :metadatas, :stats ], meta: { count: search_results.count }
                     ).serialized_json
                   ).deep_symbolize_keys
                 end
                 before do
                   expect(Resource).to receive(:search).with(
-                    query: 'lorem', language: nil, order_by: sort
+                    query: 'lorem', language: nil, order_by: sort, page: nil, per_page: nil
                   ).and_call_original
                 end
 
@@ -186,16 +187,18 @@ RSpec.describe Api::V1::ResourcesController, type: :request do
               response 200, 'success' do
                 schema resource_schema_reference
 
+                let(:search_results) { Resource.search(query: 'lorem') }
                 let!(:expected_response) do
                   JSON.parse(
                     Api::V1::ResourceSerializer.new(
-                      Resource.search(query: 'lorem'), include: [ :metadatas, :stats ]
+                      search_results.items,
+                      include: [ :metadatas, :stats ], meta: { count: search_results.count }
                     ).serialized_json
                   ).deep_symbolize_keys
                 end
                 before do
                   expect(Resource).to receive(:search).with(
-                    query: 'lorem', language: nil, order_by: nil
+                    query: 'lorem', language: nil, order_by: nil, page: nil, per_page: nil
                   ).and_call_original
                 end
 
@@ -218,19 +221,22 @@ RSpec.describe Api::V1::ResourcesController, type: :request do
               response 200, 'success' do
                 schema resource_schema_reference
 
+                let(:search_results) do
+                  Resource.search(query: 'jumps', language: 'english', order_by: '-created_at,id')
+                end
                 let!(:expected_response) do
                   JSON.parse(
                     Api::V1::ResourceSerializer.new(
-                      Resource.search(
-                        query: 'jumps', language: 'english', order_by: '-created_at,id'
-                      ), include: [ :metadatas, :stats ]
+                      search_results.items,
+                      include: [ :metadatas, :stats ], meta: { count: search_results.count }
                     ).serialized_json
                   ).deep_symbolize_keys
                 end
                 before do
                   expect(Resource).to(
                     receive(:search).with(
-                      query: 'jumps', language: 'english', order_by: '-created_at,id'
+                      query: 'jumps', language: 'english', order_by: '-created_at,id',
+                      page: nil, per_page: nil
                     ).and_call_original
                   )
                 end
@@ -247,17 +253,18 @@ RSpec.describe Api::V1::ResourcesController, type: :request do
               response 200, 'success' do
                 schema resource_schema_reference
 
+                let(:search_results) { Resource.search(query: 'jumps', language: 'english') }
                 let!(:expected_response) do
                   JSON.parse(
                     Api::V1::ResourceSerializer.new(
-                      Resource.search(query: 'jumps', language: 'english'),
-                      include: [ :metadatas, :stats ]
+                      search_results.items,
+                      include: [ :metadatas, :stats ], meta: { count: search_results.count }
                     ).serialized_json
                   ).deep_symbolize_keys
                 end
                 before do
                   expect(Resource).to receive(:search).with(
-                    query: 'jumps', language: 'english', order_by: nil
+                    query: 'jumps', language: 'english', order_by: nil, page: nil, per_page: nil
                   ).and_call_original
                 end
 

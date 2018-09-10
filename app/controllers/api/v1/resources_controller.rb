@@ -5,13 +5,17 @@ module Api
       before_action :can_modify!, only: [ :update, :destroy ]
 
       def index
-        render_resource resources: Resource.search(
+        search_results = Resource.search(
           query: filter_params[:query],
           language: filter_params[:language],
-          order_by: params[:sort]
-        ).preload(:unscoped_metadatas, :unscoped_stats).each do |resource|
-          resource.scoped_to_application = current_application
-        end
+          order_by: params[:sort],
+          page: page_params[:number],
+          per_page: page_params[:size]
+        )
+        resources = search_results.items.preload(:unscoped_metadatas, :unscoped_stats).to_a
+        resources.each { |resource| resource.scoped_to_application = current_application }
+
+        render_resource resources: resources, meta: { count: search_results.count }
       end
 
       def show
@@ -86,9 +90,9 @@ module Api
         )
       end
 
-      def render_resource(resources: resource, status: :ok)
+      def render_resource(resources: resource, status: :ok, **options)
         render json: ResourceSerializer.new(
-          resources, include: [ :metadatas, :stats ]
+          resources, options.merge(include: [ :metadatas, :stats ])
         ).serializable_hash, status: status
       end
     end

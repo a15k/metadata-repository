@@ -37,16 +37,14 @@ module ResourceSearch
     def sanitize(text)
       sanitize_sql_array ['?', text]
     end
-  end
 
-  included do
-    scope :search, ->(query: nil, prefix: false, language: nil,
-                      order_by: nil, page: nil, per_page: nil) do
-      page ||= 1
-      per_page ||= 10
+    # Returns a SearchResults object
+    def search(query: nil, prefix: false, language: nil, order_by: nil, page: nil, per_page: nil)
+      page = page ? page.to_i : 1
+      per_page = per_page ? per_page.to_i : 10
 
       # Return early if the pagination is invalid
-      return none if page < 1 || per_page < 1
+      return SearchResults.new(none, 0) if per_page < 1
 
       # Generate query text
       config = sanitize VALID_TS_CONFIGS.include?(language) ? language : 'simple'
@@ -133,6 +131,9 @@ module ResourceSearch
         skope.pluck(:id)
       end
 
+      # Return early if the page is invalid
+      return SearchResults.new(none, ids.size) if page < 1
+
       # Calculate pagination
       start_index = (page - 1) * per_page
       end_index = page * per_page - 1
@@ -150,8 +151,8 @@ module ResourceSearch
       SELECT_SQL
       skope = skope.select(select_sql)
 
-      # Return paginated scope
-      ids_in_page == ids ? skope : skope.where(id: ids_in_page)
+      # Return the paginated scope and number of results
+      SearchResults.new(ids_in_page == ids ? skope : skope.where(id: ids_in_page), ids.size)
     end
   end
 end
