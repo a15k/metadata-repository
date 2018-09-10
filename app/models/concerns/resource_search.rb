@@ -40,8 +40,8 @@ module ResourceSearch
 
     # Returns a SearchResults object
     def search(query: nil, prefix: false, language: nil, order_by: nil, page: nil, per_page: nil)
-      page ||= 1
-      per_page ||= 10
+      page = page ? page.to_i : 1
+      per_page = per_page ? per_page.to_i : 10
 
       # Return early if the pagination is invalid
       return SearchResults.new(none, 0) if per_page < 1
